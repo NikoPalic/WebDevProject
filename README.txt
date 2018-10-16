@@ -1,4 +1,10 @@
 Projekt :D
-Èlanovi:
+
+Git èlanovi:
 	Niko Paliæ
 	Dominik Marjanoviæ
+	Karlo Jagar
+
+
+
+
