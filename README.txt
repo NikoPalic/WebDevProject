@@ -1,8 +1,8 @@
 Projekt :D
 
-Git èlanovi:
-	Niko Paliæ
-	Dominik Marjanoviæ
+Git clanovi:
+	Niko Palic
+	Dominik Marjanovic
 	Karlo Jagar
 
 
