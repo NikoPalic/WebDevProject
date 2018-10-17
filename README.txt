@@ -5,7 +5,7 @@ Git clanovi:
 	Dominik Marjanovic
 	Karlo Jagar
 	Leo Milos
-
+	Branimir Pehar
 
 
 
