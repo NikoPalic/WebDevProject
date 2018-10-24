@@ -1,9 +1,47 @@
+-- ****************** Postgres ***********************;
+-- ***************************************************;
+/*
+DROP TABLE users_revenue;
+
+
+DROP TABLE users_expenditure;
+
+
+DROP TABLE users_category;
+
+
+DROP TABLE users_saving;
+
+
+DROP TABLE log;
+
+
+DROP TABLE users_common_balance;
+
+
+DROP TABLE revenue;
+
+
+DROP TABLE expenditure;
+
+
+DROP TABLE common_balance;
+
+
+DROP TABLE category;
+
+
+DROP TABLE saving;
+
+
+DROP TABLE users;
+*/
 
 -- ************************************** common_balance
 
 CREATE TABLE common_balance
 (
- cb_id INT NOT NULL ,
+ cb_id SERIAL NOT NULL ,
  funds FLOAT NOT NULL ,
  name  VARCHAR(45) NOT NULL ,
 
@@ -19,7 +57,7 @@ PRIMARY KEY (cb_id)
 
 CREATE TABLE category
 (
- cat_id INT NOT NULL ,
+ cat_id SERIAL NOT NULL ,
  name   VARCHAR(45) NOT NULL ,
  info   VARCHAR(45) ,
 
@@ -35,7 +73,7 @@ PRIMARY KEY (cat_id)
 
 CREATE TABLE saving
 (
- sav_id     INT NOT NULL ,
+ sav_id     SERIAL NOT NULL ,
  start_date DATE NOT NULL ,
  end_date   DATE NOT NULL ,
  goal       FLOAT NOT NULL ,
@@ -54,7 +92,7 @@ PRIMARY KEY (sav_id)
 
 CREATE TABLE users
 (
- user_id  INT NOT NULL ,
+ user_id  SERIAL NOT NULL ,
  name     VARCHAR(45) NOT NULL ,
  surname  VARCHAR(45) NOT NULL ,
  e_mail   VARCHAR(45) NOT NULL UNIQUE ,
@@ -74,8 +112,8 @@ PRIMARY KEY (user_id)
 
 CREATE TABLE users_category
 (
- user_id INT NOT NULL ,
- cat_id  INT NOT NULL ,
+ user_id SERIAL NOT NULL ,
+ cat_id  SERIAL NOT NULL ,
 
 
 CONSTRAINT FK_129 FOREIGN KEY (user_id) REFERENCES users (user_id),
@@ -91,8 +129,8 @@ CONSTRAINT FK_132 FOREIGN KEY (cat_id) REFERENCES category (cat_id)
 
 CREATE TABLE users_saving
 (
- user_id INT NOT NULL ,
- sav_id  INT NOT NULL ,
+ user_id SERIAL NOT NULL ,
+ sav_id  SERIAL NOT NULL ,
 
 
 CONSTRAINT FK_88 FOREIGN KEY  (user_id) REFERENCES users (user_id),
@@ -108,12 +146,12 @@ CONSTRAINT FK_91 FOREIGN KEY  (sav_id) REFERENCES saving (sav_id)
 
 CREATE TABLE log
 (
- log_id  INT NOT NULL ,
+ log_id  SERIAL NOT NULL ,
  action  VARCHAR(45) NOT NULL ,
  date    DATE NOT NULL ,
  amount  FLOAT NOT NULL ,
- user_id INT NOT NULL ,
- cb_id   INT NOT NULL ,
+ user_id SERIAL NOT NULL ,
+ cb_id   SERIAL NOT NULL ,
  e_mail  VARCHAR(45) NOT NULL ,
 
 PRIMARY KEY (log_id),
@@ -131,8 +169,8 @@ CONSTRAINT FK_119 FOREIGN KEY (cb_id) REFERENCES common_balance (cb_id)
 
 CREATE TABLE users_common_balance
 (
- user_id INT NOT NULL ,
- cb_id   INT NOT NULL ,
+ user_id SERIAL NOT NULL ,
+ cb_id   SERIAL NOT NULL ,
 
 
 
@@ -149,12 +187,12 @@ CONSTRAINT FK_97 FOREIGN KEY  (cb_id) REFERENCES common_balance (cb_id)
 
 CREATE TABLE revenue
 (
- rev_id INT NOT NULL ,
+ rev_id SERIAL NOT NULL ,
  name   VARCHAR(45) NOT NULL ,
  date   DATE NOT NULL ,
  amount FLOAT NOT NULL ,
  info   VARCHAR(45) ,
- cat_id INT NOT NULL ,
+ cat_id SERIAL NOT NULL ,
 
 PRIMARY KEY (rev_id),
 CONSTRAINT FK_106 FOREIGN KEY (cat_id) REFERENCES category (cat_id)
@@ -169,12 +207,12 @@ CONSTRAINT FK_106 FOREIGN KEY (cat_id) REFERENCES category (cat_id)
 
 CREATE TABLE expenditure
 (
- exp_id INT NOT NULL ,
+ exp_id SERIAL NOT NULL ,
  name   VARCHAR(45) NOT NULL ,
  date   DATE NOT NULL ,
  amount FLOAT NOT NULL ,
  info   VARCHAR(45) ,
- cat_id INT NOT NULL ,
+ cat_id SERIAL NOT NULL ,
 
 PRIMARY KEY (exp_id),
 CONSTRAINT FK_103 FOREIGN KEY (cat_id) REFERENCES category (cat_id)
@@ -189,8 +227,8 @@ CONSTRAINT FK_103 FOREIGN KEY (cat_id) REFERENCES category (cat_id)
 
 CREATE TABLE users_revenue
 (
- user_id INT NOT NULL ,
- rev_id  INT NOT NULL ,
+ user_id SERIAL NOT NULL ,
+ rev_id  SERIAL NOT NULL ,
 
 CONSTRAINT FK_81 FOREIGN KEY (user_id) REFERENCES users (user_id),
 CONSTRAINT FK_84 FOREIGN KEY (rev_id) REFERENCES revenue (rev_id)
@@ -203,15 +241,24 @@ CONSTRAINT FK_84 FOREIGN KEY (rev_id) REFERENCES revenue (rev_id)
 
 -- ************************************** user|expenditure
 
-CREATE TABLE user_expenditure
+CREATE TABLE users_expenditure
 (
- user_id INT NOT NULL ,
- exp_id  INT NOT NULL ,
+ user_id SERIAL NOT NULL ,
+ exp_id  SERIAL NOT NULL ,
 
 CONSTRAINT FK_74 FOREIGN KEY (user_id) REFERENCES users (user_id),
 CONSTRAINT FK_77 FOREIGN KEY (exp_id) REFERENCES expenditure (exp_id)
 );
 
+
+--DEFAULT kategorije
+INSERT INTO category (name) values ('druženje');
+INSERT INTO category (name) values ('režije');
+INSERT INTO category (name) values ('prijevoz');
+INSERT INTO category (name) values ('kredit');
+INSERT INTO category (name) values ('hrana');
+INSERT INTO category (name) values ('piæe');
+INSERT INTO category (name) values ('alati&pribor');
 
 
 
