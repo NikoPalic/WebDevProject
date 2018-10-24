@@ -1,0 +1,40 @@
+.form-group{
+    margin: 1% 10%;
+    width: 30%;
+    min-width:200px;
+    display: inline-block;
+}
+
+.btn {
+	margin: 1%;
+	display: block;
+	justify-content: center;
+	width: 30%;
+
+}
+
+.button-holder {
+	text-align: center;
+}
+
+.form-control {
+	
+}
+
+.body {
+	position: center;
+	padding: 10%;
+	background: linear-gradient(to right, #585b59 , #db1e1e );
+}
+
+.test {
+	text-align: center;
+}
+
+.uspass {
+	text-align: center;
+	font-family: arial;
+	size: 200%;
+	padding: 1%;
+	color: white;
+}
