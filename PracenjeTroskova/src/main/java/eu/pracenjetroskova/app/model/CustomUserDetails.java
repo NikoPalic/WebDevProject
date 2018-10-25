@@ -7,9 +7,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class CustomUserDetails extends Users implements UserDetails {
+@SuppressWarnings("serial")
+public class CustomUserDetails extends User implements UserDetails {
 
-	public  CustomUserDetails(final Users users) {
+	public  CustomUserDetails(final User users) {
 		super(users);
 	}
 	

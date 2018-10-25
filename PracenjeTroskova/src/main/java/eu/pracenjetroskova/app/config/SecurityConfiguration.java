@@ -11,12 +11,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import eu.pracenjetroskova.app.repository.UsersRepository;
+import eu.pracenjetroskova.app.repository.UserRepository;
 import eu.pracenjetroskova.app.service.CustomUserDetailsService;
 
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 @EnableWebSecurity
-@EnableJpaRepositories(basePackageClasses=UsersRepository.class)
+@EnableJpaRepositories(basePackageClasses=UserRepository.class)
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	

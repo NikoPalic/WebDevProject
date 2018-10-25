@@ -9,18 +9,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import eu.pracenjetroskova.app.model.CustomUserDetails;
-import eu.pracenjetroskova.app.model.Users;
-import eu.pracenjetroskova.app.repository.UsersRepository;
+import eu.pracenjetroskova.app.model.User;
+import eu.pracenjetroskova.app.repository.UserRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService{
 
 	@Autowired
-	private UsersRepository usersRepository;
+	private UserRepository userRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<Users> optionalUsers =usersRepository.findByUsername(username);
+		Optional<User> optionalUsers =userRepository.findByUsername(username);
 		
 		optionalUsers
 				.orElseThrow(()-> new UsernameNotFoundException("Korisničko ime nije pronađeno"));

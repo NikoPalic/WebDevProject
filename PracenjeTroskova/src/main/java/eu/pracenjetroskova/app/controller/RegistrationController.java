@@ -1,25 +1,28 @@
 package eu.pracenjetroskova.app.controller;
 
-import java.util.List;
+
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import eu.pracenjetroskova.app.model.Users;
-import eu.pracenjetroskova.app.repository.UsersRepository;
+import eu.pracenjetroskova.app.dto.UserDto;
+import eu.pracenjetroskova.app.model.User;
 import eu.pracenjetroskova.app.service.UserService;
+import eu.pracenjetroskova.app.validation.EmailExistsException;
 
 
-@RestController
+@Controller
 public class RegistrationController {
 	
 	private final UserService userService;
@@ -32,22 +35,48 @@ public class RegistrationController {
 	}
 
 	@GetMapping("/signup")
-	public String registration() {
-		return "registracija je jos u izradi";
+	public String showRegistrationForm(WebRequest request, Model model) {
+	    UserDto userDto = new UserDto();
+	    model.addAttribute("user", userDto);
+	    return "registration";
 	}
 	
-	@PostMapping("/signup")
-	public Users register(@RequestBody Users user) {
-		userService.insertUser(user);
-		return user;
-	}
-	
-//	@PreAuthorize("hasRole('ADMIN')")
-//	@GetMapping("/signup/all")
-//	@ResponseBody
-//	public List<Users> getAll(){
-//		return usersRepository.findAll();
+//	@PostMapping("/signup")
+//	public User register(@RequestBody User user) {
+//		userService.insertUser(user);
+//		return user;
 //	}
 	
+	@PostMapping("/signup")
+	public ModelAndView registerUserAccount(
+			  @ModelAttribute("user") @Valid UserDto accountDto, 
+			  BindingResult result, 
+			  WebRequest request, 
+			  Errors errors) {
+			     
+			    User registered = new User();
+			    if (!result.hasErrors()) {
+			        registered = createUserAccount(accountDto, result);
+			    }
+			    if (registered == null) {
+			        result.rejectValue("email", "message.regError");
+			    }
+			    if (result.hasErrors()) {
+			        return new ModelAndView("registration", "user", accountDto);
+			    } 
+			    else {
+			        return new ModelAndView("successRegister", "user", accountDto);
+			    }
+			}
+			
+	private User createUserAccount(UserDto accountDto, BindingResult result) {
+	    User registered = null;
+	    try {
+	        registered = userService.registerNewUserAccount(accountDto);
+	    } catch (EmailExistsException e) {
+	        return null;
+	    }
+	    return registered;
+	}
 	
 }
