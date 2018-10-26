@@ -1,16 +1,22 @@
 -- ****************** Postgres ***********************;
 -- ***************************************************;
 /*
+DROP TABLE users_revenue;
+
+
+DROP TABLE users_expenditure;
+
+
 DROP TABLE users_category;
+
+
+DROP TABLE users_saving;
 
 
 DROP TABLE log;
 
 
 DROP TABLE users_common_balance;
-
-
-DROP TABLE saving;
 
 
 DROP TABLE revenue;
@@ -25,9 +31,11 @@ DROP TABLE common_balance;
 DROP TABLE category;
 
 
+DROP TABLE saving;
+
+
 DROP TABLE users;
 */
-
 
 -- ************************************** common_balance
 
@@ -61,14 +69,33 @@ PRIMARY KEY (cat_id)
 
 
 
--- ************************************** users
+-- ************************************** saving
+
+CREATE TABLE saving
+(
+ sav_id     SERIAL NOT NULL ,
+ start_date DATE NOT NULL ,
+ end_date   DATE NOT NULL ,
+ goal       FLOAT NOT NULL ,
+ info       VARCHAR(45) ,
+ funds      FLOAT NOT NULL ,
+
+PRIMARY KEY (sav_id)
+);
+
+
+
+
+
+
+-- ************************************** user
 
 CREATE TABLE users
 (
  user_id  SERIAL NOT NULL ,
  name     VARCHAR(45) NOT NULL ,
  surname  VARCHAR(45) NOT NULL ,
- e_mail   VARCHAR(45) NOT NULL DEFAULT UNIQUE ,
+ e_mail   VARCHAR(45) NOT NULL UNIQUE ,
  password VARCHAR(45) NOT NULL ,
  username VARCHAR(45) NOT NULL ,
  funds    FLOAT NOT NULL ,
@@ -81,7 +108,7 @@ PRIMARY KEY (user_id)
 
 
 
--- ************************************** users_category
+-- ************************************** user|category
 
 CREATE TABLE users_category
 (
@@ -91,6 +118,23 @@ CREATE TABLE users_category
 
 CONSTRAINT FK_129 FOREIGN KEY (user_id) REFERENCES users (user_id),
 CONSTRAINT FK_132 FOREIGN KEY (cat_id) REFERENCES category (cat_id)
+);
+
+
+
+
+
+
+-- ************************************** user|saving
+
+CREATE TABLE users_saving
+(
+ user_id SERIAL NOT NULL ,
+ sav_id  SERIAL NOT NULL ,
+
+
+CONSTRAINT FK_88 FOREIGN KEY  (user_id) REFERENCES users (user_id),
+CONSTRAINT FK_91 FOREIGN KEY  (sav_id) REFERENCES saving (sav_id)
 );
 
 
@@ -108,7 +152,7 @@ CREATE TABLE log
  amount  FLOAT NOT NULL ,
  user_id SERIAL NOT NULL ,
  cb_id   SERIAL NOT NULL ,
- e_mail  VARCHAR(45) NOT NULL ,
+
 
 PRIMARY KEY (log_id),
 
@@ -121,36 +165,17 @@ CONSTRAINT FK_119 FOREIGN KEY (cb_id) REFERENCES common_balance (cb_id)
 
 
 
--- ************************************** users_common_balance
+-- ************************************** user|common_balance
 
 CREATE TABLE users_common_balance
 (
  user_id SERIAL NOT NULL ,
  cb_id   SERIAL NOT NULL ,
 
-CONSTRAINT FK_94 FOREIGN KEY (user_id) REFERENCES users (user_id),
-CONSTRAINT FK_97 FOREIGN KEY (cb_id) REFERENCES common_balance (cb_id)
-);
 
 
-
-
-
-
--- ************************************** saving
-
-CREATE TABLE saving
-(
- sav_id     SERIAL NOT NULL ,
- start_date DATE NOT NULL ,
- end_date   DATE NOT NULL ,
- goal       FLOAT NOT NULL ,
- info       VARCHAR(45) ,
- funds      FLOAT NOT NULL ,
- user_id    SERIAL NOT NULL ,
-
-PRIMARY KEY (sav_id),
-CONSTRAINT FK_142 FOREIGN KEY (user_id) REFERENCES users (user_id)
+CONSTRAINT FK_94 FOREIGN KEY  (user_id) REFERENCES users (user_id),
+CONSTRAINT FK_97 FOREIGN KEY  (cb_id) REFERENCES common_balance (cb_id)
 );
 
 
@@ -162,18 +187,15 @@ CONSTRAINT FK_142 FOREIGN KEY (user_id) REFERENCES users (user_id)
 
 CREATE TABLE revenue
 (
- rev_id  SERIAL NOT NULL ,
- name    VARCHAR(45) NOT NULL ,
- date    DATE NOT NULL ,
- amount  FLOAT NOT NULL ,
- info    VARCHAR(45) ,
- cat_id  SERIAL NOT NULL ,
- user_id SERIAL NOT NULL ,
+ rev_id SERIAL NOT NULL ,
+ name   VARCHAR(45) NOT NULL ,
+ date   DATE NOT NULL ,
+ amount FLOAT NOT NULL ,
+ info   VARCHAR(45) ,
+ cat_id SERIAL NOT NULL ,
 
 PRIMARY KEY (rev_id),
-
-CONSTRAINT FK_106 FOREIGN KEY (cat_id) REFERENCES category (cat_id),
-CONSTRAINT FK_139 FOREIGN KEY (user_id) REFERENCES users (user_id)
+CONSTRAINT FK_106 FOREIGN KEY (cat_id) REFERENCES category (cat_id)
 );
 
 
@@ -185,23 +207,48 @@ CONSTRAINT FK_139 FOREIGN KEY (user_id) REFERENCES users (user_id)
 
 CREATE TABLE expenditure
 (
- exp_id  SERIAL NOT NULL ,
- name    VARCHAR(45) NOT NULL ,
- date    DATE NOT NULL ,
- amount  FLOAT NOT NULL ,
- info    VARCHAR(45) ,
- cat_id  SERIAL NOT NULL ,
- user_id SERIAL NOT NULL ,
+ exp_id SERIAL NOT NULL ,
+ name   VARCHAR(45) NOT NULL ,
+ date   DATE NOT NULL ,
+ amount FLOAT NOT NULL ,
+ info   VARCHAR(45) ,
+ cat_id SERIAL NOT NULL ,
 
 PRIMARY KEY (exp_id),
-
-CONSTRAINT FK_103 FOREIGN KEY (cat_id) REFERENCES category (cat_id),
-CONSTRAINT FK_136 FOREIGN KEY (user_id) REFERENCES users (user_id)
+CONSTRAINT FK_103 FOREIGN KEY (cat_id) REFERENCES category (cat_id)
 );
 
 
 
 
+
+
+-- ************************************** user|revenue
+
+CREATE TABLE users_revenue
+(
+ user_id SERIAL NOT NULL ,
+ rev_id  SERIAL NOT NULL ,
+
+CONSTRAINT FK_81 FOREIGN KEY (user_id) REFERENCES users (user_id),
+CONSTRAINT FK_84 FOREIGN KEY (rev_id) REFERENCES revenue (rev_id)
+);
+
+
+
+
+
+
+-- ************************************** user|expenditure
+
+CREATE TABLE users_expenditure
+(
+ user_id SERIAL NOT NULL ,
+ exp_id  SERIAL NOT NULL ,
+
+CONSTRAINT FK_74 FOREIGN KEY (user_id) REFERENCES users (user_id),
+CONSTRAINT FK_77 FOREIGN KEY (exp_id) REFERENCES expenditure (exp_id)
+);
 
 
 --DEFAULT kategorije
