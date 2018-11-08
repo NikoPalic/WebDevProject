@@ -171,7 +171,7 @@ CREATE TABLE users_common_balance
 (
  user_id SERIAL NOT NULL ,
  cb_id   SERIAL NOT NULL ,
-
+ status VARCHAR(45) NOT NULL,
 
 
 CONSTRAINT FK_94 FOREIGN KEY  (user_id) REFERENCES users (user_id),
