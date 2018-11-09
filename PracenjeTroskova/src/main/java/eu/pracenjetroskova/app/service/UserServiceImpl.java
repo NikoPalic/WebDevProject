@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import eu.pracenjetroskova.app.dto.UserDto;
 import eu.pracenjetroskova.app.model.User;
-import eu.pracenjetroskova.app.repository.RoleRepository;
+
 import eu.pracenjetroskova.app.repository.UserRepository;
 import eu.pracenjetroskova.app.validation.EmailExistsException;
 
@@ -18,13 +18,12 @@ public class UserServiceImpl implements UserService {
 	
 	
 	private final UserRepository userRepository;
-	private final RoleRepository roleRepository;
+	
 	
 	@Autowired
-	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+	public UserServiceImpl(UserRepository userRepository) {
 		super();
 		this.userRepository = userRepository;
-		this.roleRepository = roleRepository;
 	}
 
 
@@ -48,7 +47,7 @@ public class UserServiceImpl implements UserService {
         user.setLastName(accountDto.getLastName());
         user.setPassword(accountDto.getPassword());
         user.setEmail(accountDto.getEmail());
-        user.setRoles(Arrays.asList(roleRepository.findByRole("USER")));
+        
         return userRepository.save(user);       
     }
     private boolean emailExist(String email) {

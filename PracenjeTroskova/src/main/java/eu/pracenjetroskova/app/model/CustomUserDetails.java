@@ -1,6 +1,8 @@
 package eu.pracenjetroskova.app.model;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @SuppressWarnings("serial")
 public class CustomUserDetails extends User implements UserDetails {
 
+	private String role;
 	public  CustomUserDetails(final User users) {
 		super(users);
 	}
@@ -18,10 +21,9 @@ public class CustomUserDetails extends User implements UserDetails {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
 		
-		return getRoles()
-				.stream()
-				.map(role->new SimpleGrantedAuthority("ROLE_" + role.getRole()))
-				.collect(Collectors.toList());
+		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority(this.role));
+        return authorities;
 	}
 
 	@Override

@@ -48,9 +48,7 @@ public class User {
 	@Column(name="user_active")
 	private int active;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinTable(name="user_role", joinColumns= @JoinColumn(name ="user_id"))
-	private Collection<Role> roles;
+	
 	
 	
 
@@ -60,7 +58,7 @@ public class User {
 	public User(User users) {
 		this.active=users.getActive();
 		this.email=users.getEmail();
-		this.roles=users.getRoles();
+		
 		this.name=users.getName();
 		this.lastName=users.getLastName();
 		this.username=users.getUsername();
@@ -129,13 +127,7 @@ public class User {
 		this.active = active;
 	}
 
-	public Collection<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Collection<Role> roles) {
-		this.roles = roles;
-	}
+	
 	
 	
 	
