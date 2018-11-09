@@ -33,12 +33,12 @@ public class Savings {
 	
 	//@ManyToOne(fetch = FetchType.LAZY)
     ///@JoinColumn(name = "user_id")
-	private UUID userId;
+	private Long userId;
 
 	public Savings() {}
 	
 	
-	public Savings(Long id, Date starDate, Date endDate, Float goal, String info, Float funds, UUID userId) {
+	public Savings(Long id, Date starDate, Date endDate, Float goal, String info, Float funds, Long userId) {
 		super();
 		this.id = id;
 		this.starDate = starDate;
@@ -110,12 +110,12 @@ public class Savings {
 	}
 
 	
-	public UUID getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
 
-	public void setUserId(UUID userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 	

@@ -2,7 +2,7 @@ package eu.pracenjetroskova.app.model;
 
 import java.util.Collection;
 import java.util.Set;
-import java.util.UUID;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,7 +27,7 @@ public class User {
 	@Id
 	@GeneratedValue
 	@Column(name="user_id")
-	private UUID id;
+	private Long id;
 	
 	
 	@Column(name="user_username", unique=true)
@@ -73,11 +73,11 @@ public class User {
 		return new BCryptPasswordEncoder();
 	}
 	
-	public UUID getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
