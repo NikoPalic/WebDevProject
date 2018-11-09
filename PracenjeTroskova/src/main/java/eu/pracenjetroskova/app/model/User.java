@@ -1,6 +1,7 @@
 package eu.pracenjetroskova.app.model;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 
@@ -48,7 +49,14 @@ public class User {
 	@Column(name="user_active")
 	private int active;
 	
+	@OneToMany(mappedBy = "userID")
+	private List<Savings> savings;
 	
+	@OneToMany(mappedBy = "userID")
+	private List<Revenue> revenue;
+	
+	@OneToMany(mappedBy = "userID")
+	private List<Expenditure> expenditure;
 	
 	
 

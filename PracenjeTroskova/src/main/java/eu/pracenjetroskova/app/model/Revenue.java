@@ -15,36 +15,35 @@ public class Revenue {
 	@Column(name="id")
 	private Long id;
 	
-	@Column(name="name")
+	@Column(name="revenue_name")
 	private String name;
 	
-	@Column(name="date")
+	@Column(name="revenue_date")
 	private Date date;
 	
-	@Column(name="amount")
+	@Column(name="revenue_amount")
 	private Float amount;
 	
-	@Column(name="info")
+	@Column(name="revenue_info")
 	private String info;
 	
-	@Column(name="cat_id")
-	private Long catId;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id")
+	private User userID;
 	
-	
-	@Column(name="user_id")
-	private Long userId;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="category_id")
+	private Category categoryID;
 
 	
 	
-	public Revenue(Long id, String name, Date date, Float amount, String info, Long catId, Long userId) {
+	public Revenue(Long id, String name, Date date, Float amount, String info) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.date = date;
 		this.amount = amount;
 		this.info = info;
-		this.catId = catId;
-		this.userId = userId;
 	}
 
 
@@ -97,25 +96,4 @@ public class Revenue {
 		this.info = info;
 	}
 
-
-	public Long getCatId() {
-		return catId;
-	}
-
-
-	public void setCatId(Long catId) {
-		this.catId = catId;
-	}
-
-
-	public Long getUserId() {
-		return userId;
-	}
-
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-	
-	
 }

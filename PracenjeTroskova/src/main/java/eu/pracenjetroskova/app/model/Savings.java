@@ -9,7 +9,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "savings")
-@SecondaryTable(name = "\"user\"")
 public class Savings {
 	
 	@Id
@@ -32,13 +31,15 @@ public class Savings {
 	@Column(name="savings_funds")
 	private Float funds;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id")
+	private User userID;
 	
-	private Long userId;
 
 	public Savings() {}
 	
 	
-	public Savings(Long id, Date starDate, Date endDate, Float goal, String info, Float funds, Long userId) {
+	public Savings(Long id, Date starDate, Date endDate, Float goal, String info, Float funds) {
 		super();
 		this.id = id;
 		this.starDate = starDate;
@@ -46,7 +47,6 @@ public class Savings {
 		this.goal = goal;
 		this.info = info;
 		this.funds = funds;
-		this.userId = userId;
 	}
 
 
@@ -109,15 +109,4 @@ public class Savings {
 		this.funds = funds;
 	}
 
-	@ManyToOne(targetEntity = User.class)
-	@JoinColumn(name = "user_id", table ="\"user\"")
-	public Long getUserId() {
-		return userId;
-	}
-
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-	
 }

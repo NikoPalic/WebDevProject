@@ -1,9 +1,12 @@
 package eu.pracenjetroskova.app.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,6 +22,12 @@ public class Category {
 	
 	@Column(name="category_info")
 	private String info;
+	
+	@OneToMany(mappedBy = "categoryID")
+	private List<Expenditure> expenditure;
+	
+	@OneToMany(mappedBy = "categoryID")
+	private List<Revenue> revenue;
 	
 	
 
