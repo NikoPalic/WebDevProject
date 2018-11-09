@@ -9,6 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "savings")
+@SecondaryTable(name = "\"user\"")
 public class Savings {
 	
 	@Id
@@ -31,8 +32,7 @@ public class Savings {
 	@Column(name="savings_funds", nullable = false)
 	private Float funds;
 	
-	//@ManyToOne(fetch = FetchType.LAZY)
-    ///@JoinColumn(name = "user_id")
+	
 	private Long userId;
 
 	public Savings() {}
@@ -109,7 +109,8 @@ public class Savings {
 		this.funds = funds;
 	}
 
-	
+	@ManyToOne(targetEntity = User.class)
+	@JoinColumn(name = "user_id", table ="\"user\"")
 	public Long getUserId() {
 		return userId;
 	}
