@@ -13,6 +13,7 @@ public class UsersCategory {
 	@Column(name="users_category_user_id")
 	private Long userId;
 	
+	@Id
 	@Column(name="users_category_cat_id")
 	private Long categoryId;
 

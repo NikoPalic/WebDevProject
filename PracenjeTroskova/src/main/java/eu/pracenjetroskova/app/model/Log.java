@@ -4,8 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -26,20 +29,20 @@ public class Log {
 	@Column(name="log_amount")
 	private Double amount;
 	
-	@Column(name="log_user_id")
-	private Long userId;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id")
+	private User userID;
 	
-	@Column(name="log_cb_id")
-	private Long commonBalanceId;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="common_balance_id")
+	private CommonBalance cbID;
 
-	public Log(Long id, String action, Date date, Double amount, Long userId, Long commonBalanceId) {
+	public Log(Long id, String action, Date date, Double amount) {
 		super();
 		this.id = id;
 		this.action = action;
 		this.date = date;
 		this.amount = amount;
-		this.userId = userId;
-		this.commonBalanceId = commonBalanceId;
 	}
 
 	public Long getId() {
@@ -74,23 +77,4 @@ public class Log {
 		this.amount = amount;
 	}
 
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
-	public Long getCommonBalanceId() {
-		return commonBalanceId;
-	}
-
-	public void setCommonBalanceId(Long commonBalanceId) {
-		this.commonBalanceId = commonBalanceId;
-	}
-	
-	
-	
-	
 }

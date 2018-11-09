@@ -13,6 +13,7 @@ public class UsersCommonBalance {
 	@Column(name="users_common_balance_user_id")
 	private Long userId;
 	
+	@Id
 	@Column(name="users_common_balance_cb_id")
 	private Long commonBalanceId;
 
