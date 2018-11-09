@@ -12,26 +12,26 @@ public class Revenue {
 
 	@Id
 	@GeneratedValue
-	@Column(name="id", nullable = false)
+	@Column(name="id")
 	private Long id;
 	
-	@Column(name="name", nullable = false)
+	@Column(name="name")
 	private String name;
 	
-	@Column(name="date", nullable = false)
+	@Column(name="date")
 	private Date date;
 	
-	@Column(name="amount", nullable = false)
+	@Column(name="amount")
 	private Float amount;
 	
-	@Column(name="info", nullable = true)
+	@Column(name="info")
 	private String info;
 	
-	@Column(name="cat_id", nullable = false)
+	@Column(name="cat_id")
 	private Long catId;
 	
 	
-	@Column(name="user_id", nullable = false)
+	@Column(name="user_id")
 	private Long userId;
 
 	

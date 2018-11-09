@@ -14,22 +14,22 @@ public class Savings {
 	
 	@Id
 	@GeneratedValue
-	@Column(name="savings_id", nullable = false)
+	@Column(name="savings_id")
 	private Long id;
 	
-	@Column(name="savings_startdate", nullable = false)
+	@Column(name="savings_startdate")
 	private Date starDate;
 	
-	@Column(name="savings_enddate", nullable = false)
+	@Column(name="savings_enddate")
 	private Date endDate;
 	
-	@Column(name="savings_goal", nullable = false)
+	@Column(name="savings_goal")
 	private Float goal;
 	
-	@Column(name="savings_info", nullable = true)
+	@Column(name="savings_info")
 	private String info;
 	
-	@Column(name="savings_funds", nullable = false)
+	@Column(name="savings_funds")
 	private Float funds;
 	
 	
