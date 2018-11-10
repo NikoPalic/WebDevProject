@@ -3,6 +3,7 @@ package eu.pracenjetroskova.app.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,8 +30,12 @@ public class CommonBalance {
 	@OneToMany(mappedBy = "cbID")
 	private List<Log> log;
 	
-	@ManyToMany(mappedBy = "commonbalances")
-    private List<User> users = new ArrayList<>();
+	@OneToMany(
+	        mappedBy = "commonbalance",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	    private List<UsersCommonBalance> users = new ArrayList<>();
 
 	
 	public CommonBalance(Long id, Double funds, String name) {

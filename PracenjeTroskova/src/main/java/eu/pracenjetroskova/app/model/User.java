@@ -73,15 +73,12 @@ public class User {
 	    )
 	    private List<Category> categories = new ArrayList<>();
 	
-	@ManyToMany(cascade = { 
-	        CascadeType.PERSIST, 
-	        CascadeType.MERGE
-	    })
-	    @JoinTable(name = "users_common_balance",
-	        joinColumns = @JoinColumn(name = "user_id"),
-	        inverseJoinColumns = @JoinColumn(name = "common_balance_id")
+	@OneToMany(
+	        mappedBy = "user",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
 	    )
-	    private List<CommonBalance> commonbalances = new ArrayList<>();
+	    private List<UsersCommonBalance> commonbalances = new ArrayList<>();
 	
 	
 
