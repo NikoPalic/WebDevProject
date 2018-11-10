@@ -1,11 +1,13 @@
 package eu.pracenjetroskova.app.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,6 +30,9 @@ public class Category {
 	
 	@OneToMany(mappedBy = "categoryID")
 	private List<Revenue> revenue;
+	
+    @ManyToMany(mappedBy = "categories")
+    private List<User> users = new ArrayList<>();
 	
 	
 

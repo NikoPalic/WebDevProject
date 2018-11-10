@@ -1,5 +1,6 @@
 package eu.pracenjetroskova.app.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -60,6 +62,26 @@ public class User {
 	
 	@OneToMany(mappedBy = "userID")
 	private List<Log> log;
+	
+	@ManyToMany(cascade = { 
+	        CascadeType.PERSIST, 
+	        CascadeType.MERGE
+	    })
+	    @JoinTable(name = "users_category",
+	        joinColumns = @JoinColumn(name = "user_id"),
+	        inverseJoinColumns = @JoinColumn(name = "category_id")
+	    )
+	    private List<Category> categories = new ArrayList<>();
+	
+	@ManyToMany(cascade = { 
+	        CascadeType.PERSIST, 
+	        CascadeType.MERGE
+	    })
+	    @JoinTable(name = "users_common_balance",
+	        joinColumns = @JoinColumn(name = "user_id"),
+	        inverseJoinColumns = @JoinColumn(name = "common_balance_id")
+	    )
+	    private List<CommonBalance> commonbalances = new ArrayList<>();
 	
 	
 
