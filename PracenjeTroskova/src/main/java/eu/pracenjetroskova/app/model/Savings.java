@@ -16,8 +16,8 @@ public class Savings {
 	@Column(name="savings_id")
 	private Long id;
 	
-	@Column(name="savings_startdate")
-	private Date starDate;
+	@Column(name="savings_starttdate")
+	private Date startDate;
 	
 	@Column(name="savings_enddate")
 	private Date endDate;
@@ -39,10 +39,10 @@ public class Savings {
 	public Savings() {}
 	
 	
-	public Savings(Long id, Date starDate, Date endDate, Float goal, String info, Float funds) {
+	public Savings(Long id, Date startDate, Date endDate, Float goal, String info, Float funds) {
 		super();
 		this.id = id;
-		this.starDate = starDate;
+		this.startDate = startDate;
 		this.endDate = endDate;
 		this.goal = goal;
 		this.info = info;
@@ -60,13 +60,13 @@ public class Savings {
 	}
 
 
-	public Date getStarDate() {
-		return starDate;
+	public Date getStartDate() {
+		return startDate;
 	}
 
 
-	public void setStarDate(Date starDate) {
-		this.starDate = starDate;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
 
