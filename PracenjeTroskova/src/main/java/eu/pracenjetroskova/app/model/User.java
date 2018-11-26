@@ -51,6 +51,9 @@ public class User {
 	@Column(name="user_active")
 	private int active;
 	
+	@Column(name="user_funds")
+	private Double funds;
+	
 	@OneToMany(mappedBy = "userID")
 	private List<Savings> savings;
 	
@@ -88,7 +91,7 @@ public class User {
 	public User(User users) {
 		this.active=users.getActive();
 		this.email=users.getEmail();
-		
+		this.funds=users.getFunds();
 		this.name=users.getName();
 		this.lastName=users.getLastName();
 		this.username=users.getUsername();
@@ -156,6 +159,16 @@ public class User {
 	public void setActive(int active) {
 		this.active = active;
 	}
+
+	public Double getFunds() {
+		return funds;
+	}
+
+	public void setFunds(Double funds) {
+		this.funds = funds;
+	}
+	
+	
 
 	
 	
