@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>OTVARANJE ŠTEDNJE</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="stednja.css">
+</head>
+<body>
+
+	<input class="form-control" id="naziv" type="text" placeholder="Naziv štednje">
+	<div class="svota-valuta">
+		<input class="form-control" id="svota" type="text" placeholder="Željena svota">
+		<div class="input-group mb-3">
+  			<select class="custom-select" id="inputGroupSelect01">
+    			<option selected>Valuta</option>
+    			<option value="1">HRK</option>
+    			<option value="2">EUR</option>
+    			<option value="3">USD</option>
+  			</select>
+		</div>
+	</div>
+
+	<div class="dates">
+		<div class="forma">
+			<p>Datum Početka Štednje</p>
+			<input class="form-control" type="date" id="datumPocetka">
+		</div>
+		<div class="forma">
+			<p>Datum Željenog Kraja Štednje</p>
+			<input class="form-control" type="date" id="datumKraj">
+		</div>	
+	</div>
+	
+	<div class="container">
+		<div class="row">
+			<input type="hidden" name="count" value="1" />
+        	<div class="control-group" id="fields">
+           		<label class="control-label" for="field1">Dodaj korisnika u štednju</label>
+            	<div class="controls" id="profs"> 
+                	<form class="input-append">
+                    	<div id="field"><input autocomplete="off" class="input" id="field1" name="prof1" type="text" placeholder="Korisničko ime" data-items="8"/><button id="b1" class="btn add-more" type="button">+</button></div>
+                	</form>
+            	<br>
+            	<small>Pritisni na + da dodaš više korsinika </small>
+            	</div>
+    		</div>
+		</div>
+	</div>
+
+	<input class="btn btn-primary" type="button" id ="subbtn" value="OTVORI ŠTEDNJU">
+	
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</body>
+</html>

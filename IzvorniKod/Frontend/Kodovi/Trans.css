@@ -1,0 +1,30 @@
+body {
+	position: center;
+	background-color: #888;
+}
+
+#test{
+	width: 20%;
+}
+
+.svota-valuta {
+	display: inline-flex;
+	margin: 1%;
+	width: 62%;
+}
+
+.input-groupica {
+	display: inline-flex;
+	width: 30%;
+	margin: 1%;
+}
+
+.input-groups {
+	width: 62%;
+	margin: 1%;
+}
+
+.btn{
+	margin: 1%;
+	width: 62%;
+}
