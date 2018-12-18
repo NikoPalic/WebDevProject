@@ -27,15 +27,13 @@
    			</ul>
    			
    		<div th:if="${param.logout}">
-            <div class="alert alert-success alert-dismissible text-center mr-sm-2 my-2 my-sm-0 " style="margin-bottom: 1px; padding:0px 15px; height: 35px ; line-height:35px" role="alert" >
-            	<a href="#" class="close" style="margin-bottom: 1px; padding:0px 0px; height: 35px ; line-height:15px" data-dismiss="alert" aria-label="close">&times;</a>
+            <div class="alert alert-success text-center mr-sm-2 my-2 my-sm-0 " style="margin-bottom: 1px; padding:0px 15px; height: 35px ; line-height:35px" role="alert" >
                 <strong>Uspješno</strong> ste se odjavili!
             </div>
         </div>
         	
         <div th:if="${param.error}">
-            <div class="alert alert-danger alert-dismissible text-center mr-sm-2 my-2 my-sm-0 " style="margin-bottom: 1px; padding:0px 15px; height: 35px ; line-height:35px" role="alert" >
-            	<a href="#" class="close" style="margin-bottom: 1px; padding:0px 0px; height: 35px ; line-height:15px" data-dismiss="alert" aria-label="close">&times;</a>
+            <div class="alert alert-danger text-center mr-sm-2 my-2 my-sm-0 " style="margin-bottom: 1px; padding:0px 15px; height: 35px ; line-height:35px" role="alert" >
                 <strong>Krivo</strong> korisničko ime ili lozinka!
             </div>
         </div>
@@ -70,7 +68,6 @@
   		</div>
 	</div>
 
-	<img src="https://ds055uzetaobb.cloudfront.net/image_optimizer/dc5a1efc0b7594c7108bc5e6a14bb66566da858b.jpg" alt="Responsive image">
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
