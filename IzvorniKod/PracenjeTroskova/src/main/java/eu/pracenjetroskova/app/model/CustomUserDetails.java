@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @SuppressWarnings("serial")
 public class CustomUserDetails extends User implements UserDetails {
 
-	private String role;
+	private String role="USER";
 	public  CustomUserDetails(final User users) {
 		super(users);
 	}
