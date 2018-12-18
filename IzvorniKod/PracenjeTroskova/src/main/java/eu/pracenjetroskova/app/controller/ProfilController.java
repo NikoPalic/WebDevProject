@@ -39,19 +39,19 @@ public class ProfilController {
 		return "zajednickeStednje";
 	}
 
-	@PostMapping("/profil/troskovi")
+	@PostMapping("/profil/troskovi/stvori")
 	public void stvoriNoviTrosak() {
 		//TODO
 		
 	}
 	
-	@PostMapping("/profil/prihodi")
+	@PostMapping("/profil/prihodi/stvori")
 	public void stvoriNoviPrihod() {
 		//TODO
 		
 	}
 
-	@PostMapping("/profil/stednje")
+	@PostMapping("/profil/stednje/stvori")
 	public void stvoriNovuStednju() {
 		//TODO
 		

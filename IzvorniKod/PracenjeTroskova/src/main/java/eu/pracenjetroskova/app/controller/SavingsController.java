@@ -24,12 +24,12 @@ public class SavingsController {
 		return new ArrayList<String>();
 	}
 	
-	@PostMapping
+	@PostMapping("/povuci")
 	public void povuciNovacSaStednje() {
 		//TODO
 	}
 
-	@PostMapping
+	@PostMapping("/prebaci")
 	public void prebaciNovacSBlagaje() {
 		//TODO
 	}

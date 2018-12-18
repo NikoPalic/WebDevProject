@@ -15,12 +15,12 @@ public class RevenueController {
 		return "ispis";
 	}
 	
-	@PostMapping
+	@PostMapping("/izbrisi")
 	public void deletePrihod() {
 		//TODO
 	}
 	
-	@PostMapping
+	@PostMapping("/osvjezi")
 	public void updatePrihod() {
 		//TODO
 	}

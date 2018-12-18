@@ -15,12 +15,12 @@ public class ExpenditureController {
 		return "ispis";
 	}
 	
-	@PostMapping
+	@PostMapping("/obrisi")
 	public void deleteTrosak() {
 		//TODO
 	}
 	
-	@PostMapping
+	@PostMapping("/osvjezi")
 	public void updateTrosak() {
 		//TODO
 	}
