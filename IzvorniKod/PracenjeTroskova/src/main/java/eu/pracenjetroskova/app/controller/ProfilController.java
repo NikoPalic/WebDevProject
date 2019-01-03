@@ -24,6 +24,7 @@ import eu.pracenjetroskova.app.model.Revenue;
 import eu.pracenjetroskova.app.model.Savings;
 import eu.pracenjetroskova.app.model.User;
 import eu.pracenjetroskova.app.repository.RevenueRepository;
+import eu.pracenjetroskova.app.repository.SavingsRepository;
 import eu.pracenjetroskova.app.repository.UserRepository;
 import eu.pracenjetroskova.app.service.RevenueService;
 import eu.pracenjetroskova.app.service.SavingsService;
@@ -38,18 +39,20 @@ public class ProfilController {
 	private final RevenueService revenueService;
 	private final ExpenditureService expenditureService;
 	private final SavingsService savingsService;
+	private final SavingsRepository savingsRepository;
 	
 	
 	
 	@Autowired
 	public ProfilController(RevenueRepository revenueRepository, UserRepository userRepository, RevenueService revenueService, ExpenditureService
-			expenditureService, SavingsService savingsService) {
+			expenditureService, SavingsService savingsService, SavingsRepository savingsRepository) {
 		super();
 		this.revenueRepository=revenueRepository;
 		this.userRepository=userRepository;
 		this.revenueService=revenueService;
 		this.expenditureService=expenditureService;
 		this.savingsService=savingsService;
+		this.savingsRepository=savingsRepository;
 	}
 	
 	@GetMapping("/profil")
@@ -72,8 +75,10 @@ public class ProfilController {
 	}
 	
 	@GetMapping("/profil/stednje")
-	public String pregledStednji() {
-		//TODO
+	public String pregledStednji(Principal principal,WebRequest request, Model model) {
+		Optional<User> user=userRepository.findByUsername(principal.getName());
+		List<Savings>stednje=savingsRepository.findByUserID(user.get());
+		model.addAttribute("stednje", stednje);
 		return "stednje";
 	}
 	

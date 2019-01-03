@@ -37,23 +37,23 @@
     	<thead class="thead-inverse">
         	<tr>
             	<th>ID</th>
-                <th>Naziv</th>
-                <th>Datum</th>
-                <th>Iznos</th>
+                <th>Datum početka</th>
+                <th>Datum kraja</th>
+                <th>Cilj</th>
                 <th>Opis</th>
-                <th>Kategorija</th>
+                <th>Sredstva</th>
                    
             </tr>
             </thead>
             <tbody>
-            	<th:block th:each="prihod : ${prihodi}">
+            	<th:block th:each="stednja : ${stednje}">
                     <tr>
-                        <td th:text="${prihod.id}">...</td>
-        				<td th:text="${prihod.name}">...</td>
-        				<td th:text="${prihod.date}">...</td>
-        				<td th:text="${prihod.amount}">...</td>
-        				<td th:text="${prihod.info}">...</td>
-        				<td th:text="${prihod.categoryID}">...</td>
+                        <td th:text="${stednja.id}">...</td>
+        				<td th:text="${stednja.startDate}">...</td>
+        				<td th:text="${stednja.endDate}">...</td>
+        				<td th:text="${stednja.goal}">...</td>
+        				<td th:text="${stednja.info}">...</td>
+        				<td th:text="${stednja.funds}">...</td>
                     </tr>
                 </th:block>
             </tbody>
