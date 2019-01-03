@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style type="text/css">
+      body {
+        font-family: arial, helvetica, sans-serif;
+        font-size: 15px;
+        line-height: 1.5;
+        padding: 0;
+        margin-left: 25%;
+        margin-top: 10%;
+      }
+
+    #test{
+      width: 20%;
+    }
+
+    .svota-valuta {
+      display: inline-flex;
+      margin: 1%;
+      width: 62%;
+    }
+
+    .input-groupica {
+      display: inline-flex;
+      width: 30%;
+      margin: 1%;
+    }
+
+    .input-groups {
+      width: 62%;
+      margin: 1%;
+    }
+
+    .btn{
+      margin: 1%;
+      width: 62%;
+      background-color: white;
+      color: green;
+      border-color: green;
+    }
+
+    .btn:hover{
+      background-color: green;
+      font-weight: bold;
+      color: white;
+    }
+    </style>
+	<title>TRANSAKCIJA</title>
+</head>
+<body>
+
+	<div class="svota-valuta">
+		<input class="form-control" id="svota" type="text" placeholder="Željena svota">
+		<div class="input-group mb-3" id="test">
+  			<select class="custom-select" id="inputGroupSelect01">
+    			<option selected>Valuta</option>
+    			<option value="1">HRK</option>
+    			<option value="2">EUR</option>
+    			<option value="3">USD</option>
+  			</select>
+		</div>
+	</div>
+	<br>
+	<div class="input-groupica">
+  		<select class="custom-select" id="inputGroupSelect11">
+    		<option selected>Kategorija</option>
+    		<option value="1">Režije</option>
+    		<option value="2">Zabava</option>
+    		<option value="3">Štednja</option>
+  		</select>
+	</div>
+
+
+
+	<div class="input-groupica">
+  		<select class="custom-select" id="inputGroupSelect10">
+    		<option selected>Blagajna</option>
+    		<option value="1">Blagajna 1</option>
+    		<option value="2">Zajednička</option>
+    		<option value="3">Neka treća</option>
+  		</select>
+	</div>
+	
+	<div class="input-groups">
+  		<div class="input-group-prepend">
+    		<span class="input-group-text">Opis</span>
+  		</div>
+  		<textarea class="form-control" aria-label="With textarea"></textarea>
+	</div>
+
+	<button type="button" class="btn btn-dark">TRANSAKCIJA</button>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
