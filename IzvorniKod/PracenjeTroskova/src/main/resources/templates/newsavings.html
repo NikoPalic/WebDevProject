@@ -3,41 +3,60 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></head>
-
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style>
         body{
-            position: center;
-            text-align: center;
-        }
+        font-family: arial, helvetica, sans-serif;
+        font-size: 15px;
+        line-height: 1.5;
+        padding: 0;
+        margin-left: 25%;
+        margin-top: 10%;
+        margin-right: 25%
+    }
+    .allinputs{
+      width: 50%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .allinputs:hover{
+        border-color: green;
+    }   
+    .btn-outline-success{
+        margin-left: 20%;
+    }
+
+    .btn-outline-success:hover{
+        background-color: green;
+    }
     </style>
 <body class="body">
-<h1 >Štednje</h1>
+<h1 >Štednje</h1><br>
 <form action="#" th:action="@{/profil/stednje/stvori}"th:object="${savings}" method="POST" enctype="utf8">
    
     <div>
-        <label>Pocetak štednje</label>
-        <input th:field="*{startDate}" class = "form-control" placeholder="Unesite datum (npr. 2019-01-01 10:30:00)" />
+        <input th:field="*{startDate}" class = "allinputs" placeholder="Unesite datum (npr. 2019-01-01 10:30:00)" />
         
     </div>
     <div>
-        <label>Kraj štednje</label>
-        <input th:field="*{endDate}" class = "form-control" placeholder="Unesite datum (npr. 2019-01-01 10:30:00)" />
+        <input th:field="*{endDate}" class = "allinputs" placeholder="Unesite datum (npr. 2019-01-01 10:30:00)" />
         
     </div>
      <div>
-        <label >Sredstva</label>
-        <input th:field="*{funds}" class = "form-control" placeholder="Unesite sredstva" />
+        <input th:field="*{funds}" class = "allinputs" placeholder="Unesite sredstva" />
         
     </div>
     <div>
-        <label >Cilj</label>
-        <input th:field="*{goal}" class = "form-control" placeholder="Unesite cilj" />
+        <input th:field="*{goal}" class = "allinputs" placeholder="Unesite cilj" />
         
     </div>
     <div>
-        <label >Opis štednje</label>
-        <input th:field="*{info}" class = "form-control" placeholder="Unesite opis" />
+        <input th:field="*{info}" class = "allinputs" placeholder="Unesite opis" />
         
     </div>
    
