@@ -6,9 +6,15 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style>
+        div{
+            max-width: 500px;
+            min-width: 200px;
+            float: center;
+        }
         body{
-            position: center;
             text-align: center;
+            clear: both;
+            display: block;
         }
     </style>
 <body class="body">
@@ -48,9 +54,10 @@
         <label >Potvrdi lozinku</label>
         <input type="password" th:field="*{matchingPassword}" class = "form-control" placeholder="Ponovno uneite lozinku" />
     </div>
+
     <button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Pošalji</button>
 </form>
- 
+
 <a th:href="@{/login}" >Natrag na početnu stranicu</a>
 
 
