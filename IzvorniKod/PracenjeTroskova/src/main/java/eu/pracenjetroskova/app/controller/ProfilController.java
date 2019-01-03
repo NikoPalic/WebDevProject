@@ -64,10 +64,11 @@ public class ProfilController {
 	}
 	
 	@GetMapping("/profil/prihodi")
-	public @ResponseBody List<Revenue> pregledPrihoda(Principal principal) {
+	public String pregledPrihoda(Principal principal,WebRequest request, Model model) {
 		Optional<User> user=userRepository.findByUsername(principal.getName());
 		List<Revenue>prihodi=revenueRepository.findByUserID(user.get());
-		return prihodi;
+		model.addAttribute("prihodi", prihodi);
+		return "prihodi";
 	}
 	
 	@GetMapping("/profil/stednje")
