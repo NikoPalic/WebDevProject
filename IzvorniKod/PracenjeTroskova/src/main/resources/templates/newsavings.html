@@ -12,25 +12,31 @@
         }
     </style>
 <body class="body">
-<h1 >Prihodi</h1>
-<form action="#" th:action="@{/profil/prihodi/stvori}"th:object="${revenue}" method="POST" enctype="utf8">
+<h1 >Štednje</h1>
+<form action="#" th:action="@{/profil/stednje/stvori}"th:object="${savings}" method="POST" enctype="utf8">
+   
     <div>
-        <label >Naziv prihoda</label>
-        <input th:field="*{name}" class = "form-control" placeholder="Unesite naziv prihoda" />
+        <label>Pocetak štednje</label>
+        <input th:field="*{startDate}" class = "form-control" placeholder="Unesite datum (npr. 2019-01-01 10:30:00)" />
         
     </div>
     <div>
-        <label >Iznos</label>
-        <input th:field="*{amount}" class = "form-control" placeholder="Unesite iznos" />
+        <label>Kraj štednje</label>
+        <input th:field="*{endDate}" class = "form-control" placeholder="Unesite datum (npr. 2019-01-01 10:30:00)" />
+        
+    </div>
+     <div>
+        <label >Sredstva</label>
+        <input th:field="*{funds}" class = "form-control" placeholder="Unesite sredstva" />
         
     </div>
     <div>
-        <label>Datum</label>
-        <input th:field="*{date}" class = "form-control" placeholder="Unesite datum (npr. 2019-01-01 10:30:00)" />
+        <label >Cilj</label>
+        <input th:field="*{goal}" class = "form-control" placeholder="Unesite cilj" />
         
     </div>
     <div>
-        <label >Opis prihoda</label>
+        <label >Opis štednje</label>
         <input th:field="*{info}" class = "form-control" placeholder="Unesite opis" />
         
     </div>

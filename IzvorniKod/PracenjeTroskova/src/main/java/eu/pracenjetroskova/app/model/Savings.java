@@ -6,6 +6,8 @@ import eu.pracenjetroskova.app.model.User;
 
 import javax.persistence.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 @Entity
 @Table(name = "savings")
@@ -16,9 +18,11 @@ public class Savings {
 	@Column(name="savings_id")
 	private Long id;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(name="savings_starttdate")
 	private Date startDate;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(name="savings_enddate")
 	private Date endDate;
 	
@@ -107,6 +111,11 @@ public class Savings {
 
 	public void setFunds(Float funds) {
 		this.funds = funds;
+	}
+
+
+	public void setUserID(User userID) {
+		this.userID = userID;
 	}
 
 }
