@@ -110,4 +110,16 @@ public class Expenditure {
 		this.userID = userID;
 	}
 
+	public Category getCategoryID() {
+		return categoryID;
+	}
+
+	public void setCategoryID(Category categoryID) {
+		this.categoryID = categoryID;
+	}
+
+	public User getUserID() {
+		return userID;
+	}
+
 }
