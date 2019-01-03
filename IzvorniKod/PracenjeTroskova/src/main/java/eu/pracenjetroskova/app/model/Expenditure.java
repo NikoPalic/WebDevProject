@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "expenditure")
 public class Expenditure {
@@ -24,6 +26,7 @@ public class Expenditure {
 	@Column(name="expenditure_name")
 	private String name;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(name="expenditure_date")
 	private Date date;
 	
@@ -41,6 +44,8 @@ public class Expenditure {
 	@JoinColumn(name="category_id")
 	private Category categoryID;
 
+	
+	public Expenditure() {}
 
 	public Expenditure(Long id, String name, Date date, Float amount, String info) {
 		super();
@@ -99,6 +104,10 @@ public class Expenditure {
 
 	public void setInfo(String info) {
 		this.info = info;
+	}
+	
+	public void setUserID(User userID) {
+		this.userID = userID;
 	}
 
 }
