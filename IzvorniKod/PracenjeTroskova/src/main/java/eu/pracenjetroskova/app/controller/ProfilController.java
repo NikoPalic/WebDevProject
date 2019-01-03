@@ -23,6 +23,7 @@ import eu.pracenjetroskova.app.model.Expenditure;
 import eu.pracenjetroskova.app.model.Revenue;
 import eu.pracenjetroskova.app.model.Savings;
 import eu.pracenjetroskova.app.model.User;
+import eu.pracenjetroskova.app.repository.ExpenditureRepository;
 import eu.pracenjetroskova.app.repository.RevenueRepository;
 import eu.pracenjetroskova.app.repository.SavingsRepository;
 import eu.pracenjetroskova.app.repository.UserRepository;
@@ -40,12 +41,13 @@ public class ProfilController {
 	private final ExpenditureService expenditureService;
 	private final SavingsService savingsService;
 	private final SavingsRepository savingsRepository;
+	private final ExpenditureRepository expenditureRepository;
 	
 	
 	
 	@Autowired
 	public ProfilController(RevenueRepository revenueRepository, UserRepository userRepository, RevenueService revenueService, ExpenditureService
-			expenditureService, SavingsService savingsService, SavingsRepository savingsRepository) {
+			expenditureService, SavingsService savingsService, SavingsRepository savingsRepository, ExpenditureRepository expenditureRepository) {
 		super();
 		this.revenueRepository=revenueRepository;
 		this.userRepository=userRepository;
@@ -53,6 +55,7 @@ public class ProfilController {
 		this.expenditureService=expenditureService;
 		this.savingsService=savingsService;
 		this.savingsRepository=savingsRepository;
+		this.expenditureRepository=expenditureRepository;
 	}
 	
 	@GetMapping("/profil")
@@ -61,8 +64,10 @@ public class ProfilController {
 	}
 	
 	@GetMapping("/profil/troskovi")
-	public String pregledTroskova() {
-		//TODO
+	public String pregledTroskova(Principal principal,WebRequest request, Model model) {
+		Optional<User> user=userRepository.findByUsername(principal.getName());
+		List<Expenditure>troskovi=expenditureRepository.findByUserID(user.get());
+		model.addAttribute("troskovi", troskovi);
 		return "troskovi";
 	}
 	
