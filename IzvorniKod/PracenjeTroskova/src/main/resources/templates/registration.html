@@ -3,61 +3,75 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></head>
-
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style>
-        div{
-            max-width: 500px;
-            min-width: 200px;
-            float: center;
-        }
-        body{
-            text-align: center;
-            clear: both;
-            display: block;
-        }
-    </style>
+   body{
+    font-family: arial, helvetica, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 0;
+    margin-left: 25%;
+    margin-top: 3%;
+    margin-right: 25%
+    background: url("../slike/background.jpg");
+    background-repeat: no-repeat;
+}
+    .allinputs{
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+    .allinputs:hover{
+        border-color: green;
+    }
+
+    .btn-outline-success{
+        margin-left: 20%;
+    }
+
+    .btn-outline-success:hover{
+        background-color: green;
+    }
+  </style>
 <body class="body">
-<h1 >Registracija</h1>
+<h1 >Registracija</h1><br>
 <form action="#" th:action="@{/signup}"th:object="${user}" method="POST" enctype="utf8">
     <div>
-        <label >Ime</label>
-        <input th:field="*{name}" class = "form-control" placeholder="Unesite ime" />
+        <input th:field="*{name}" class="allinputs" placeholder="Unesite ime" />
         <p th:each="error: ${#fields.errors('name')}"
           th:text="${error}">Validation error</p>
     </div>
     <div>
-        <label >Prezime</label>
-        <input th:field="*{lastName}" class = "form-control" placeholder="Unesite prezime" />
+        <input th:field="*{lastName}" class = "allinputs" placeholder="Unesite prezime" />
         <p th:each="error : ${#fields.errors('lastName')}"
           th:text="${error}">Validation error</p>
     </div>
     <div>
-        <label >Korisničko ime</label>
-        <input th:field="*{username}" class = "form-control" placeholder="Unesite korisničko ime" />
+        <input th:field="*{username}" class = "allinputs" placeholder="Unesite korisničko ime" />
         <p th:each="error : ${#fields.errors('username')}"
           th:text="${error}">Validation error</p>
     </div>
     <div>
-        <label>Email</label>
-        <input type="email" th:field="*{email}" class = "form-control" placeholder="Unesite email" />
+        <input type="email" th:field="*{email}" class = "allinputs" placeholder="Unesite email" />
         <p th:each="error : ${#fields.errors('email')}"
           th:text="${error}">Validation error</p>
     </div>
     <div>
-        <label >Lozinka</label>
-        <input type="password" th:field="*{password}" class = "form-control" placeholder="Unesite lozinku" />
+        <input type="password" th:field="*{password}" class = "allinputs" placeholder="Unesite lozinku" />
         <p th:each="error : ${#fields.errors('password')}"
           th:text="${error}">Validation error</p>
     </div>
     <div>
-        <label >Potvrdi lozinku</label>
-        <input type="password" th:field="*{matchingPassword}" class = "form-control" placeholder="Ponovno uneite lozinku" />
+        <input type="password" th:field="*{matchingPassword}" class = "allinputs" placeholder="Ponovno unesite lozinku" />
     </div>
-
     <button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Pošalji</button>
 </form>
-
+ 
 <a th:href="@{/login}" >Natrag na početnu stranicu</a>
 
 
