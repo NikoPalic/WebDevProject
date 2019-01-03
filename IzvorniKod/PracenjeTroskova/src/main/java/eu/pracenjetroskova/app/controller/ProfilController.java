@@ -42,7 +42,7 @@ public class ProfilController {
 	
 	@GetMapping("/profil")
 	public String mojProfil() {
-		return "home";
+		return "profil";
 	}
 	
 	@GetMapping("/profil/troskovi")
