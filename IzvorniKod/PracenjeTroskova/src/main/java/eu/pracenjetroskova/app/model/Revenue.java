@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import javax.persistence.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "revenue")
 public class Revenue {
@@ -18,6 +20,7 @@ public class Revenue {
 	@Column(name="revenue_name")
 	private String name;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(name="revenue_date")
 	private Date date;
 	
@@ -35,7 +38,9 @@ public class Revenue {
 	@JoinColumn(name="category_id")
 	private Category categoryID;
 
-	
+	public Revenue() {
+		
+	}
 	
 	public Revenue(Long id, String name, Date date, Float amount, String info) {
 		super();
@@ -95,5 +100,22 @@ public class Revenue {
 	public void setInfo(String info) {
 		this.info = info;
 	}
+
+	public User getUserID() {
+		return userID;
+	}
+
+	public void setUserID(User userID) {
+		this.userID = userID;
+	}
+
+	public Category getCategoryID() {
+		return categoryID;
+	}
+
+	public void setCategoryID(Category categoryID) {
+		this.categoryID = categoryID;
+	}
+	
 
 }
