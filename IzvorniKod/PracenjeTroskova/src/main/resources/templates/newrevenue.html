@@ -37,7 +37,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <body class="body">
-
     <h1>Registracija prihoda</h1>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,6 +62,7 @@
             </form>
         
     </nav>
+    <h1>Prihodi</h1>
     <form action="#" th:action="@{/profil/prihodi/stvori}"th:object="${revenue}" method="POST" enctype="utf8">
     <div>
         <input th:field="*{name}" class = "allinputs" placeholder="Unesite naziv prihoda" />
