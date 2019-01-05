@@ -10,5 +10,6 @@ import eu.pracenjetroskova.app.model.User;
 public interface RevenueRepository extends JpaRepository<Revenue,Long> {
 
 	List<Revenue> findByUserID(User userID);
+	Optional<Revenue> findById(Long id);
 
 }

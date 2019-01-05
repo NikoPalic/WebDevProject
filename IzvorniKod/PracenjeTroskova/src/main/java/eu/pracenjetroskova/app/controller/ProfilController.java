@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.pracenjetroskova.app.model.Category;
 import eu.pracenjetroskova.app.model.CustomUserDetails;
 import eu.pracenjetroskova.app.model.Expenditure;
 import eu.pracenjetroskova.app.model.Revenue;
@@ -75,7 +76,9 @@ public class ProfilController {
 	public String pregledPrihoda(Principal principal,WebRequest request, Model model) {
 		Optional<User> user=userService.findByUsername(principal.getName());
 		List<Revenue>prihodi=revenueService.findByUserID(user.get());
+		
 		model.addAttribute("prihodi", prihodi);
+		
 		return "prihodi";
 	}
 	
@@ -94,9 +97,12 @@ public class ProfilController {
 	}
 	
 	@GetMapping("/profil/troskovi/stvori")
-	public String showExpenditureForm(WebRequest request, Model model) {
+	public String showExpenditureForm(WebRequest request, Model model, Principal principal) {
 		Expenditure expenditure = new Expenditure();
+		Optional<User> user=userService.findByUsername(principal.getName());
+		List<Category>kategorije=user.get().getCategories();
 		model.addAttribute("expenditure", expenditure);
+		model.addAttribute("kategorije", kategorije);
 		return "newexpenditure";
 	}
 
@@ -114,9 +120,12 @@ public class ProfilController {
 	}
 	
 	@GetMapping("/profil/prihodi/stvori")
-	public String showRevenueForm(WebRequest request, Model model) {
+	public String showRevenueForm(WebRequest request, Model model, Principal principal) {
 		Revenue revenue = new Revenue();
+		Optional<User> user=userService.findByUsername(principal.getName());
+		List<Category>kategorije=user.get().getCategories();
 		model.addAttribute("revenue", revenue);
+		model.addAttribute("kategorije", kategorije);
 		return "newrevenue";
 	}
 	

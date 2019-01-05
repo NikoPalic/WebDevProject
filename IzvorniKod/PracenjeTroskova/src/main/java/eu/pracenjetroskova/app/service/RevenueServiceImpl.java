@@ -1,6 +1,7 @@
 package eu.pracenjetroskova.app.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,29 @@ public class RevenueServiceImpl implements RevenueService{
 	@Override
 	public List<Revenue> findByUserID(User userID) {
 		return revenueRepository.findByUserID(userID);
+	}
+
+
+
+	@Override
+	public void deleteRevenue(Long id) {
+		revenueRepository.deleteById(id);
+		
+	}
+
+
+
+	@Override
+	public Optional<Revenue> findById(Long id) {
+		return revenueRepository.findById(id);
+	}
+
+
+
+	@Override
+	public void saveRevenue(Revenue revenue) {
+		revenueRepository.save(revenue);
+		
 	}
 
 }
