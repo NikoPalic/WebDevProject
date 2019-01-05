@@ -23,6 +23,7 @@ import eu.pracenjetroskova.app.model.Expenditure;
 import eu.pracenjetroskova.app.model.Revenue;
 import eu.pracenjetroskova.app.model.Savings;
 import eu.pracenjetroskova.app.model.User;
+import eu.pracenjetroskova.app.repository.CategoryRepository;
 import eu.pracenjetroskova.app.repository.ExpenditureRepository;
 import eu.pracenjetroskova.app.repository.RevenueRepository;
 import eu.pracenjetroskova.app.repository.SavingsRepository;
@@ -35,27 +36,26 @@ import eu.pracenjetroskova.app.service.ExpenditureService;
 @Controller
 public class ProfilController {
 
-	private final UserRepository userRepository;
-	private final RevenueRepository revenueRepository;
+	private final UserService userService; 
 	private final RevenueService revenueService;
 	private final ExpenditureService expenditureService;
 	private final SavingsService savingsService;
-	private final SavingsRepository savingsRepository;
-	private final ExpenditureRepository expenditureRepository;
+	
+	private final CategoryRepository categoryRepository;
+	
 	
 	
 	
 	@Autowired
-	public ProfilController(RevenueRepository revenueRepository, UserRepository userRepository, RevenueService revenueService, ExpenditureService
-			expenditureService, SavingsService savingsService, SavingsRepository savingsRepository, ExpenditureRepository expenditureRepository) {
+	public ProfilController(RevenueService revenueService, ExpenditureService
+			expenditureService, SavingsService savingsService,  CategoryRepository categoryRepository,UserService userService) {
 		super();
-		this.revenueRepository=revenueRepository;
-		this.userRepository=userRepository;
+		
 		this.revenueService=revenueService;
 		this.expenditureService=expenditureService;
 		this.savingsService=savingsService;
-		this.savingsRepository=savingsRepository;
-		this.expenditureRepository=expenditureRepository;
+		this.categoryRepository=categoryRepository;
+		this.userService=userService;
 	}
 	
 	@GetMapping("/profil")
@@ -65,24 +65,24 @@ public class ProfilController {
 	
 	@GetMapping("/profil/troskovi")
 	public String pregledTroskova(Principal principal,WebRequest request, Model model) {
-		Optional<User> user=userRepository.findByUsername(principal.getName());
-		List<Expenditure>troskovi=expenditureRepository.findByUserID(user.get());
+		Optional<User> user=userService.findByUsername(principal.getName());
+		List<Expenditure>troskovi=expenditureService.findByUserID(user.get());
 		model.addAttribute("troskovi", troskovi);
 		return "troskovi";
 	}
 	
 	@GetMapping("/profil/prihodi")
 	public String pregledPrihoda(Principal principal,WebRequest request, Model model) {
-		Optional<User> user=userRepository.findByUsername(principal.getName());
-		List<Revenue>prihodi=revenueRepository.findByUserID(user.get());
+		Optional<User> user=userService.findByUsername(principal.getName());
+		List<Revenue>prihodi=revenueService.findByUserID(user.get());
 		model.addAttribute("prihodi", prihodi);
 		return "prihodi";
 	}
 	
 	@GetMapping("/profil/stednje")
 	public String pregledStednji(Principal principal,WebRequest request, Model model) {
-		Optional<User> user=userRepository.findByUsername(principal.getName());
-		List<Savings>stednje=savingsRepository.findByUserID(user.get());
+		Optional<User> user=userService.findByUsername(principal.getName());
+		List<Savings>stednje=savingsService.findByUserID(user.get());
 		model.addAttribute("stednje", stednje);
 		return "stednje";
 	}
@@ -106,7 +106,7 @@ public class ProfilController {
 			  BindingResult result, 
 			  WebRequest request, 
 			  Errors errors,Principal principal) {
-		Optional<User> user=userRepository.findByUsername(principal.getName());
+		Optional<User> user=userService.findByUsername(principal.getName());
 		newExpenditure.setUserID(user.get());
 		expenditureService.createExpenditure(newExpenditure);
 		return new ModelAndView ("successexpenditure","expenditure", newExpenditure);
@@ -125,8 +125,9 @@ public class ProfilController {
 			  BindingResult result, 
 			  WebRequest request, 
 			  Errors errors,Principal principal) {
-		Optional<User> user=userRepository.findByUsername(principal.getName());
+		Optional<User> user=userService.findByUsername(principal.getName());
 		newRevenue.setUserID(user.get());
+//		newRevenue.setCategoryID(categoryRepository.findByname("Plaća"));
 		revenueService.createRevenue(newRevenue);
 		return new ModelAndView ("successrevenue","revenue", newRevenue);
 		
@@ -144,7 +145,7 @@ public class ProfilController {
 			  BindingResult result, 
 			  WebRequest request, 
 			  Errors errors,Principal principal) {
-		Optional<User> user=userRepository.findByUsername(principal.getName());
+		Optional<User> user=userService.findByUsername(principal.getName());
 		newSavings.setUserID(user.get());
 		savingsService.createSavings(newSavings);
 		return new ModelAndView ("successsavings","savings", newSavings);

@@ -53,7 +53,7 @@
         				<td th:text="${trosak.date}">...</td>
         				<td th:text="${trosak.amount}">...</td>
         				<td th:text="${trosak.info}">...</td>
-        				<td th:text="${trosak.categoryID}">...</td>
+        				<td th:text="${trosak.categoryID!=null}?${trosak.categoryID?.name}:'NIJE UPISANA'"></td>
                     </tr>
                 </th:block>
             </tbody>

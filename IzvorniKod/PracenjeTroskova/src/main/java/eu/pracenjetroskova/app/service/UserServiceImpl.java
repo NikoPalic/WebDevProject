@@ -1,6 +1,7 @@
 package eu.pracenjetroskova.app.service;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -58,5 +59,12 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+
+
+	@Override
+	public Optional<User> findByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
 
 }

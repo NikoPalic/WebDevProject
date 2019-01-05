@@ -35,6 +35,11 @@ public class Category {
     private List<User> users = new ArrayList<>();
 	
 	
+    
+    
+	public Category() {
+		
+	}
 
 	public Category(Long id, String name, String info) {
 		super();

@@ -53,7 +53,7 @@
         				<td th:text="${prihod.date}">...</td>
         				<td th:text="${prihod.amount}">...</td>
         				<td th:text="${prihod.info}">...</td>
-        				<td th:text="${prihod.categoryID}">...</td>
+        				<td th:text="${prihod.categoryID!=null}?${prihod.categoryID?.name}:'NIJE UPISANA'"></td>
                     </tr>
                 </th:block>
             </tbody>
