@@ -32,6 +32,7 @@ import eu.pracenjetroskova.app.repository.UserRepository;
 import eu.pracenjetroskova.app.service.RevenueService;
 import eu.pracenjetroskova.app.service.SavingsService;
 import eu.pracenjetroskova.app.service.UserService;
+import eu.pracenjetroskova.app.service.CategoryService;
 import eu.pracenjetroskova.app.service.ExpenditureService;
 
 @Controller
@@ -41,7 +42,7 @@ public class ProfilController {
 	private final RevenueService revenueService;
 	private final ExpenditureService expenditureService;
 	private final SavingsService savingsService;
-	
+	private final CategoryService categoryService;
 	private final CategoryRepository categoryRepository;
 	
 	
@@ -49,7 +50,7 @@ public class ProfilController {
 	
 	@Autowired
 	public ProfilController(RevenueService revenueService, ExpenditureService
-			expenditureService, SavingsService savingsService,  CategoryRepository categoryRepository,UserService userService) {
+			expenditureService, SavingsService savingsService,  CategoryRepository categoryRepository,UserService userService, CategoryService categoryService) {
 		super();
 		
 		this.revenueService=revenueService;
@@ -57,11 +58,20 @@ public class ProfilController {
 		this.savingsService=savingsService;
 		this.categoryRepository=categoryRepository;
 		this.userService=userService;
+		this.categoryService=categoryService;
 	}
 	
 	@GetMapping("/profil")
 	public String mojProfil() {
 		return "profil";
+	}
+	
+	@GetMapping("/profil/kategorije")
+	public String pregledKategorija(Principal principal,WebRequest request, Model model) {
+		Optional<User> user=userService.findByUsername(principal.getName());
+		List<Category>kategorije=user.get().getCategories();
+		model.addAttribute("kategorije", kategorije);
+		return "kategorije";
 	}
 	
 	@GetMapping("/profil/troskovi")
@@ -96,6 +106,13 @@ public class ProfilController {
 		return "zajednickeStednje";
 	}
 	
+	@GetMapping("/profil/kategorije/stvori")
+	public String showCategoryForm(WebRequest request, Model model, Principal principal) {
+		Optional<User> user=userService.findByUsername(principal.getName());
+		model.addAttribute("category", new Category());
+		return "newcategory";
+	}
+	
 	@GetMapping("/profil/troskovi/stvori")
 	public String showExpenditureForm(WebRequest request, Model model, Principal principal) {
 		Expenditure expenditure = new Expenditure();
@@ -106,6 +123,19 @@ public class ProfilController {
 		return "newexpenditure";
 	}
 
+	@PostMapping("/profil/kategorije/stvori")
+	public ModelAndView stvoriNoviTrosak(@ModelAttribute("category") Category category, 
+			  BindingResult result, 
+			  WebRequest request, 
+			  Errors errors,Principal principal) {
+		Optional<User> user=userService.findByUsername(principal.getName());
+		List<Category> listaKategorija=user.get().getCategories();
+		listaKategorija.add(category);
+		categoryService.createCategory(category);
+		user.get().setCategories(listaKategorija);
+		return new ModelAndView ("successcategory","category", category);
+		
+	}
 	
 	@PostMapping("/profil/troskovi/stvori")
 	public ModelAndView stvoriNoviTrosak(@ModelAttribute("expenditure") Expenditure newExpenditure, 

@@ -36,11 +36,10 @@ public class RevenueController {
 		this.userService = userService;
 	}
 
-	@GetMapping
-	public String ispisPrihoda() {
-		//TODO
-		return "ispis";
-	}
+//	@GetMapping
+//	public String ispisPrihoda() {
+//		return "prihodi";
+//	}
 	
 	@PostMapping("/izbrisi/{id}")
 	public String deletePrihod(@PathVariable Long id) {
