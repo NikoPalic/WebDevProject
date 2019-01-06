@@ -62,7 +62,9 @@ public class ProfilController {
 	}
 	
 	@GetMapping("/profil")
-	public String mojProfil() {
+	public String mojProfil(Principal principal,WebRequest request, Model model) {
+		Optional<User> user=userService.findByUsername(principal.getName());
+		model.addAttribute("funds",user.get().getFunds());
 		return "profil";
 	}
 	
@@ -167,6 +169,8 @@ public class ProfilController {
 		Optional<User> user=userService.findByUsername(principal.getName());
 		newRevenue.setUserID(user.get());
 		revenueService.createRevenue(newRevenue);
+		user.get().setFunds(user.get().getFunds()+newRevenue.getAmount());
+		userService.updateUser(user.get());
 		return new ModelAndView ("successrevenue","revenue", newRevenue);
 		
 	}

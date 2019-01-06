@@ -91,7 +91,7 @@
         
     </div>
     <div>
-        <input th:field="*{date}" class = "allinputs" placeholder="Unesite datum (npr. 2019-01-01 10:30:00)" />
+      <input  th:name="date" th:id="date" class = "allinputs"  th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"/>
         
     </div>
     <div>

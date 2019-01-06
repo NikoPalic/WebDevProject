@@ -25,7 +25,7 @@ public class Revenue {
 	private Date date;
 	
 	@Column(name="revenue_amount")
-	private Float amount;
+	private Double amount;
 	
 	@Column(name="revenue_info")
 	private String info;
@@ -42,7 +42,7 @@ public class Revenue {
 		
 	}
 	
-	public Revenue(Long id, String name, Date date, Float amount, String info) {
+	public Revenue(Long id, String name, Date date, Double amount, String info) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -82,12 +82,12 @@ public class Revenue {
 	}
 
 
-	public Float getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
 
 
-	public void setAmount(Float amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 

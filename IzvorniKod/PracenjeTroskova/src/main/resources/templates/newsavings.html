@@ -72,11 +72,10 @@
 <form action="#" th:action="@{/profil/stednje/stvori}"th:object="${savings}" method="POST" enctype="utf8">
    
     <div>
-        <input th:field="*{startDate}" class = "allinputs" placeholder="Unesite datum (npr. 2019-01-01 10:30:00)" />
-        
+        <input  th:name="startDate" th:id="startDate" class = "allinputs"  th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"/>
     </div>
     <div>
-        <input th:field="*{endDate}" class = "allinputs" placeholder="Unesite datum (npr. 2019-01-01 10:30:00)" />
+       <input  th:name="endDate" th:id="endDate" class = "allinputs"  th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"/>
         
     </div>
      <div>

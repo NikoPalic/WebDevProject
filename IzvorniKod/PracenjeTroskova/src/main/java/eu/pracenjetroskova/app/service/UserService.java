@@ -11,5 +11,6 @@ public interface UserService {
 	void insertUser(User user);
 	User registerNewUserAccount(UserDto accountDto) throws EmailExistsException;
 	Optional<User> findByUsername(String username);
+	void updateUser(User user);
 
 }
