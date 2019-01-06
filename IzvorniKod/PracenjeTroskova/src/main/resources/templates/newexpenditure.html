@@ -43,6 +43,17 @@
       width: 100%;
       margin-left: 0px;
     }
+  .dropdown{
+        width: 50%;
+        margin-bottom: 8px;
+        margin-top: 8px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        padding-left: 12px;
+    }
     </style>
 <body class="body">
 <h1 >Troškovi</h1>
@@ -86,6 +97,15 @@
     <div>
         <input th:field="*{info}" class = "allinputs" placeholder="Unesite opis" />
         
+    </div>
+        <div>
+    	
+        <select class="dropdown" th:field="*{categoryID.id}">
+            <option th:each="kategorija : ${kategorije}"
+                    th:text="${kategorija.name}"
+                    th:value="${kategorija.id}"
+            ></option>
+        </select>
     </div>
    
     <button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Stvori</button>

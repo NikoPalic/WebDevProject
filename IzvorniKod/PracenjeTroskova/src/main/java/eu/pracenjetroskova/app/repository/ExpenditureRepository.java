@@ -10,4 +10,5 @@ import eu.pracenjetroskova.app.model.User;
 public interface ExpenditureRepository extends JpaRepository<Expenditure,Long> {
 
 	List<Expenditure> findByUserID (User userID);
+	Optional<Expenditure> findById (Long id);
 }

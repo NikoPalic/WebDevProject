@@ -166,7 +166,6 @@ public class ProfilController {
 			  Errors errors,Principal principal) {
 		Optional<User> user=userService.findByUsername(principal.getName());
 		newRevenue.setUserID(user.get());
-//		newRevenue.setCategoryID(categoryRepository.findByname("Plaća"));
 		revenueService.createRevenue(newRevenue);
 		return new ModelAndView ("successrevenue","revenue", newRevenue);
 		
