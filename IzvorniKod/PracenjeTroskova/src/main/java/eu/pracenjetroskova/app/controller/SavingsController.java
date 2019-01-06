@@ -1,18 +1,39 @@
 package eu.pracenjetroskova.app.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import eu.pracenjetroskova.app.model.Savings;
+import eu.pracenjetroskova.app.service.SavingsService;
+import eu.pracenjetroskova.app.service.UserService;
 
 
 @Controller
 @RequestMapping("stednje")
 public class SavingsController {
 
+	private final SavingsService savingsService;
+	private final UserService userService;
+	
+	
+	@Autowired
+	public SavingsController(SavingsService savingsService, UserService userService) {
+		super();
+		this.savingsService = savingsService;
+		this.userService = userService;
+	}
+	
 	@GetMapping
 	public String prikazSvihUnosa() {
 		//TODO
@@ -34,6 +55,25 @@ public class SavingsController {
 		//TODO
 	}
 
+	@PostMapping("/izbrisi/{id}")
+	public String deleteStednja(@PathVariable Long id) {
+		savingsService.deleteSavings(id);
+		return "redirect:/profil/stednje";
+	}
 	
+	@GetMapping("/osvjezi/{id}")
+	public String showUpdateStednja(@PathVariable Long id, Model model, Principal principal) {
+		model.addAttribute("editstednja", savingsService.findById(id).get());
+		return "updatesavings";
+	}
+	
+	@PostMapping("/osvjezi")
+	public String updateStednja(@ModelAttribute("editstednja") Savings savings, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "updatesavings";
+		}
+		savingsService.saveRevenue(savings);
+		return "redirect:/profil/stednje";
+	}
 	
 }

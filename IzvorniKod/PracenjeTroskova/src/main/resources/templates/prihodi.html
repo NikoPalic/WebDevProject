@@ -55,7 +55,7 @@
                     <tr>
                         <td th:text="${prihod.id}">...</td>
         				<td th:text="${prihod.name}">...</td>
-        				<td th:text="${prihod.date}">...</td>
+        				<td th:text="${#dates.format(prihod.date,'dd.MM.yyyy')}">...</td>
         				<td th:text="${prihod.amount}">...</td>
         				<td th:text="${prihod.info}">...</td>
         				<td th:text="${prihod.categoryID!=null}?${prihod.categoryID?.name}:'NIJE UPISANA'"></td>

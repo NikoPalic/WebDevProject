@@ -36,11 +36,7 @@ public class ExpenditureController {
 		this.userService = userService;
 	}
 
-	@GetMapping
-	public String ispisTroskova() {
-		//TODO
-		return "ispis";
-	}
+
 	
 	@PostMapping("/izbrisi/{id}")
 	public String deleteTrosak(@PathVariable Long id) {

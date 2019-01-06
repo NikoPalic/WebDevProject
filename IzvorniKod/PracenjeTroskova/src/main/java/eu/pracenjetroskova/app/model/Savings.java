@@ -99,6 +99,11 @@ public class Savings {
 	}
 
 
+	public User getUserID() {
+		return userID;
+	}
+
+
 	public void setInfo(String info) {
 		this.info = info;
 	}
