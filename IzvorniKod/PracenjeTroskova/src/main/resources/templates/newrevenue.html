@@ -39,6 +39,17 @@
     	width: 100%;
     	margin-left: 0px;
     }
+    .dropdown{
+        width: 50%;
+        margin-bottom: 8px;
+        margin-top: 8px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        padding-left: 12px;
+    }
   </style>
 
 </head>
@@ -55,7 +66,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="@{/login}">Početna <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" th:href="@{/}">Početna <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/profil">Profil<span class="sr-only">(current)</span></a>
@@ -90,7 +101,7 @@
     </div>
     <div>
     	
-        <select th:field="*{categoryID.id}">
+        <select class="dropdown" th:field="*{categoryID.id}">
             <option th:each="kategorija : ${kategorije}"
                     th:text="${kategorija.name}"
                     th:value="${kategorija.id}"

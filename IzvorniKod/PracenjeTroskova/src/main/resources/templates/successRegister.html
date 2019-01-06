@@ -3,11 +3,44 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head>
+	<style type="text/css">
+	.navbar{
+    	position: fixed;
+    	top: 0px;
+    	left: 0px;
+    	width: 100%;
+    	margin-left: 0px;
+    }
+</style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
 <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
 <title >Početna</title>
 </head>
 <body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/}">Početna <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/profil">Profil<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/prihodi">Prihodi <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <a class="nav-item active mr-sm-2 my-2 my-sm-0" th:inline="text">Korisnik [[${#httpServletRequest.remoteUser}]]  </a>                           
+            <form th:action="@{/logout}" method="post">
+                 <input type="submit" value="Odjavi se" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0"/>
+            </form>
+        
+    </nav>
 <div class="container">
     <h1 class="alert alert-success" >Uspješno ste se registrirali!</h1>
     <a th:href="@{/login}" >Prijava</a>
