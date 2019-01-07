@@ -31,7 +31,7 @@ public class Expenditure {
 	private Date date;
 	
 	@Column(name="expenditure_amount")
-	private Float amount;
+	private Double amount;
 	
 	@Column(name="expenditure_info")
 	private String info;
@@ -47,7 +47,7 @@ public class Expenditure {
 	
 	public Expenditure() {}
 
-	public Expenditure(Long id, String name, Date date, Float amount, String info) {
+	public Expenditure(Long id, String name, Date date, Double amount, String info) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -87,12 +87,12 @@ public class Expenditure {
 	}
 
 
-	public Float getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
 
 
-	public void setAmount(Float amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 
