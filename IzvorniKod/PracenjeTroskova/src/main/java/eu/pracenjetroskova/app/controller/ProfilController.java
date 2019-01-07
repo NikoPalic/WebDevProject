@@ -65,6 +65,7 @@ public class ProfilController {
 	public String mojProfil(Principal principal,WebRequest request, Model model) {
 		Optional<User> user=userService.findByUsername(principal.getName());
 		model.addAttribute("funds",user.get().getFunds());
+		model.addAttribute("stednje", user.get().getSavings());
 		return "profil";
 	}
 	

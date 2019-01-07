@@ -174,6 +174,14 @@ public class User {
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
 	}
+
+	public List<Savings> getSavings() {
+		return savings;
+	}
+
+	public void setSavings(List<Savings> savings) {
+		this.savings = savings;
+	}
 	
 	
 	

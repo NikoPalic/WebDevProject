@@ -69,9 +69,21 @@
     		<p class="lead">Smanjite svoje troškove i uštedite s nama.</p>
   		</div>
 	</div>
-	<div id="myProgress">
-    <div id="myBar">10%</div>
-  </div>
+	
+	<th:block th:each="stednja: ${stednje}">
+		<tr>
+			<td>
+			<label th:text="${'Štednja: ' + stednja.info}"></label>
+			<div class="progress" th:with="napredak=${100 * (stednja.funds / stednja.goal)}">
+    			<div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar"  aria-valuemin="0" aria-valuemax="100" th:attr="aria-valuenow=${stednja.funds}" th:style="'width:' + ${napredak} +'%;'" th:text="${#numbers.formatDecimal(napredak, 1, 'DEFAULT', 2, 'DEFAULT') + ' %'}"> </div>
+			</div>
+			</td>
+		</tr>
+	
+	</th:block>
+  
+
+
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
