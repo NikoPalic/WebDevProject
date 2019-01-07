@@ -6,13 +6,43 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
   <style type="text/css">
-    #myBar {
-      width: 10%;
-      height: 30px;
-      background-color: #4CAF50;
-      text-align: center;
-      line-height: 30px;
-      color: white; 
+    .center{
+      width: 40%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+    }
+    .progbar{
+      box-sizing: border-box;
+      width: 100%;
+      margin: 20px 0;
+    }
+    .progbar p{
+      text-transform: uppercase;
+      margin: 0 0 10px;
+      padding: 0;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+    .progbar p:nth-child(2){
+      float: right;
+      position: relative;
+      top: -30px;
+    }
+    .percentage{
+      background: #262626;
+      padding: 4px;
+      box-sizing: border-box;
+      border: 1px solid green;
+      border-radius: 6px;
+    }
+    .level{
+      width: 50%;
+      background-color: #7FFF00;
+      height: 10px;
+      border-radius: 6px;
     }
   </style>
 	<meta charset="utf-8">
@@ -69,8 +99,14 @@
     		<p class="lead">Smanjite svoje troškove i uštedite s nama.</p>
   		</div>
 	</div>
-	<div id="myProgress">
-    <div id="myBar">10%</div>
+  <div class="center">
+	<div class="progbar">
+    <p>Štednja</p>
+    <p>50%</p>
+    <div class="percentage">
+      <div class="level"></div>
+    </div>
+  </div>
   </div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
