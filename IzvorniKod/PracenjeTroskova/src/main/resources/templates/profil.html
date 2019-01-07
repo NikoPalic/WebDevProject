@@ -44,7 +44,45 @@
   </style>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      </button>
+
     
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+              <a class="nav-link" th:href="@{/}">Početna <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/profil/prihodi">Prihodi <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/profil/stednje">Štednje <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/profil/troskovi">Troškovi <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/profil/kategorije">Kategorije <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+        <a class="nav-item active mr-sm-2 my-2 my-sm-0" th:inline="text" th:text="${'Sredstva: ' + #numbers.formatDecimal(funds, 1, 'DEFAULT', 2, 'DEFAULT')}"></a>
+
+      <a  class="nav-item active mr-sm-2 my-2 my-sm-0" th:inline="text">Korisnik [[${#httpServletRequest.remoteUser}]] </a>
+      
+      <button class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" onclick="window.location.href='/postavke'"><span class="fas fa-cogs"></span> </button>
+                    
+        <form th:action="@{/logout}" method="post">
+               <input type="submit" value="Odjavi se" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0"/>
+          </form>
+      
+  </nav>
+ 
 
 	<title>Praćenje troškova</title>
 	<div class="jumbotron jumbotron-fluid">
