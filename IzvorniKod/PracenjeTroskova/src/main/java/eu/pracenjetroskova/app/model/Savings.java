@@ -27,13 +27,13 @@ public class Savings {
 	private Date endDate;
 	
 	@Column(name="savings_goal")
-	private Float goal;
+	private Double goal;
 	
 	@Column(name="savings_info")
 	private String info;
 	
 	@Column(name="savings_funds")
-	private Float funds;
+	private Double funds;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
@@ -43,7 +43,7 @@ public class Savings {
 	public Savings() {}
 	
 	
-	public Savings(Long id, Date startDate, Date endDate, Float goal, String info, Float funds) {
+	public Savings(Long id, Date startDate, Date endDate, Double goal, String info, Double funds) {
 		super();
 		this.id = id;
 		this.startDate = startDate;
@@ -84,12 +84,12 @@ public class Savings {
 	}
 
 
-	public Float getGoal() {
+	public Double getGoal() {
 		return goal;
 	}
 
 
-	public void setGoal(Float goal) {
+	public void setGoal(Double goal) {
 		this.goal = goal;
 	}
 
@@ -109,12 +109,12 @@ public class Savings {
 	}
 
 
-	public Float getFunds() {
+	public Double getFunds() {
 		return funds;
 	}
 
 
-	public void setFunds(Float funds) {
+	public void setFunds(Double funds) {
 		this.funds = funds;
 	}
 
