@@ -51,6 +51,31 @@
     	width: 100%;
     	margin-left: 0px;
     }
+
+    h2{
+        font-size: 20px;
+    }
+
+    h2:hover{
+        color: green;
+    }
+
+    .usernameinput{
+        width: 50%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        opacity: 0.5 !important; 
+        cursor: not-allowed;
+    }
+
+    p{
+        color: red;
+    }
+
   </style>
 
 </head>
@@ -91,6 +116,11 @@
     <div>
     	<input type="hidden" th:field="*{userID}" />
     </div>
+    <div>
+        <input th:field="*{username}" class = "usernameinput" placeholder="" />
+    </div>
+    <h2><a th:href="@{/passwordchange}" >Promjeni lozinku</a></h2>
+    <br>
      <div>
         <input th:field="*{name}" class="allinputs" placeholder="" />
         <p th:each="error: ${#fields.errors('name')}"
@@ -102,16 +132,11 @@
           th:text="${error}">Validation error</p>
     </div>
     <div>
-        <input th:field="*{username}" class = "allinputs" placeholder="" />
-        <p th:each="error : ${#fields.errors('username')}"
-          th:text="${error}">Validation error</p>
-    </div>
-    <div>
         <input type="email" th:field="*{email}" class = "allinputs" placeholder="" />
         <p th:each="error : ${#fields.errors('email')}"
           th:text="${error}">Validation error</p>
     </div>
-   
+
     <button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Spremi</button>
 </form>
 <br>
