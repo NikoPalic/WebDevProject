@@ -6,69 +6,54 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
   <style type="text/css">
-    #myBar {
-      width: 10%;
-      height: 30px;
-      background-color: #4CAF50;
-      text-align: center;
-      line-height: 30px;
-      color: white; 
+    
+    .progbar{
+      box-sizing: border-box;
+      width: 100%;
     }
+    .progbar p{
+      text-transform: uppercase;
+      font-weight: bold;
+      float: left;
+      position: relative;
+      top: -30px;
+      margin-left: 2%;
+    }
+    .percentage{
+      background: black;
+      padding: 5px;
+      box-sizing: border-box;
+      border: 1px #7FFF00;
+      border-radius: 5px;
+    }
+    .level{
+      width: 50%;
+      background-color: #7FFF00;
+      height: 10px;
+      border-radius: 5px;
+    }
+    .center{
+      width: 40%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+    }
+
   </style>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
 
 	<title>Praćenje troškova</title>
-</head>
-<body>
-
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    	<span class="navbar-toggler-icon"></span>
-  		</button>
-
-		
-  		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-    		<ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-              <a class="nav-link" th:href="@{/}">Početna <span class="sr-only">(current)</span></a>
-            </li>
-      			<li class="nav-item active">
-        			<a class="nav-link" href="/profil/prihodi">Prihodi <span class="sr-only">(current)</span></a>
-      			</li>
-      			<li class="nav-item active">
-        			<a class="nav-link" href="/profil/stednje">Štednje <span class="sr-only">(current)</span></a>
-      			</li>
-      			<li class="nav-item active">
-        			<a class="nav-link" href="/profil/troskovi">Troškovi <span class="sr-only">(current)</span></a>
-      			</li>
-      			<li class="nav-item active">
-        			<a class="nav-link" href="/profil/kategorije">Kategorije <span class="sr-only">(current)</span></a>
-      			</li>
-   			</ul>
-   			<a class="nav-item active mr-sm-2 my-2 my-sm-0" th:inline="text" th:text="${'Sredstva: ' + #numbers.formatDecimal(funds, 1, 'DEFAULT', 2, 'DEFAULT')}"></a>
-
-			<a  class="nav-item active mr-sm-2 my-2 my-sm-0" th:inline="text">Korisnik [[${#httpServletRequest.remoteUser}]] </a>
-			
-			<button class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" onclick="window.location.href='/postavke'"><span class="fas fa-cogs"></span> </button>
-						   			
-   			<form th:action="@{/logout}" method="post">
-           		 <input type="submit" value="Odjavi se" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0"/>
-        	</form>
-  		
-	</nav>
-
-	
-	
-
-	
 	<div class="jumbotron jumbotron-fluid">
   		<div class="container">
     		<h1 class="display-4">Dobrodošli na praćenje troškova</h1>
     		<p class="lead">Smanjite svoje troškove i uštedite s nama.</p>
   		</div>
 	</div>
+
 	
 	<th:block th:each="stednja: ${stednje}">
 		<tr>
@@ -82,6 +67,7 @@
 	
 	</th:block>
   
+
 
 
 
