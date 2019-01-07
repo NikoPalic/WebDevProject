@@ -107,34 +107,39 @@
         
     </nav>
  
-    <h1>Podaci o profilu</h1>
-    
+    <h1 >Podaci o profilu</h1>
+    <label th:text="${'Korisničko ime: '+korisnik.username}"></label>
+   <form action="#" th:action="@{/postavke/osvjezi}"th:object="${korisnik}" method="POST" enctype="utf8"> 
     <div>
     	<input type="hidden" th:field="*{id}" />
     </div>
     
     <div>
-    	<input type="hidden" th:field="*{userID}" />
+    	<input type="hidden" th:field="*{funds}" />
     </div>
+    
     <div>
-        <input th:field="*{username}" class = "usernameinput" placeholder="" disabled />
+    	<input type="hidden" th:field="*{password}" />
     </div>
-    <h2><a th:href="@{/passwordchange}" >Promjeni lozinku</a></h2>
+    
+    <div>
+    	<input type="hidden" th:field="*{active}" />
+    </div>
+    
+    <div>
+        <input th:field="*{username}"  type="hidden" />
+    </div>
+    <h2><a href="/postavke/password" >Promjeni lozinku</a></h2>
     <br>
      <div>
-        <input th:field="*{name}" class="allinputs" placeholder="" />
-        <p th:each="error: ${#fields.errors('name')}"
-          th:text="${error}">Validation error</p>
+        <input th:field="*{name}" th:value="${korisnik.name}" class="allinputs" placeholder="" />
     </div>
     <div>
-        <input th:field="*{lastName}" class = "allinputs" placeholder="" />
-        <p th:each="error : ${#fields.errors('lastName')}"
-          th:text="${error}">Validation error</p>
+        <input th:field="*{lastName}" th:value="${korisnik.lastName}" class = "allinputs" placeholder="" />
+ 
     </div>
     <div>
-        <input type="email" th:field="*{email}" class = "allinputs" placeholder="" />
-        <p th:each="error : ${#fields.errors('email')}"
-          th:text="${error}">Validation error</p>
+        <input th:field="*{email}" type="email" th:value="${korisnik.email}" class = "allinputs" placeholder="" />
     </div>
 
     <button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Spremi</button>
