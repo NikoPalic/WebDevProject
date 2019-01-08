@@ -39,7 +39,6 @@
     <table class="table table-bordered table-hover table-condensed table-striped">
     	<thead class="thead-inverse">
         	<tr>
-            	<th>ID</th>
                 <th>Naziv</th>
                 <th>Opis</th>
                 <th>Uredi</th>
@@ -50,8 +49,7 @@
             <tbody>
             	<th:block th:each="kategorija : ${kategorije}">
                     <tr>
-                        <td th:text="${kategorija.id}">...</td>
-        				<td th:text="${kategorija.name}">...</td>
+                        <td th:text="${kategorija.name}">...</td>
         				<td th:text="${kategorija.info}">...</td>
         				<td>
            					<form th:action="@{/kategorije/osvjezi/{id}(id=${kategorija.id})}" method="get" >

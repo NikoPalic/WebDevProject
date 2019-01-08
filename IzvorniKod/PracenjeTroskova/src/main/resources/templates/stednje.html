@@ -33,14 +33,13 @@
    			<form th:action="@{/logout}" method="post">
            		 <input type="submit" value="Odjavi se" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0"/>
         	</form>
-  		
+  		</div>
 	</nav>
 <div class="container">
     <table class="table table-bordered table-hover table-condensed table-striped">
     	<thead class="thead-inverse">
         	<tr>
-            	<th>ID</th>
-                <th>Datum početka</th>
+            	<th>Datum početka</th>
                 <th>Datum kraja</th>
                 <th>Cilj</th>
                 <th>Opis</th>
@@ -53,8 +52,7 @@
             <tbody>
             	<th:block th:each="stednja : ${stednje}">
                     <tr>
-                        <td th:text="${stednja.id}">...</td>
-        				<td th:text="${stednja.startDate}">...</td>
+                        <td th:text="${stednja.startDate}">...</td>
         				<td th:text="${stednja.endDate}">...</td>
         				<td th:text="${stednja.goal}">...</td>
         				<td th:text="${stednja.info}">...</td>

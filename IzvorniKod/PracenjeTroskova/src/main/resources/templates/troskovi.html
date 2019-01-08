@@ -19,7 +19,7 @@
   		<div class="collapse navbar-collapse" id="navbarSupportedContent">
     		<ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-              <a class="nav-link" href="/home">Početna <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/">Početna <span class="sr-only">(current)</span></a>
             </li>
       			<li class="nav-item active">
         			<a class="nav-link" href="/profil">Profil <span class="sr-only">(current)</span></a>
@@ -39,8 +39,7 @@
     <table class="table table-bordered table-hover table-condensed table-striped">
     	<thead class="thead-inverse">
         	<tr>
-            	<th>ID</th>
-                <th>Naziv</th>
+            	<th>Naziv</th>
                 <th>Datum</th>
                 <th>Iznos</th>
                 <th>Opis</th>
@@ -53,8 +52,7 @@
             <tbody>
             	<th:block th:each="trosak : ${troskovi}">
                     <tr>
-                        <td th:text="${trosak.id}">...</td>
-        				<td th:text="${trosak.name}">...</td>
+                        <td th:text="${trosak.name}">...</td>
         				<td th:text="${trosak.date}">...</td>
         				<td th:text="${trosak.amount}">...</td>
         				<td th:text="${trosak.info}">...</td>

@@ -72,7 +72,7 @@
                     <a class="nav-link" href="/profil">Profil<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/profil/stednje">Štednje <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/profil/kategorije">Kategorije <span class="sr-only">(current)</span></a>
                 </li>
             </ul>
             <a class="nav-item active mr-sm-2 my-2 my-sm-0" th:inline="text">Korisnik [[${#httpServletRequest.remoteUser}]]  </a>                           
@@ -105,7 +105,7 @@
     <button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Spremi</button>
 </form>
  
-<a th:href="@{/login}" >Natrag na početnu stranicu</a>
+<a th:href="@{/profil/kategorije}" >Natrag na pregled kategorija</a>
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

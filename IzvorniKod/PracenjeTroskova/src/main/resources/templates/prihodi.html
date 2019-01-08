@@ -33,14 +33,13 @@
    			<form th:action="@{/logout}" method="post">
            		 <input type="submit" value="Odjavi se" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0"/>
         	</form>
-  		
+  		</div>
 	</nav>
 <div class="container">
     <table class="table table-bordered table-hover table-condensed text-center table-striped">
     	<thead class="thead-inverse">
         	<tr>
-            	<th>ID</th>
-                <th>Naziv</th>
+            	<th>Naziv</th>
                 <th>Datum</th>
                 <th>Iznos</th>
                 <th>Opis</th>
@@ -53,8 +52,7 @@
             <tbody>
             	<th:block th:each="prihod : ${prihodi}">
                     <tr>
-                        <td th:text="${prihod.id}">...</td>
-        				<td th:text="${prihod.name}">...</td>
+                        <td th:text="${prihod.name}">...</td>
         				<td th:text="${#dates.format(prihod.date,'dd.MM.yyyy')}">...</td>
         				<td th:text="${prihod.amount}">...</td>
         				<td th:text="${prihod.info}">...</td>
