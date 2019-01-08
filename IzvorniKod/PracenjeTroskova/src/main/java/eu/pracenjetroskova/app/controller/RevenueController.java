@@ -42,7 +42,10 @@ public class RevenueController {
 //	}
 	
 	@PostMapping("/izbrisi/{id}")
-	public String deletePrihod(@PathVariable Long id) {
+	public String deletePrihod(@PathVariable Long id,Principal principal) {
+		User user=userService.findByUsername(principal.getName()).get();
+		user.setFunds(user.getFunds()-revenueService.findById(id).get().getAmount());
+		userService.updateUser(user);
 		revenueService.deleteRevenue(id);
 		return "redirect:/profil/prihodi";
 	}
