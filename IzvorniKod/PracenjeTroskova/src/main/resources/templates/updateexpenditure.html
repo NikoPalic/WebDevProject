@@ -102,7 +102,7 @@
         
     </div>
     <div>
-        <input th:field="*{date}" class = "allinputs" th:value="${edittrosak.date}" />
+        <input th:field="*{date}" type="date" class = "allinputs" th:value="${#dates.format(edittrosak.date, 'yyyy-MM-dd')}" />
         
     </div>
     <div>

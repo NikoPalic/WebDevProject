@@ -1,7 +1,12 @@
 package eu.pracenjetroskova.app.controller;
 
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,8 +77,21 @@ public class SavingsController {
 		if (bindingResult.hasErrors()) {
 			return "updatesavings";
 		}
+		try {
+			savings.setStartDate(formatiranjeDatuma(savings.getStartDate()));
+			savings.setEndDate(formatiranjeDatuma(savings.getEndDate()));
+		} catch (ParseException e) {
+		}
 		savingsService.saveRevenue(savings);
 		return "redirect:/profil/stednje";
 	}
 	
+	private Date formatiranjeDatuma(Date trenutniDatum) throws ParseException {
+		SimpleDateFormat vrijeme = new SimpleDateFormat("HH:mm:ss");
+	    SimpleDateFormat datum = new SimpleDateFormat("yyyy-MM-dd");
+	    DateFormat noviDatum = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    String formattedTime = vrijeme.format(Calendar.getInstance().getTime());
+	    String formattedDate = datum.format(trenutniDatum);
+	    return noviDatum.parse(formattedDate+" "+formattedTime);
+	}
 }

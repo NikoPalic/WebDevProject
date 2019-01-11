@@ -26,7 +26,7 @@ public class Expenditure {
 	@Column(name="expenditure_name")
 	private String name;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="expenditure_date")
 	private Date date;
 	

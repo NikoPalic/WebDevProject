@@ -1,6 +1,11 @@
 package eu.pracenjetroskova.app.controller;
 
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,7 +68,20 @@ public class RevenueController {
 		if (bindingResult.hasErrors()) {
 			return "updaterevenue";
 		}
+		try {
+			prihod.setDate(formatiranjeDatuma(prihod.getDate()));
+		} catch (ParseException e) {
+		}
 		revenueService.saveRevenue(prihod);
 		return "redirect:/profil/prihodi";
+	}
+	
+	private Date formatiranjeDatuma(Date trenutniDatum) throws ParseException {
+		SimpleDateFormat vrijeme = new SimpleDateFormat("HH:mm:ss");
+	    SimpleDateFormat datum = new SimpleDateFormat("yyyy-MM-dd");
+	    DateFormat noviDatum = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    String formattedTime = vrijeme.format(Calendar.getInstance().getTime());
+	    String formattedDate = datum.format(trenutniDatum);
+	    return noviDatum.parse(formattedDate+" "+formattedTime);
 	}
 }

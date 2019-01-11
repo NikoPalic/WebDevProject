@@ -18,11 +18,11 @@ public class Savings {
 	@Column(name="savings_id")
 	private Long id;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="savings_starttdate")
 	private Date startDate;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="savings_enddate")
 	private Date endDate;
 	

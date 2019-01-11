@@ -58,8 +58,8 @@
             <tbody>
             	<th:block th:each="stednja : ${stednje}">
                     <tr>
-                        <td th:text="${stednja.startDate}">...</td>
-        				<td th:text="${stednja.endDate}">...</td>
+                        <td th:text="${#dates.format(stednja.startDate, 'dd.MM.yyyy')}">...</td>
+        				<td th:text="${#dates.format(stednja.endDate, 'dd.MM.yyyy')}">...</td>
         				<td th:text="${stednja.goal}">...</td>
         				<td th:text="${stednja.info}">...</td>
         				<td th:text="${stednja.funds}">...</td>

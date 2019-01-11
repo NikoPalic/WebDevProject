@@ -59,7 +59,7 @@
             	<th:block th:each="trosak : ${troskovi}">
                     <tr>
                         <td th:text="${trosak.name}">...</td>
-        				<td th:text="${trosak.date}">...</td>
+        				<td th:text="${#dates.format(trosak.date, 'dd.MM.yyyy')}">...</td>
         				<td th:text="${trosak.amount}">...</td>
         				<td th:text="${trosak.info}">...</td>
         				<td th:text="${trosak.categoryID!=null}?${trosak.categoryID?.name}:'NIJE UPISANA'"></td>

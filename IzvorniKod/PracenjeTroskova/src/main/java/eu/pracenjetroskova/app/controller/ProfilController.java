@@ -2,6 +2,11 @@ package eu.pracenjetroskova.app.controller;
 
 
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -148,6 +153,10 @@ public class ProfilController {
 			  WebRequest request, 
 			  Errors errors,Principal principal,RedirectAttributes redir) {
 		Optional<User> user=userService.findByUsername(principal.getName());
+		try {
+			newExpenditure.setDate(formatiranjeDatuma(newExpenditure.getDate()));
+		} catch (ParseException e) {
+		}
 		newExpenditure.setUserID(user.get());
 		expenditureService.createExpenditure(newExpenditure);
 		redir.addFlashAttribute("successMsg", "Uspješno ste stvorili novi trošak!");
@@ -171,6 +180,10 @@ public class ProfilController {
 			  WebRequest request, 
 			  Errors errors,Principal principal,RedirectAttributes redir) {
 		Optional<User> user=userService.findByUsername(principal.getName());
+		try {
+			newRevenue.setDate(formatiranjeDatuma(newRevenue.getDate()));
+		} catch (ParseException e) {
+		}
 		newRevenue.setUserID(user.get());
 		revenueService.createRevenue(newRevenue);
 		user.get().setFunds(user.get().getFunds()+newRevenue.getAmount());
@@ -192,6 +205,11 @@ public class ProfilController {
 			  WebRequest request, 
 			  Errors errors,Principal principal,RedirectAttributes redir) {
 		Optional<User> user=userService.findByUsername(principal.getName());
+		try {
+			newSavings.setStartDate(formatiranjeDatuma(newSavings.getStartDate()));
+			newSavings.setEndDate(formatiranjeDatuma(newSavings.getEndDate()));
+		} catch (ParseException e) {
+		}
 		newSavings.setUserID(user.get());
 		savingsService.createSavings(newSavings);
 		redir.addFlashAttribute("successMsg", "Uspješno ste stvorili novu štednju!");
@@ -207,5 +225,13 @@ public class ProfilController {
 		
 	}
 	
+	private Date formatiranjeDatuma(Date trenutniDatum) throws ParseException {
+		SimpleDateFormat vrijeme = new SimpleDateFormat("HH:mm:ss");
+	    SimpleDateFormat datum = new SimpleDateFormat("yyyy-MM-dd");
+	    DateFormat noviDatum = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    String formattedTime = vrijeme.format(Calendar.getInstance().getTime());
+	    String formattedDate = datum.format(trenutniDatum);
+	    return noviDatum.parse(formattedDate+" "+formattedTime);
+	}
 	
 }
