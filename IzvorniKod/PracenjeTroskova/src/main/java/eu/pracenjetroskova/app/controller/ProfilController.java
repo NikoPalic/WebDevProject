@@ -131,13 +131,14 @@ public class ProfilController {
 	public ModelAndView stvoriNoviTrosak(@ModelAttribute("category") Category category, 
 			  BindingResult result, 
 			  WebRequest request, 
-			  Errors errors,Principal principal) {
+			  Errors errors,Principal principal,RedirectAttributes redir) {
 		Optional<User> user=userService.findByUsername(principal.getName());
 		List<Category> listaKategorija=user.get().getCategories();
 		listaKategorija.add(category);
 		categoryService.createCategory(category);
 		user.get().setCategories(listaKategorija);
-		return new ModelAndView ("successcategory","category", category);
+		redir.addFlashAttribute("successMsg", "Uspješno ste stvorili novu kategoriju!");
+		return new ModelAndView("redirect:/profil/kategorije");
 		
 	}
 	
@@ -145,11 +146,12 @@ public class ProfilController {
 	public ModelAndView stvoriNoviTrosak(@ModelAttribute("expenditure") Expenditure newExpenditure, 
 			  BindingResult result, 
 			  WebRequest request, 
-			  Errors errors,Principal principal) {
+			  Errors errors,Principal principal,RedirectAttributes redir) {
 		Optional<User> user=userService.findByUsername(principal.getName());
 		newExpenditure.setUserID(user.get());
 		expenditureService.createExpenditure(newExpenditure);
-		return new ModelAndView ("successexpenditure","expenditure", newExpenditure);
+		redir.addFlashAttribute("successMsg", "Uspješno ste stvorili novi trošak!");
+		return new ModelAndView("redirect:/profil/troskovi");
 		
 	}
 	
@@ -188,11 +190,12 @@ public class ProfilController {
 	public ModelAndView stvoriNovuStednju(@ModelAttribute("savings") Savings newSavings, 
 			  BindingResult result, 
 			  WebRequest request, 
-			  Errors errors,Principal principal) {
+			  Errors errors,Principal principal,RedirectAttributes redir) {
 		Optional<User> user=userService.findByUsername(principal.getName());
 		newSavings.setUserID(user.get());
 		savingsService.createSavings(newSavings);
-		return new ModelAndView ("successsavings","savings", newSavings);
+		redir.addFlashAttribute("successMsg", "Uspješno ste stvorili novu štednju!");
+		return new ModelAndView("redirect:/profil/stednje");
 		
 	}
 	
