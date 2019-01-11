@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import eu.pracenjetroskova.app.model.Category;
 import eu.pracenjetroskova.app.model.CustomUserDetails;
@@ -166,14 +167,14 @@ public class ProfilController {
 	public ModelAndView stvoriNoviPrihod(@ModelAttribute("revenue") Revenue newRevenue, 
 			  BindingResult result, 
 			  WebRequest request, 
-			  Errors errors,Principal principal) {
+			  Errors errors,Principal principal,RedirectAttributes redir) {
 		Optional<User> user=userService.findByUsername(principal.getName());
 		newRevenue.setUserID(user.get());
 		revenueService.createRevenue(newRevenue);
 		user.get().setFunds(user.get().getFunds()+newRevenue.getAmount());
 		userService.updateUser(user.get());
-		return new ModelAndView ("successrevenue","revenue", newRevenue);
-		
+		redir.addFlashAttribute("successMsg", "Uspješno ste stvorili novi prihod!");
+		return new ModelAndView("redirect:/profil/prihodi");
 	}
 	
 	@GetMapping("/profil/stednje/stvori")
