@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import eu.pracenjetroskova.app.dto.UserDto;
 import eu.pracenjetroskova.app.model.Category;
@@ -85,7 +87,7 @@ public class AccountController {
 	}
 	
 	@PostMapping("/kategorije/izbrisi/{id}")
-	public String deleteKategorija(@PathVariable Long id,Principal principal) {
+	public String deleteKategorija(@PathVariable Long id,Principal principal, RedirectAttributes redir) {
 		Optional<User> user=userService.findByUsername(principal.getName());
 		List<Category>kategorije=user.get().getCategories();
 		try {
@@ -93,7 +95,8 @@ public class AccountController {
 			user.get().setCategories(kategorije);
 			categoryService.deleteCategory(id);
 		} catch (Exception e) {
-			return "zabranabrisanja";
+			redir.addFlashAttribute("zabrana", "Zabrana brisanja! Kategorija se koristi!");
+			return "redirect:/profil/kategorije";
 		}
 		
 		return "redirect:/profil/kategorije";
