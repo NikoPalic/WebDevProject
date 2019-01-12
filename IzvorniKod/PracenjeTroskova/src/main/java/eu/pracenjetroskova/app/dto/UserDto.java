@@ -2,6 +2,9 @@ package eu.pracenjetroskova.app.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import eu.pracenjetroskova.app.validation.ValidPassword;
 
 import eu.pracenjetroskova.app.validation.PasswordMatches;
 import eu.pracenjetroskova.app.validation.ValidEmail;
@@ -28,7 +31,10 @@ public class UserDto {
 	
 	@NotNull
 	@NotEmpty
+	@ValidPassword
 	private String password;
+	@NotNull
+    @Size(min = 1)
 	private String matchingPassword;
 	
 	public String getUsername() {

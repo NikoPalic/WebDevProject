@@ -19,7 +19,7 @@
       min-width: 200px;
     }
     .allinputs{
-      
+      width: 50%;
       min-width: 250px;
       padding: 12px 20px;
       margin: 8px 0;
@@ -44,40 +44,45 @@
   </style>
   
   </head>
-<body >
-	
-	<div class="container">
-		<h1 >Registracija</h1><br>
-		<form action="#" th:action="@{/signup}"th:object="${user}" method="POST" enctype="utf8">
-			<div class="form-group row">
-				<span class="col-sm-5"><input th:field="*{name}" class="form-control allinputs" placeholder="Unesite ime" /></span>
-				<span class="alert alert-danger col-sm-4" th:each="error: ${#fields.errors('name')}" th:text="${error}"></span>
-			</div>
-			<div class="form-group row">
-				<span class="col-sm-5"><input th:field="*{lastName}" class = "form-control allinputs" placeholder="Unesite prezime" /></span>
-				<span class="alert alert-danger col-sm-4" th:each="error: ${#fields.errors('lastName')}" th:text="${error}"></span>
-			</div>
-			<div class="form-group row">
-				<span class="col-sm-5"><input th:field="*{username}" class = "form-control allinputs" placeholder="Unesite korisničko ime"/></span>
-				<span class="alert alert-danger col-sm-4" th:each="error: ${#fields.errors('username')}" th:text="${error}"></span>
-			</div>
-			<div class="form-group row">
-				<span class="col-sm-5"><input type="email" th:field="*{email}" class = "form-control allinputs" placeholder="Unesite email" /></span>
-				<span class="alert alert-danger col-sm-4" th:each="error: ${#fields.errors('email')}" th:text="${error}"></span>
-			</div>
-			<div class="form-group row">
-				<span class="col-sm-5"><input id="password" name="password" type="password" th:field="*{password}" class = "form-control allinputs" placeholder="Unesite lozinku" /></span>
-				<span class="alert alert-danger col-sm-4" th:each="error: ${#fields.errors('password')}" th:text="${error}"></span>
-			</div>
-			<div class="form-group row">
-				<span class="col-sm-5"><input id="matchPassword" type="password" th:field="*{matchingPassword}" class = "form-control allinputs" placeholder="Ponovno unesite lozinku"/></span>
-				<span class="alert alert-danger col-sm-4" th:each="error: ${#fields.errors('matchingPassword')}" th:text="${error}"></span>
-				<span id="globalError" class="alert alert-danger col-sm-4" style="display:none"></span>
-			</div>
-			<button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Pošalji</button>
-		</form>
-	</div>
-	<a th:href="@{/login}" >Natrag na početnu stranicu</a>
+<body class="body">
+<h1 >Registracija</h1><br>
+<div>
+	<form action="#" th:action="@{/signup}"th:object="${user}" method="POST" enctype="utf8">
+	    <div>
+	        <input th:field="*{name}" class="allinputs" placeholder="Unesite ime" />
+	        <p th:each="error: ${#fields.errors('name')}"
+	          th:text="${error}">Validation error</p>
+	    </div>
+	    <div>
+	        <input th:field="*{lastName}" class = "allinputs" placeholder="Unesite prezime" />
+	        <p th:each="error : ${#fields.errors('lastName')}"
+	          th:text="${error}">Validation error</p>
+	    </div>
+	    <div>
+	        <input th:field="*{username}" class = "allinputs" placeholder="Unesite korisničko ime" />
+	        <p th:each="error : ${#fields.errors('username')}"
+	          th:text="${error}">Validation error</p>
+	    </div>
+	    <div>
+	        <input type="email" th:field="*{email}" class = "allinputs" placeholder="Unesite email" />
+	        <p th:each="error : ${#fields.errors('email')}"
+	          th:text="${error}">Validation error</p>
+	    </div>
+	    <div >
+	        <input id="password" name="password" type="password" th:field="*{password}" class = "allinputs" placeholder="Unesite lozinku" />
+	        <p class="allinputs alert alert-danger col-sm-4" th:each="error : ${#fields.errors('password')}"
+	          th:text="${error}">Validation error</p>
+	        
+	    </div>
+	    <div>
+	        
+	        <input id="matchPassword" type="password" th:field="*{matchingPassword}" class = "allinputs" placeholder="Ponovno unesite lozinku" />
+	    	<span id="globalError" class="alert alert-danger col-sm-4" style="display:none"></span>
+	    </div>
+	    <button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Pošalji</button>
+	</form>
+ </div>
+<a th:href="@{/login}" >Natrag na početnu stranicu</a>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script type="text/javascript" th:src="@{/js/pwstrength-bootstrap.min.js}"></script>  
 
