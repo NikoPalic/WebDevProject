@@ -85,7 +85,6 @@
         <p class="lead">Smanjite svoje troškove i uštedite s nama.</p>
       </div>
   </div>
-
   <div class="center">
     <div class="progbar">
   <th:block th:each="stednja: ${stednje}">
@@ -101,6 +100,21 @@
     </tr>
   </div>
   </th:block>
+	<div class="center">
+    <div class="progbar">
+	<th:block th:each="stednja: ${stednje}">
+		<tr>
+			<td>
+			<label th:text="${'Štednja: ' + stednja.info}"></label>
+      <div class="percentage">
+			<div class="progress" th:with="napredak=${100 * (stednja.funds / stednja.goal)}">
+    			<div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar"  aria-valuemin="0" aria-valuemax="100" th:attr="aria-valuenow=${stednja.funds}" th:style="'width:' + ${napredak} +'%;'" th:text="${#numbers.formatDecimal(napredak, 1, 'DEFAULT', 2, 'DEFAULT') + ' %'}"> </div>
+        </div>
+			</div>
+			</td>
+		</tr>
+	</div>
+	</th:block>
   </div>
   </div>  
 
