@@ -44,7 +44,10 @@ public class ExpenditureController {
 
 	
 	@PostMapping("/izbrisi/{id}")
-	public String deleteTrosak(@PathVariable Long id) {
+	public String deleteTrosak(@PathVariable Long id,Principal principal) {
+		User user=userService.findByUsername(principal.getName()).get();
+		user.setFunds(user.getFunds()+expenditureService.findById(id).get().getAmount());
+		userService.updateUser(user);
 		expenditureService.deleteExpenditure(id);
 		return "redirect:/profil/troskovi";
 	}

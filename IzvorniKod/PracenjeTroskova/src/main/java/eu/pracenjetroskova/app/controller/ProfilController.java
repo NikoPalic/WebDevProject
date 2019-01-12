@@ -49,20 +49,20 @@ public class ProfilController {
 	private final ExpenditureService expenditureService;
 	private final SavingsService savingsService;
 	private final CategoryService categoryService;
-	private final CategoryRepository categoryRepository;
+	
 	
 	
 	
 	
 	@Autowired
 	public ProfilController(RevenueService revenueService, ExpenditureService
-			expenditureService, SavingsService savingsService,  CategoryRepository categoryRepository,UserService userService, CategoryService categoryService) {
+			expenditureService, SavingsService savingsService,  UserService userService, CategoryService categoryService) {
 		super();
 		
 		this.revenueService=revenueService;
 		this.expenditureService=expenditureService;
 		this.savingsService=savingsService;
-		this.categoryRepository=categoryRepository;
+		
 		this.userService=userService;
 		this.categoryService=categoryService;
 	}
@@ -159,6 +159,8 @@ public class ProfilController {
 		}
 		newExpenditure.setUserID(user.get());
 		expenditureService.createExpenditure(newExpenditure);
+		user.get().setFunds(user.get().getFunds()-newExpenditure.getAmount());
+		userService.updateUser(user.get());
 		redir.addFlashAttribute("successMsg", "Uspješno ste stvorili novi trošak!");
 		return new ModelAndView("redirect:/profil/troskovi");
 		
