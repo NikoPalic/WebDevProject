@@ -38,6 +38,7 @@
   </style>
   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Praćenje troškova</title>
   </head>
 <body>
 
@@ -78,7 +79,7 @@
   </nav>
  
 
-  <title>Praćenje troškova</title>
+  
   <div class="jumbotron jumbotron-fluid">
       <div class="container">
         <h1 class="display-4">Dobrodošli na praćenje troškova</h1>
@@ -86,22 +87,24 @@
       </div>
   </div>
   
-    
-  		<th:block th:each="stednja: ${stednje}">
-   			<tr>
-      			<td>
-      				<div class="center progbar">
-      					<label th:text="${'Štednja: ' + stednja.info}"></label>
-      					<div class="percentage">
-      						<div class="progress" th:with="napredak=${100 * (stednja.funds / stednja.goal)}">
-          						<div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar"  aria-valuemin="0" aria-valuemax="100" th:attr="aria-valuenow=${stednja.funds}" th:style="'width:' + ${napredak} +'%;'" th:text="${#numbers.formatDecimal(napredak, 1, 'DEFAULT', 2, 'DEFAULT') + ' %'}"> </div>
-        					</div>
-      					</div>
-      				</div>  
-     			</td>
-    		</tr>
-  		</th:block>
-	
+    <div class="jumbotron horizontal-center">
+    	<div class="container">
+	  		<th:block th:each="stednja: ${stednje}">
+	   			<tr>
+	      			<td>
+	      				
+	      					<label th:text="${'Štednja: ' + stednja.info}"></label>
+	      					
+	      						<div class="progress  border border-success" th:with="napredak=${100 * (stednja.funds / stednja.goal)}">
+	          						<div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar"  aria-valuemin="0" aria-valuemax="100" th:attr="aria-valuenow=${stednja.funds}" th:style="'width:' + ${napredak} +'%;'" th:text="${#numbers.formatDecimal(napredak, 1, 'DEFAULT', 2, 'DEFAULT') + ' %'}"> </div>
+	        					</div>
+	      					
+	      				 
+	     			</td>
+	    		</tr>
+	  		</th:block>
+	  	</div>
+	</div> 
  
 
 
