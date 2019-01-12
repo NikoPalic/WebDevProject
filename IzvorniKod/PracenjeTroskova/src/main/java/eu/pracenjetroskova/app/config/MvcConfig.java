@@ -1,6 +1,7 @@
 package eu.pracenjetroskova.app.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -16,7 +17,16 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/troskovi").setViewName("troskovi");
         registry.addViewController("/profil/postavke").setViewName("account");
     }
-    
-    
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler(
+                "/js/**")
+                .addResourceLocations(
+                        "classpath:/static/js/");
+    }
+
+
+
 
 }
