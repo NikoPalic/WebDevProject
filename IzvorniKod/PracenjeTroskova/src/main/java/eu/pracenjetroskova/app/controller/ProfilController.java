@@ -7,8 +7,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -148,7 +152,7 @@ public class ProfilController {
 	}
 	
 	@PostMapping("/profil/troskovi/stvori")
-	public ModelAndView stvoriNoviTrosak(@ModelAttribute("expenditure") Expenditure newExpenditure, 
+	public ModelAndView stvoriNoviTrosak(@ModelAttribute("expenditure") @Valid Expenditure newExpenditure, 
 			  BindingResult result, 
 			  WebRequest request, 
 			  Errors errors,Principal principal,RedirectAttributes redir) {
@@ -156,6 +160,14 @@ public class ProfilController {
 		try {
 			newExpenditure.setDate(formatiranjeDatuma(newExpenditure.getDate()));
 		} catch (ParseException e) {
+		}
+		
+		if(result.hasErrors()) {
+			List<Category>kategorije=user.get().getCategories();
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("expenditure", newExpenditure);
+			model.put("kategorije", kategorije);
+			return new ModelAndView("newexpenditure",model);
 		}
 		newExpenditure.setUserID(user.get());
 		expenditureService.createExpenditure(newExpenditure);

@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,14 +64,18 @@ public class ExpenditureController {
 	}
 	
 	@PostMapping("/osvjezi")
-	public String updateTrosak(@ModelAttribute("edittrosak") Expenditure expenditure, BindingResult bindingResult,Principal principal) {
+	public String updateTrosak(@ModelAttribute("edittrosak") @Valid Expenditure expenditure, BindingResult bindingResult,Principal principal,Model model) {
 		User user = userService.findByUsername(principal.getName()).get();
-		if (bindingResult.hasErrors()) {
-			return "updateexpenditure";
-		}
+		
 		try {
 			expenditure.setDate(formatiranjeDatuma(expenditure.getDate()));
 		} catch (ParseException e) {
+		}
+		if (bindingResult.hasErrors()) {
+			List<Category>kategorije=user.getCategories();
+			model.addAttribute("edittrosak", expenditure);
+			model.addAttribute("kategorije", kategorije);
+			return "updateexpenditure";
 		}
 		user.setFunds(user.getFunds()+expenditureService.findById(expenditure.getId()).get().getAmount()-expenditure.getAmount());
 		expenditureService.saveExpenditure(expenditure);

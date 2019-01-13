@@ -72,7 +72,7 @@
                     <a class="nav-link" href="/profil">Profil<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/profil/troškovi">Troškovi <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/profil/troskovi">Troškovi <span class="sr-only">(current)</span></a>
                 </li>
             </ul>
             <a class="nav-item active mr-sm-2 my-2 my-sm-0" th:inline="text">Korisnik [[${#httpServletRequest.remoteUser}]]  </a>                           
@@ -95,11 +95,11 @@
     
     <div>
         <input th:field="*{name}" class = "allinputs" th:value="${edittrosak.name}"/>
-        
+        <span  th:each="error: ${#fields.errors('name')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
     <div>
         <input th:field="*{amount}" class = "allinputs" th:value="${edittrosak.amount}" />
-        
+        <span  th:each="error: ${#fields.errors('amount')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
     <div>
         <input th:field="*{date}" type="date" class = "allinputs" th:value="${#dates.format(edittrosak.date, 'yyyy-MM-dd')}" />
@@ -107,7 +107,7 @@
     </div>
     <div>
         <input th:field="*{info}" class = "allinputs" th:value="${edittrosak.info}" />
-        
+        <span  th:each="error: ${#fields.errors('info')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
     <div>
     	
