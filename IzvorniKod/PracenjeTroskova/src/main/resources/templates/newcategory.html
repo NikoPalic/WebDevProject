@@ -73,12 +73,12 @@
 <form action="#" th:action="@{/profil/kategorije/stvori}"th:object="${category}" method="POST" enctype="utf8">
     <div>
         <input th:field="*{name}" class = "allinputs" placeholder="Unesite naziv kategorije" />
-        
+        <span  th:each="error: ${#fields.errors('name')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
   
     <div>
         <input th:field="*{info}" class = "allinputs" placeholder="Unesite opis" />
-        
+        <span  th:each="error: ${#fields.errors('info')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
    
     <button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Stvori</button>

@@ -88,7 +88,7 @@
     </div>
     <div>
         <input th:field="*{info}" class = "allinputs" placeholder="Unesite opis" />
-        
+        <span  th:each="error: ${#fields.errors('info')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
    
     <button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Stvori</button>

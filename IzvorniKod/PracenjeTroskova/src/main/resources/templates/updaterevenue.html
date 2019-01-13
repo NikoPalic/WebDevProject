@@ -95,18 +95,18 @@
     
     <div>
         <input th:field="*{name}" class = "allinputs" th:value="${editprihod.name}"/>
-        
+        <span  th:each="error: ${#fields.errors('name')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
     <div>
         <input th:field="*{amount}" class = "allinputs" th:value="${editprihod.amount}" />
-        
+        <span  th:each="error: ${#fields.errors('amount')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
     <div>
         <input th:field="*{date}" type="date" class = "allinputs" th:value="${#dates.format(editprihod.date, 'yyyy-MM-dd')}" />
     </div>
     <div>
         <input th:field="*{info}" class = "allinputs" th:value="${editprihod.info}" />
-        
+        <span  th:each="error: ${#fields.errors('info')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
     <div>
     	

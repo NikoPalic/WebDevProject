@@ -86,11 +86,11 @@
     <form action="#" th:action="@{/profil/prihodi/stvori}"th:object="${revenue}" method="POST" enctype="utf8">
     <div>
         <input th:field="*{name}" class = "allinputs" placeholder="Unesite naziv prihoda" />
-        
+        <span  th:each="error: ${#fields.errors('name')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
     <div>
         <input th:field="*{amount}" class = "allinputs" placeholder="Unesite iznos" />
-        
+        <span  th:each="error: ${#fields.errors('amount')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
     <div>
         <input  th:name="date" th:id="date" type="date" class = "allinputs"  th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/>
@@ -98,7 +98,7 @@
     </div>
     <div>
         <input th:field="*{info}" class = "allinputs" placeholder="Unesite opis" />
-        
+        <span  th:each="error: ${#fields.errors('info')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
     <div>
     	

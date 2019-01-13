@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -77,7 +79,7 @@ public class SavingsController {
 	}
 	
 	@PostMapping("/osvjezi")
-	public String updateStednja(@ModelAttribute("editstednja") Savings savings, BindingResult bindingResult, Principal principal, Model model) {
+	public String updateStednja(@ModelAttribute("editstednja") @Valid Savings savings, BindingResult bindingResult, Principal principal, Model model) {
 		User user=userService.findByUsername(principal.getName()).get();
 		try {
 			savings.setStartDate(formatiranjeDatuma(savings.getStartDate()));
@@ -87,12 +89,17 @@ public class SavingsController {
 		if(savings.getEndDate().before(savings.getStartDate())) {
 			bindingResult.rejectValue("endDate", "savings.endDate");
 		}
-		if(savings.getFunds()>user.getFunds()+savingsService.findById(savings.getId()).get().getFunds()) {
-			bindingResult.rejectValue("funds", "savings.funds");
+		if(savings.getFunds()!=null){
+			if(savings.getFunds()>user.getFunds()+savingsService.findById(savings.getId()).get().getFunds()) {
+				bindingResult.rejectValue("funds", "savings.funds");
+			}
 		}
-		if(savings.getGoal()<savings.getFunds()) {
-			bindingResult.rejectValue("goal", "savings.goal");
+		if(savings.getFunds()!=null && savings.getGoal()!=null){
+			if(savings.getGoal()<savings.getFunds()) {
+				bindingResult.rejectValue("goal", "savings.goal");
+			}
 		}
+		
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("editstednja", savings);
 			return "updatesavings";

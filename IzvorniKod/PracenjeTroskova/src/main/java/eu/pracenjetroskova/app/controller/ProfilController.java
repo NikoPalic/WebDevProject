@@ -137,10 +137,13 @@ public class ProfilController {
 	}
 
 	@PostMapping("/profil/kategorije/stvori")
-	public ModelAndView stvoriNoviTrosak(@ModelAttribute("category") Category category, 
+	public ModelAndView stvoriNoviTrosak(@ModelAttribute("category") @Valid Category category, 
 			  BindingResult result, 
 			  WebRequest request, 
 			  Errors errors,Principal principal,RedirectAttributes redir) {
+		if(result.hasErrors()) {
+			return new ModelAndView("newcategory","category",category);
+		}
 		Optional<User> user=userService.findByUsername(principal.getName());
 		List<Category> listaKategorija=user.get().getCategories();
 		listaKategorija.add(category);
@@ -189,7 +192,7 @@ public class ProfilController {
 	}
 	
 	@PostMapping("/profil/prihodi/stvori")
-	public ModelAndView stvoriNoviPrihod(@ModelAttribute("revenue") Revenue newRevenue, 
+	public ModelAndView stvoriNoviPrihod(@ModelAttribute("revenue") @Valid Revenue newRevenue, 
 			  BindingResult result, 
 			  WebRequest request, 
 			  Errors errors,Principal principal,RedirectAttributes redir) {
@@ -197,6 +200,13 @@ public class ProfilController {
 		try {
 			newRevenue.setDate(formatiranjeDatuma(newRevenue.getDate()));
 		} catch (ParseException e) {
+		}
+		if(result.hasErrors()) {
+			List<Category>kategorije=user.get().getCategories();
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("revenue", newRevenue);
+			model.put("kategorije", kategorije);
+			return new ModelAndView("newrevenue",model);
 		}
 		newRevenue.setUserID(user.get());
 		revenueService.createRevenue(newRevenue);
@@ -214,7 +224,7 @@ public class ProfilController {
 	}
 
 	@PostMapping("/profil/stednje/stvori")
-	public ModelAndView stvoriNovuStednju(@ModelAttribute("savings") Savings newSavings, 
+	public ModelAndView stvoriNovuStednju(@ModelAttribute("savings") @Valid Savings newSavings, 
 			  BindingResult result, 
 			  WebRequest request, 
 			  Errors errors,Principal principal,RedirectAttributes redir) {
@@ -227,11 +237,15 @@ public class ProfilController {
 		if(newSavings.getEndDate().before(newSavings.getStartDate())) {
 			result.rejectValue("endDate", "savings.endDate");
 		}
-		if(newSavings.getFunds()>user.get().getFunds()) {
-			result.rejectValue("funds", "savings.funds");
+		if(newSavings.getFunds()!=null){
+			if(newSavings.getFunds()>user.get().getFunds()) {
+				result.rejectValue("funds", "savings.funds");
+			}
 		}
-		if(newSavings.getGoal()<newSavings.getFunds()) {
-			result.rejectValue("goal", "savings.goal");
+		if(newSavings.getFunds()!=null && newSavings.getGoal()!=null) {
+			if(newSavings.getGoal()<newSavings.getFunds()) {
+				result.rejectValue("goal", "savings.goal");
+			}
 		}
 		if (result.hasErrors()) {
 			return new ModelAndView("newsavings","savings", newSavings);

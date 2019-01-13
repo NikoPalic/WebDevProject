@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -36,9 +37,9 @@ public class Expenditure {
 	@Column(name="expenditure_date")
 	private Date date;
 	
-	
+	@NotNull(message="Polje ne može ostati prazno")
 	@NumberFormat(style=Style.NUMBER)
-	@DecimalMin(value="0.0",message="Trošak mora biti pozitivan broj")
+	@DecimalMin(value="0.0",message="Iznos mora biti pozitivan broj")
 	@Column(name="expenditure_amount")
 	private Double amount;
 	

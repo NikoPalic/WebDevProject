@@ -5,8 +5,13 @@ import java.util.UUID;
 import eu.pracenjetroskova.app.model.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 
 @Entity
@@ -26,12 +31,19 @@ public class Savings {
 	@Column(name="savings_enddate")
 	private Date endDate;
 	
+	@NotNull(message="Polje ne može ostati prazno")
+	@NumberFormat(style=Style.NUMBER)
+	@DecimalMin(value="0.0",message="Iznos mora biti pozitivan broj")
 	@Column(name="savings_goal")
 	private Double goal;
 	
+	@NotBlank(message="Polje ne može ostati prazno")
 	@Column(name="savings_info")
 	private String info;
 	
+	@NotNull(message="Polje ne može ostati prazno")
+	@NumberFormat(style=Style.NUMBER)
+	@DecimalMin(value="0.0",message="Iznos mora biti pozitivan broj")
 	@Column(name="savings_funds")
 	private Double funds;
 	

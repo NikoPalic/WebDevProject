@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,7 +48,7 @@ public class AccountController {
 	
 
 	@PostMapping("/postavke/osvjezi")
-	public String updateUser(@ModelAttribute("korisnik") User user, BindingResult bindingResult, Principal principal,Model model) {
+	public String updateUser(@ModelAttribute("korisnik") @Valid User user, BindingResult bindingResult, Principal principal,Model model) {
 		if (bindingResult.hasErrors()) {
 			return "userdata";
 		}else if(userService.emailExist(user.getEmail())) {
@@ -72,9 +74,19 @@ public class AccountController {
 	@PostMapping("/postavke/password")
 	public String changePassword(@ModelAttribute("lozinka") UserDto user, BindingResult bindingResult, Principal principal,Model model) {
 		Optional<User> userO=userService.findByUsername(principal.getName());
+		if(user.getName().equals("")) {
+			bindingResult.rejectValue("name", "lozinka.nije.upisana");
+		}
+		if(user.getPassword().equals("")) {
+			bindingResult.rejectValue("password", "lozinka.nije.upisana");
+		}
+		if(user.getMatchingPassword().equals("")) {
+			bindingResult.rejectValue("matchingPassword", "lozinka.nije.upisana");
+		}
 		if(!user.getPassword().equals(user.getMatchingPassword())) {
 			bindingResult.rejectValue("matchingPassword", "lozinka.promijena.potvrda");
-		}if(!userService.passwordEncoder().matches(user.getName(), userO.get().getPassword())) {
+		}
+		if(!userService.passwordEncoder().matches(user.getName(), userO.get().getPassword()) && !user.getName().equals("")) {
 			bindingResult.rejectValue("name", "lozinka.promijena.stari");
 		}
 		if (bindingResult.hasErrors()) {
@@ -109,8 +121,9 @@ public class AccountController {
 	}
 	
 	@PostMapping("/kategorije/osvjezi")
-	public String updateKategorija(@ModelAttribute("editkategorija") Category category, BindingResult bindingResult) {
+	public String updateKategorija(@ModelAttribute("editkategorija") @Valid Category category, BindingResult bindingResult,Model model) {
 		if(bindingResult.hasErrors()) {
+			model.addAttribute("editkategorija", category);
 			return "updatecategory";
 		}
 		categoryService.createCategory(category);

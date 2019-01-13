@@ -4,8 +4,13 @@ import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 @Entity
 @Table(name = "revenue")
@@ -17,6 +22,7 @@ public class Revenue {
 	@Column(name="id")
 	private Long id;
 	
+	@NotBlank(message="Polje ne može ostati prazno")
 	@Column(name="revenue_name")
 	private String name;
 	
@@ -24,9 +30,13 @@ public class Revenue {
 	@Column(name="revenue_date")
 	private Date date;
 	
+	@NotNull(message="Polje ne može ostati prazno")
+	@NumberFormat(style=Style.NUMBER)
+	@DecimalMin(value="0.0",message="Iznos mora biti pozitivan broj")
 	@Column(name="revenue_amount")
 	private Double amount;
 	
+	@NotBlank(message="Polje ne može ostati prazno")
 	@Column(name="revenue_info")
 	private String info;
 	

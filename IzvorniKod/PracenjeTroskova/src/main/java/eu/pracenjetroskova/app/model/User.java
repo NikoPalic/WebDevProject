@@ -17,10 +17,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import eu.pracenjetroskova.app.validation.ValidEmail;
 
 
 
@@ -33,19 +36,21 @@ public class User {
 	@Column(name="user_id")
 	private Long id;
 	
-	
+	@NotBlank(message="Polje ne može ostati prazno")
 	@Column(name="user_username", unique=true)
 	private String username;
 	
 	@Column(name="user_password")
 	private String password;
 	
+	@NotBlank(message="Polje ne može ostati prazno")
 	@Column(name="user_name")
 	private String name;
-	
+	@NotBlank(message="Polje ne može ostati prazno")
 	@Column(name="user_last_name")
 	private String lastName;
 	
+	@ValidEmail(message="Neispravan email")
 	@Column(name="user_email",unique=true)
 	private String email;
 	

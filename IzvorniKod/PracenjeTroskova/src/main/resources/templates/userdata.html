@@ -132,13 +132,15 @@
     <br>
      <div>
         <input th:field="*{name}" th:value="${korisnik.name}" class="allinputs" placeholder="" />
+        <span  th:each="error: ${#fields.errors('name')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
     <div>
         <input th:field="*{lastName}" th:value="${korisnik.lastName}" class = "allinputs" placeholder="" />
- 
+ 		<span  th:each="error: ${#fields.errors('lastName')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
     <div>
         <input th:field="*{email}" type="email" th:value="${korisnik.email}" class = "allinputs" placeholder="" />
+        <span  th:each="error: ${#fields.errors('email')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
 
     <button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Spremi</button>

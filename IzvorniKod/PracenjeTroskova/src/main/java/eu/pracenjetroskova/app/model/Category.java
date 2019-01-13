@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "category")
@@ -19,9 +20,11 @@ public class Category {
 	@Column(name="category_id")
 	private Long id;
 	
+	@NotBlank(message="Polje ne može ostati prazno")
 	@Column(name="category_name")
 	private String name;
 	
+	@NotBlank(message="Polje ne može ostati prazno")
 	@Column(name="category_info")
 	private String info;
 	

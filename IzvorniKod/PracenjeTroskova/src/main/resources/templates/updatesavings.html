@@ -114,7 +114,7 @@
     </div>
     <div>
         <input th:field="*{info}" class = "allinputs" th:value="${editstednja.info}" />
-        
+        <span  th:each="error: ${#fields.errors('info')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
   
 

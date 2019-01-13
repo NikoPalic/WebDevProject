@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,14 +66,18 @@ public class RevenueController {
 		return "updaterevenue";
 	}
 	@PostMapping("/osvjezi")
-	public String updatePrihod(@ModelAttribute("editprihod") Revenue prihod, BindingResult bindingResult,Principal principal) {
+	public String updatePrihod(@ModelAttribute("editprihod") @Valid Revenue prihod, BindingResult bindingResult,Principal principal,Model model) {
 		User user=userService.findByUsername(principal.getName()).get();
-		if (bindingResult.hasErrors()) {
-			return "updaterevenue";
-		}
+		
 		try {
 			prihod.setDate(formatiranjeDatuma(prihod.getDate()));
 		} catch (ParseException e) {
+		}
+		if (bindingResult.hasErrors()) {
+			List<Category>kategorije=user.getCategories();
+			model.addAttribute("editprihod", prihod);
+			model.addAttribute("kategorije", kategorije);
+			return "updaterevenue";
 		}
 		user.setFunds(user.getFunds()-revenueService.findById(prihod.getId()).get().getAmount()+prihod.getAmount());
 		revenueService.saveRevenue(prihod);
