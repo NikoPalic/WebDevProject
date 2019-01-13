@@ -212,8 +212,22 @@ public class ProfilController {
 			newSavings.setEndDate(formatiranjeDatuma(newSavings.getEndDate()));
 		} catch (ParseException e) {
 		}
+		if(newSavings.getEndDate().before(newSavings.getStartDate())) {
+			result.rejectValue("endDate", "savings.endDate");
+		}
+		if(newSavings.getFunds()>user.get().getFunds()) {
+			result.rejectValue("funds", "savings.funds");
+		}
+		if(newSavings.getGoal()<newSavings.getFunds()) {
+			result.rejectValue("goal", "savings.goal");
+		}
+		if (result.hasErrors()) {
+			return new ModelAndView("newsavings","savings", newSavings);
+		}
 		newSavings.setUserID(user.get());
 		savingsService.createSavings(newSavings);
+		user.get().setFunds(user.get().getFunds()-newSavings.getFunds());
+		userService.updateUser(user.get());
 		redir.addFlashAttribute("successMsg", "Uspješno ste stvorili novu štednju!");
 		return new ModelAndView("redirect:/profil/stednje");
 		

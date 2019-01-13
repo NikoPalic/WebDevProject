@@ -64,7 +64,8 @@ public class RevenueController {
 		return "updaterevenue";
 	}
 	@PostMapping("/osvjezi")
-	public String updatePrihod(@ModelAttribute("editprihod") Revenue prihod, BindingResult bindingResult) {
+	public String updatePrihod(@ModelAttribute("editprihod") Revenue prihod, BindingResult bindingResult,Principal principal) {
+		User user=userService.findByUsername(principal.getName()).get();
 		if (bindingResult.hasErrors()) {
 			return "updaterevenue";
 		}
@@ -72,7 +73,9 @@ public class RevenueController {
 			prihod.setDate(formatiranjeDatuma(prihod.getDate()));
 		} catch (ParseException e) {
 		}
+		user.setFunds(user.getFunds()-revenueService.findById(prihod.getId()).get().getAmount()+prihod.getAmount());
 		revenueService.saveRevenue(prihod);
+		userService.updateUser(user);
 		return "redirect:/profil/prihodi";
 	}
 	

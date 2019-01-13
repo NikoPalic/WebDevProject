@@ -62,7 +62,8 @@ public class ExpenditureController {
 	}
 	
 	@PostMapping("/osvjezi")
-	public String updateTrosak(@ModelAttribute("edittrosak") Expenditure expenditure, BindingResult bindingResult) {
+	public String updateTrosak(@ModelAttribute("edittrosak") Expenditure expenditure, BindingResult bindingResult,Principal principal) {
+		User user = userService.findByUsername(principal.getName()).get();
 		if (bindingResult.hasErrors()) {
 			return "updateexpenditure";
 		}
@@ -70,7 +71,9 @@ public class ExpenditureController {
 			expenditure.setDate(formatiranjeDatuma(expenditure.getDate()));
 		} catch (ParseException e) {
 		}
+		user.setFunds(user.getFunds()+expenditureService.findById(expenditure.getId()).get().getAmount()-expenditure.getAmount());
 		expenditureService.saveExpenditure(expenditure);
+		userService.updateUser(user);
 		return "redirect:/profil/troskovi";
 	}
 	

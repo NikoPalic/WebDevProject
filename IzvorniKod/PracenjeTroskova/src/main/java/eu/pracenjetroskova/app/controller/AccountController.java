@@ -72,13 +72,13 @@ public class AccountController {
 	@PostMapping("/postavke/password")
 	public String changePassword(@ModelAttribute("lozinka") UserDto user, BindingResult bindingResult, Principal principal,Model model) {
 		Optional<User> userO=userService.findByUsername(principal.getName());
+		if(!user.getPassword().equals(user.getMatchingPassword())) {
+			bindingResult.rejectValue("matchingPassword", "lozinka.promijena.potvrda");
+		}if(!userService.passwordEncoder().matches(user.getName(), userO.get().getPassword())) {
+			bindingResult.rejectValue("name", "lozinka.promijena.stari");
+		}
 		if (bindingResult.hasErrors()) {
-			return "passwordchange";
-		}else if(!user.getPassword().equals(user.getMatchingPassword())) {
-			model.addAttribute("lozinka", new UserDto());
-			return "passwordchange";
-		}else if(!userService.passwordEncoder().matches(user.getName(), userO.get().getPassword())) {
-			model.addAttribute("lozinka", new UserDto());
+			model.addAttribute("lozinka", user);
 			return "passwordchange";
 		}
 		userO.get().setPassword(userService.passwordEncoder().encode(user.getPassword()));

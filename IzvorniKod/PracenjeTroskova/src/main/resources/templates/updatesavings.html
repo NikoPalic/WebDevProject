@@ -99,14 +99,17 @@
     </div>
     <div>
         <input th:field="*{endDate}" type="date" class = "allinputs" th:value="${#dates.format(editstednja.endDate, 'yyyy-MM-dd')}" />
+        <span  th:each="error: ${#fields.errors('endDate')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
         
     </div>
       <div>
         <input th:field="*{funds}" class = "allinputs" th:value="${editstednja.funds}" />
+        <span  th:each="error: ${#fields.errors('funds')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
         
     </div>
     <div>
         <input th:field="*{goal}" class = "allinputs" th:value="${editstednja.goal}" />
+        <span  th:each="error: ${#fields.errors('goal')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
         
     </div>
     <div>

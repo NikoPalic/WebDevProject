@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import eu.pracenjetroskova.app.model.Savings;
+import eu.pracenjetroskova.app.model.User;
 import eu.pracenjetroskova.app.service.SavingsService;
 import eu.pracenjetroskova.app.service.UserService;
 
@@ -61,7 +62,10 @@ public class SavingsController {
 	}
 
 	@PostMapping("/izbrisi/{id}")
-	public String deleteStednja(@PathVariable Long id) {
+	public String deleteStednja(@PathVariable Long id, Principal principal) {
+		User user=userService.findByUsername(principal.getName()).get();
+		user.setFunds(user.getFunds()+savingsService.findById(id).get().getFunds());
+		userService.updateUser(user);
 		savingsService.deleteSavings(id);
 		return "redirect:/profil/stednje";
 	}
@@ -73,16 +77,31 @@ public class SavingsController {
 	}
 	
 	@PostMapping("/osvjezi")
-	public String updateStednja(@ModelAttribute("editstednja") Savings savings, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			return "updatesavings";
-		}
+	public String updateStednja(@ModelAttribute("editstednja") Savings savings, BindingResult bindingResult, Principal principal, Model model) {
+		User user=userService.findByUsername(principal.getName()).get();
 		try {
 			savings.setStartDate(formatiranjeDatuma(savings.getStartDate()));
 			savings.setEndDate(formatiranjeDatuma(savings.getEndDate()));
 		} catch (ParseException e) {
 		}
+		if(savings.getEndDate().before(savings.getStartDate())) {
+			bindingResult.rejectValue("endDate", "savings.endDate");
+		}
+		if(savings.getFunds()>user.getFunds()+savingsService.findById(savings.getId()).get().getFunds()) {
+			bindingResult.rejectValue("funds", "savings.funds");
+		}
+		if(savings.getGoal()<savings.getFunds()) {
+			bindingResult.rejectValue("goal", "savings.goal");
+		}
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("editstednja", savings);
+			return "updatesavings";
+		}
+		
+		user.setFunds(user.getFunds()+savingsService.findById(savings.getId()).get().getFunds()-savings.getFunds());
 		savingsService.saveRevenue(savings);
+		
+		userService.updateUser(user);
 		return "redirect:/profil/stednje";
 	}
 	

@@ -76,15 +76,15 @@
     </div>
     <div>
        <input  th:name="endDate" th:id="endDate" type="date" class = "allinputs"  th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/>
-        
+        <span  th:each="error: ${#fields.errors('endDate')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
      <div>
         <input th:field="*{funds}" class = "allinputs" placeholder="Unesite sredstva" />
-        
+        <span  th:each="error: ${#fields.errors('funds')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
     <div>
         <input th:field="*{goal}" class = "allinputs" placeholder="Unesite cilj" />
-        
+        <span  th:each="error: ${#fields.errors('goal')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
     <div>
         <input th:field="*{info}" class = "allinputs" placeholder="Unesite opis" />
