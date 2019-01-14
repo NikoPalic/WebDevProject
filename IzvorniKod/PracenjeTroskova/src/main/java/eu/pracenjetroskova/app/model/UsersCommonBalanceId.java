@@ -15,8 +15,13 @@ public class UsersCommonBalanceId
     @Column(name = "cb_id")
     private Long cbId;
 
-	public UsersCommonBalanceId(Long userId, Long cbId) {
+    
+    
+	public UsersCommonBalanceId() {
 		super();
+	}
+
+	public UsersCommonBalanceId(Long userId, Long cbId) {
 		this.userId = userId;
 		this.cbId = cbId;
 	}

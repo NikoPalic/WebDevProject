@@ -35,9 +35,7 @@
       transform: translate(-50%, -50%);
       padding: 20px;
     }
-    .jumbotron{
-      padding-bottom: 1%;
-    }
+    
   </style>
   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -61,6 +59,9 @@
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="/profil/stednje">Štednje <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/profil/zajednicke">Zajedničke štednje <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="/profil/troskovi">Troškovi <span class="sr-only">(current)</span></a>
@@ -92,14 +93,35 @@
   
     <div class="jumbotron horizontal-center">
     	<div class="container">
+    		
 	  		<th:block th:each="stednja: ${stednje}">
 	   			<tr>
 	      			<td>
-	      				
+	      				<h1>Štednje</h1>
 	      					<label th:text="${'Štednja: ' + stednja.info}"></label>
 	      					
 	      						<div class="progress  border border-success" th:with="napredak=${100 * (stednja.funds / stednja.goal)}">
 	          						<div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar"  aria-valuemin="0" aria-valuemax="100" th:attr="aria-valuenow=${stednja.funds}" th:style="'width:' + ${napredak} +'%;'" th:text="${#numbers.formatDecimal(napredak, 1, 'DEFAULT', 2, 'DEFAULT') + ' %'}"> </div>
+	        					</div>
+	      					
+	      				 
+	     			</td>
+	    		</tr>
+	  		</th:block>
+	  	</div>
+	</div> 
+	
+	<div class="jumbotron horizontal-center">
+    	<div class="container">
+    		
+	  		<th:block th:each="zajednicka: ${zajednicke}">
+	   			<tr>
+	      			<td>
+	      				<h1>Zajedničke štednje</h1>
+	      					<label th:text="${'Zajednička štednja: ' + zajednicka.name}"></label>
+	      					
+	      						<div class="progress  border border-success" th:with="napredak=${100 * (zajednicka.funds / zajednicka.goal)}">
+	          						<div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar"  aria-valuemin="0" aria-valuemax="100" th:attr="aria-valuenow=${zajednicka.funds}" th:style="'width:' + ${napredak} +'%;'" th:text="${#numbers.formatDecimal(napredak, 1, 'DEFAULT', 2, 'DEFAULT') + ' %'}"> </div>
 	        					</div>
 	      					
 	      				 

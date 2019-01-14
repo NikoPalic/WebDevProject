@@ -77,4 +77,21 @@ public class Log {
 		this.amount = amount;
 	}
 
+	public User getUserID() {
+		return userID;
+	}
+
+	public void setUserID(User userID) {
+		this.userID = userID;
+	}
+
+	public CommonBalance getCbID() {
+		return cbID;
+	}
+
+	public void setCbID(CommonBalance cbID) {
+		this.cbID = cbID;
+	}
+
+	
 }

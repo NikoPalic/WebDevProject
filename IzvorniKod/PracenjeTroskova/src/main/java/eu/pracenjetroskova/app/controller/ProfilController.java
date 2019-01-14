@@ -5,12 +5,16 @@ import java.security.Principal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.LogRecord;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -28,22 +32,33 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 import eu.pracenjetroskova.app.model.Category;
+import eu.pracenjetroskova.app.model.CommonBalance;
 import eu.pracenjetroskova.app.model.CustomUserDetails;
 import eu.pracenjetroskova.app.model.Expenditure;
+import eu.pracenjetroskova.app.model.Log;
 import eu.pracenjetroskova.app.model.Revenue;
 import eu.pracenjetroskova.app.model.Savings;
 import eu.pracenjetroskova.app.model.User;
+import eu.pracenjetroskova.app.model.UsersCommonBalance;
+import eu.pracenjetroskova.app.model.UsersCommonBalanceId;
 import eu.pracenjetroskova.app.repository.CategoryRepository;
 import eu.pracenjetroskova.app.repository.ExpenditureRepository;
+import eu.pracenjetroskova.app.repository.LogRepository;
 import eu.pracenjetroskova.app.repository.RevenueRepository;
 import eu.pracenjetroskova.app.repository.SavingsRepository;
 import eu.pracenjetroskova.app.repository.UserRepository;
 import eu.pracenjetroskova.app.service.RevenueService;
 import eu.pracenjetroskova.app.service.SavingsService;
 import eu.pracenjetroskova.app.service.UserService;
+import eu.pracenjetroskova.app.service.UsersCommonBalanceService;
 import eu.pracenjetroskova.app.service.CategoryService;
+import eu.pracenjetroskova.app.service.CommonBalanceService;
 import eu.pracenjetroskova.app.service.ExpenditureService;
+import eu.pracenjetroskova.app.service.LogService;
+import eu.pracenjetroskova.app.enumeration.Action;
+import eu.pracenjetroskova.app.enumeration.Status;
 
 @Controller
 public class ProfilController {
@@ -53,27 +68,37 @@ public class ProfilController {
 	private final ExpenditureService expenditureService;
 	private final SavingsService savingsService;
 	private final CategoryService categoryService;
-	
-	
+	private final CommonBalanceService commonBalanceService;
+	private final LogService logService;
+	private final UsersCommonBalanceService uCBService;
 	
 	
 	
 	@Autowired
-	public ProfilController(RevenueService revenueService, ExpenditureService
-			expenditureService, SavingsService savingsService,  UserService userService, CategoryService categoryService) {
+	public ProfilController(UserService userService, RevenueService revenueService,
+			ExpenditureService expenditureService, SavingsService savingsService, CategoryService categoryService,
+			CommonBalanceService commonBalanceService, LogService logService, UsersCommonBalanceService uCBService) {
 		super();
-		
-		this.revenueService=revenueService;
-		this.expenditureService=expenditureService;
-		this.savingsService=savingsService;
-		
-		this.userService=userService;
-		this.categoryService=categoryService;
+		this.userService = userService;
+		this.revenueService = revenueService;
+		this.expenditureService = expenditureService;
+		this.savingsService = savingsService;
+		this.categoryService = categoryService;
+		this.commonBalanceService = commonBalanceService;
+		this.logService = logService;
+		this.uCBService = uCBService;
 	}
-	
+
+
+
+
+
 	@GetMapping("/profil")
 	public String mojProfil(Principal principal,WebRequest request, Model model) {
 		Optional<User> user=userService.findByUsername(principal.getName());
+		List<UsersCommonBalance> useroveStednje=uCBService.findByUser(user.get());
+		List<CommonBalance> zajednicke = useroveStednje.stream().filter(t->t.getStatus().equals(Status.ACCEPTED.name())).map(e->e.getCommonbalance()).collect(Collectors.toList());
+		model.addAttribute("zajednicke", zajednicke);
 		model.addAttribute("funds",user.get().getFunds());
 		model.addAttribute("stednje", user.get().getSavings());
 		return "profil";
@@ -113,9 +138,13 @@ public class ProfilController {
 		return "stednje";
 	}
 	
-	@GetMapping("/profil/stednje/zajednicke")
-	public String pregledZajednickihStednji() {
-		//TODO
+	@GetMapping("/profil/zajednicke")
+	public String pregledZajednickihStednji(Principal principal, Model model) {
+		User user=userService.findByUsername(principal.getName()).get();
+		List<UsersCommonBalance> useroveStednje=uCBService.findByUser(user);
+		List<CommonBalance> zajednicke = useroveStednje.stream().filter(t->t.getStatus().equals(Status.ACCEPTED.name())).map(e->e.getCommonbalance()).collect(Collectors.toList());
+		
+		model.addAttribute("zajednicke", zajednicke);
 		return "zajednickeStednje";
 	}
 	
@@ -261,10 +290,65 @@ public class ProfilController {
 	
 	
 	
-	@PostMapping("/profil/stednje/zajednicke")
-	public void stvoriNovuZajednickuStednju() {
-		//TODO
+	@GetMapping("/profil/zajednicke/stvori")
+	public String showCommonBalanceForm(WebRequest request, Model model) {
+		CommonBalance common = new CommonBalance();
+		model.addAttribute("common", common);
+		return "newcommon";
+	}
+	
+	@PostMapping("/profil/zajednicke/stvori")
+	public ModelAndView stvoriNovuZajednicku(@ModelAttribute("common") @Valid CommonBalance common, BindingResult result,Principal principal,RedirectAttributes redir) {
 		
+		User user=userService.findByUsername(principal.getName()).get();
+		try {
+			common.setDate(formatiranjeDatuma(common.getDate()));
+		} catch (ParseException e) {
+		}
+		
+		if(common.getFunds()!=null){
+			if(common.getFunds()>user.getFunds()) {
+				result.rejectValue("funds", "savings.funds");
+			}
+		}
+		if(common.getFunds()!=null && common.getGoal()!=null) {
+			if(common.getGoal()<common.getFunds()) {
+				result.rejectValue("goal", "savings.goal");
+			}
+		}
+		
+		if(result.hasErrors()) {
+			return new ModelAndView("newcommon","common",common);
+		}else {
+
+			CommonBalance stvorena=commonBalanceService.createCommon(common);
+			Log log=new Log(null, Action.STVARANJE.name(), Calendar.getInstance().getTime(), common.getFunds());
+			log.setCbID(stvorena);
+			log.setUserID(user);
+			List<Log> logovi=new ArrayList<>();
+			logovi.add(logService.createLog(log));
+			stvorena.setLog(logovi);
+			UsersCommonBalanceId uCbId=new UsersCommonBalanceId(user.getId(), stvorena.getId());
+			UsersCommonBalance pomocni=uCBService.createUCB(new UsersCommonBalance(uCbId, user,stvorena, Status.ACCEPTED.name()));
+			List<UsersCommonBalance> korisnici=stvorena.getUsers();
+			korisnici.add(pomocni);
+			stvorena.setUsers(korisnici);
+			commonBalanceService.updateCommon(stvorena);
+			
+			user.setFunds(user.getFunds()-common.getFunds());
+			userService.updateUser(user);
+			redir.addFlashAttribute("successMsg","Uspješno ste stvorili novu zajedničku štednju");
+			return new ModelAndView("redirect:/profil/zajednicke");
+		}
+	}
+	
+	@GetMapping("/profil/zajednicke/zahtjevi")
+	public String dohvatiZahtjeve(Principal principal, Model model) {
+		User user=userService.findByUsername(principal.getName()).get();
+		List<UsersCommonBalance> useroveStednje=uCBService.findByUser(user);
+		List<CommonBalance> zahtjevi = useroveStednje.stream().filter(t->t.getStatus().equals(Status.WAITING.name())).map(e->e.getCommonbalance()).collect(Collectors.toList());
+		model.addAttribute("zahtjevi", zahtjevi);
+		return "zahtjevi";
 	}
 	
 	private Date formatiranjeDatuma(Date trenutniDatum) throws ParseException {
@@ -275,5 +359,9 @@ public class ProfilController {
 	    String formattedDate = datum.format(trenutniDatum);
 	    return noviDatum.parse(formattedDate+" "+formattedTime);
 	}
+
+	
+	
+	
 	
 }
