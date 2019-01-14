@@ -7,7 +7,7 @@
 	
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title >Početna</title>
+<title >Kategorije</title>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -75,7 +75,7 @@
        					<td>
        						<form th:action="@{/kategorije/izbrisi/{id}(id=${kategorija.id})}" method="post" >
               					
-              					<button type="submit" onClick="return confirm('Jeste li sigurni da želite obrisati označenu štednju?')" value="Delete" class="btn btn-danger"><span class="fas fa-trash-alt"></span></button>
+              					<button type="submit" onClick="return confirm('Jeste li sigurni da želite obrisati označenu kategoriju?')" value="Delete" class="btn btn-danger"><span class="fas fa-trash-alt"></span></button>
               					
            					</form>
        					</td>
