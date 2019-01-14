@@ -93,11 +93,11 @@
   
     <div class="jumbotron horizontal-center">
     	<div class="container">
-    		
+    		<h1 th:if="${not #lists.isEmpty(stednje)}" >Štednje</h1>
 	  		<th:block th:each="stednja: ${stednje}">
 	   			<tr>
 	      			<td>
-	      				<h1>Štednje</h1>
+	      				
 	      					<label th:text="${'Štednja: ' + stednja.info}"></label>
 	      					
 	      						<div class="progress  border border-success" th:with="napredak=${100 * (stednja.funds / stednja.goal)}">
@@ -113,11 +113,11 @@
 	
 	<div class="jumbotron horizontal-center">
     	<div class="container">
-    		
+    		<h1 th:if="${not #lists.isEmpty(zajednicke)}" >Zajedničke štednje</h1>
 	  		<th:block th:each="zajednicka: ${zajednicke}">
 	   			<tr>
 	      			<td>
-	      				<h1>Zajedničke štednje</h1>
+	      				
 	      					<label th:text="${'Zajednička štednja: ' + zajednicka.name}"></label>
 	      					
 	      						<div class="progress  border border-success" th:with="napredak=${100 * (zajednicka.funds / zajednicka.goal)}">
