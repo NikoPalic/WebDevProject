@@ -1,0 +1,158 @@
+/*
+DROP TABLE common_saving;
+
+
+DROP TABLE category;
+
+
+DROP TABLE log;
+
+
+DROP TABLE expenditure;
+
+
+DROP TABLE saving;
+
+
+DROP TABLE revenue;
+
+
+DROP TABLE users_category;
+
+
+DROP TABLE users;
+
+
+DROP TABLE users_common_saving;
+*/
+
+
+-- ************************************** users
+
+CREATE TABLE users
+(
+ user_id  serial NOT NULL ,
+ name     varchar(45) NOT NULL ,
+ surname  varchar(45) NOT NULL ,
+ e_mail   varchar(45) NOT NULL UNIQUE ,
+ password varchar(45) NOT NULL ,
+ username varchar(45) NOT NULL ,
+ funds    float NOT NULL ,
+PRIMARY KEY (user_id)
+);
+
+-- ************************************** common_saving
+
+CREATE TABLE common_saving
+(
+ cs_id      serial NOT NULL ,
+ funds      float NOT NULL ,
+ name       varchar(45) NOT NULL ,
+ info       varchar(45) NOT NULL ,
+ goal       float NOT NULL ,
+ start_date date NOT NULL ,
+PRIMARY KEY (cs_id)
+);
+
+
+-- ************************************** category
+
+CREATE TABLE category
+(
+ cat_id serial NOT NULL ,
+ name   varchar(45) NOT NULL ,
+ info   varchar(45) ,
+ tip    boolean NOT NULL ,
+PRIMARY KEY (cat_id)
+);
+
+-- ************************************** log
+
+CREATE TABLE log
+(
+ log_id  serial NOT NULL ,
+ action  varchar(45) NOT NULL ,
+ date    date NOT NULL ,
+ amount  float NOT NULL ,
+ user_id serial NOT NULL ,
+ cs_id   serial NOT NULL ,
+PRIMARY KEY (log_id),
+CONSTRAINT FK_116 FOREIGN KEY (user_id) REFERENCES users (user_id),
+CONSTRAINT FK_119 FOREIGN KEY (cs_id) REFERENCES common_saving (cs_id)
+);
+
+
+-- ************************************** expenditure
+
+CREATE TABLE expenditure
+(
+ exp_id  serial NOT NULL ,
+ name    varchar(45) NOT NULL ,
+ date    date NOT NULL ,
+ amount  float NOT NULL ,
+ info    varchar(45) ,
+ cat_id  serial NOT NULL ,
+ user_id serial NOT NULL ,
+PRIMARY KEY (exp_id),
+CONSTRAINT FK_103 FOREIGN KEY (cat_id) REFERENCES category (cat_id),
+CONSTRAINT FK_136 FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
+
+
+-- ************************************** saving
+
+CREATE TABLE saving
+(
+ sav_id     serial NOT NULL ,
+ start_date date NOT NULL ,
+ end_date   date NOT NULL ,
+ goal       float NOT NULL ,
+ info       varchar(45) ,
+ funds      float NOT NULL ,
+ user_id    serial NOT NULL ,
+PRIMARY KEY (sav_id),
+CONSTRAINT FK_142 FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
+
+
+
+
+
+
+-- ************************************** revenue
+
+CREATE TABLE revenue
+(
+ rev_id  serial NOT NULL ,
+ name    varchar(45) NOT NULL ,
+ date    date NOT NULL ,
+ amount  float NOT NULL ,
+ info    varchar(45) ,
+ cat_id  serial NOT NULL ,
+ user_id serial NOT NULL ,
+PRIMARY KEY (rev_id),
+CONSTRAINT FK_106 FOREIGN KEY (cat_id) REFERENCES category (cat_id),
+CONSTRAINT FK_139 FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
+
+
+-- ************************************** users_category
+
+CREATE TABLE users_category
+(
+ user_id serial NOT NULL ,
+ cat_id  serial NOT NULL ,
+CONSTRAINT FK_129 FOREIGN KEY (user_id) REFERENCES users (user_id),
+CONSTRAINT FK_132 FOREIGN KEY (cat_id) REFERENCES category (cat_id)
+);
+
+
+-- ************************************** users_common_saving
+
+CREATE TABLE users_common_saving
+(
+ user_id serial NOT NULL ,
+ cs_id   serial NOT NULL ,
+CONSTRAINT FK_94 FOREIGN KEY (user_id) REFERENCES users (user_id),
+CONSTRAINT FK_97 FOREIGN KEY (cs_id) REFERENCES common_saving (cs_id)
+);
