@@ -10,6 +10,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title >Prihodi</title>
   <style type="text/css">
+  .results tr[visible='false'],
+.no-result{
+  display:none;
+}
+
+.results tr[visible='true']{
+  display:table-row;
+}
+
+.counter{
+  padding:8px; 
+  color:#ccc;
+}
+.search{
+  padding-bottom: 1%;
+
+}
+.navbar{
+  margin-bottom: 1%;
+}
     .table{
       padding-top: 10px;
     }
@@ -48,10 +68,13 @@
 			<h1 th:text="${successMsg}"></h1>
 		</div>
 	</div>
+   <div class="form-group pull-right">
+    <input type="text" class="search form-control" placeholder="Pretraga">
+</div>
   <div class ="container">
     <div class="row mt-3">
       <div class ="col">
-        <table data-toggle ="table" data-classes="table table-hover table-condensed table-bordered" data-striped="true" data-sort-name="Datum"
+        <table data-toggle ="table" data-classes="table table-hover table-condensed table-bordered results" data-striped="true" data-sort-name="Datum"
        data-sort-order="asc">
     	   <thead class="thead-inverse">
         	<tr>
@@ -105,6 +128,7 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>    
   <script type="text/javascript" th:src="@{/js/sort.js}"></script>
   <script type="text/javascript" th:src="@{/js/close_alert.js}"></script>
+    <script type="text/javascript" th:src="@{/js/search.js}"></script>
 </html>
 
 	
