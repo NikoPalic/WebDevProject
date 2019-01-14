@@ -84,14 +84,14 @@
  
 
   
-  <div class="jumbotron jumbotron-fluid">
+  <div  class="jumbotron jumbotron-fluid">
       <div class="container">
         <h1 class="display-4">Dobro došli na praćenje troškova</h1>
         <p class="lead">Smanjite svoje troškove i uštedite s nama.</p>
       </div>
   </div>
   
-    <div class="jumbotron horizontal-center">
+    <div style="background:transparent !important" class="jumbotron horizontal-center">
     	<div class="container">
     		<h1 th:if="${not #lists.isEmpty(stednje)}" >Štednje</h1>
 	  		<th:block th:each="stednja: ${stednje}">
@@ -111,7 +111,7 @@
 	  	</div>
 	</div> 
 	
-	<div class="jumbotron horizontal-center">
+	<div style="background:transparent !important" class="jumbotron horizontal-center">
     	<div class="container">
     		<h1 th:if="${not #lists.isEmpty(zajednicke)}" >Zajedničke štednje</h1>
 	  		<th:block th:each="zajednicka: ${zajednicke}">
