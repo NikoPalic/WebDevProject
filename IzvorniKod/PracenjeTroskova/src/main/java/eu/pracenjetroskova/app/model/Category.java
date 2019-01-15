@@ -28,6 +28,10 @@ public class Category {
 	@Column(name="category_info")
 	private String info;
 	
+	@Column(name="category_type")
+	private String type;
+	
+	
 	@OneToMany(mappedBy = "categoryID")
 	private List<Expenditure> expenditure;
 	
@@ -44,11 +48,12 @@ public class Category {
 		
 	}
 
-	public Category(Long id, String name, String info) {
+	public Category(Long id, String name, String info, String type) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.info = info;
+		this.type=type;
 	}
 
 	public Long getId() {
@@ -74,6 +79,15 @@ public class Category {
 	public void setInfo(String info) {
 		this.info = info;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 	
 	
 
