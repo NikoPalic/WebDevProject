@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        body{
+        font-family: arial, helvetica, sans-serif;
+        font-size: 15px;
+        line-height: 1.5;
+        padding: 0;
+        margin-left: 25%;
+        margin-top: 10%;
+        margin-right: 25%;
+        min-width: 200px;
+    }
+    .allinputs{
+      width: 50%;
+      min-width: 200px;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .allinputs:hover{
+        border-color: green;
+    }   
+    .btn-outline-success{
+        margin-left: 20%;
+    }
+
+    .btn-outline-success:hover{
+        background-color: green;
+    }
+    .navbar{
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      margin-left: 0px;
+    }
+    </style>
+<body class="body">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    	<span class="navbar-toggler-icon"></span>
+  		</button>
+
+		
+  		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    		<ul class="navbar-nav mr-auto">
+      			<li class="nav-item active">
+        			<a class="nav-link" th:href="@{/}">Početna <span class="sr-only">(current)</span></a>
+      			</li>
+      			<li class="nav-item active">
+        			<a class="nav-link" href="/profil">Profil<span class="sr-only">(current)</span></a>
+      			</li>
+      			<li class="nav-item active">
+        			<a class="nav-link" href="/profil/stednje">Štednje <span class="sr-only">(current)</span></a>
+      			</li>
+   			</ul>
+			<a class="nav-item active mr-sm-2 my-2 my-sm-0" th:inline="text">Korisnik [[${#httpServletRequest.remoteUser}]]  </a>				   			
+   			<form th:action="@{/logout}" method="post">
+           		 <input type="submit" value="Odjavi se" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0"/>
+        	</form>
+  		
+	</nav>
+	<h1 >Uplaćivanje novaca</h1>
+<form action="#" th:action="@{/stednje/prebaci}"th:object="${transaction}" method="POST" enctype="utf8">
+    <div>
+        <input th:field="*{amount}" class = "allinputs" placeholder="Unesite iznos" />
+        <span  th:each="error: ${#fields.errors('amount')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
+    </div>
+  	<div>
+    	<input type="hidden" th:field="*{id}" />
+    </div>
+   
+    <button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Uplati</button>
+</form>
+ 
+<a th:href="@{/profil/stednje}" >Natrag na pregled štednji</a>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

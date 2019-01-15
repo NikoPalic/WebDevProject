@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import eu.pracenjetroskova.app.dto.Korisnik;
+import eu.pracenjetroskova.app.dto.Transakcija;
 import eu.pracenjetroskova.app.enumeration.Status;
 import eu.pracenjetroskova.app.model.CommonBalance;
 import eu.pracenjetroskova.app.model.Savings;
@@ -75,10 +76,43 @@ public class SavingsController {
 		//TODO
 	}
 
-	@PostMapping("/prebaci")
-	public void prebaciNovacSBlagaje() {
-		//TODO
+	@GetMapping("/prebaci/{id}")
+	public String prebaciNovacSBlagajneForm(@PathVariable Long id, Principal principal,Model model) {
+		Transakcija transaction=new Transakcija();
+		transaction.setId(id);
+		model.addAttribute("transaction", transaction);
+		return "newtransaction";
 	}
+	
+	@PostMapping("/prebaci")
+	public String prebaciNaStednju(@ModelAttribute("transaction") @Valid Transakcija transaction, BindingResult result, Principal principal, Model model,RedirectAttributes redir) {
+		User user=userService.findByUsername(principal.getName()).get();
+		if(transaction.getAmount()>user.getFunds()) {
+			result.rejectValue("amount", "newtransaction.transaction.amount");
+		}
+		if(result.hasErrors()) {
+			model.addAttribute("transaction", transaction);
+			return "newtransaction";
+		}else {
+			Savings stednja=savingsService.findById(transaction.getId()).get();
+			if(stednja.getFunds()+transaction.getAmount()>stednja.getGoal()) {
+				stednja.setFunds(stednja.getGoal());
+				user.setFunds(user.getFunds()-(stednja.getGoal()-stednja.getFunds()));
+				redir.addFlashAttribute("successMsg", "Uspješno ste uplatili novce u štednju "+stednja.getInfo()+"! Višak novaca je vraćen u blagajnu!");
+			}else {
+				stednja.setFunds(stednja.getFunds()+transaction.getAmount());
+				user.setFunds(user.getFunds()-transaction.getAmount());
+				redir.addFlashAttribute("successMsg", "Uspješno ste uplatili "+transaction.getAmount()+" u štednju: "+stednja.getInfo());
+			}
+			savingsService.saveRevenue(stednja);
+			userService.updateUser(user);
+			return "redirect:/profil/stednje";
+		}
+		
+		
+		
+	}
+	
 	
 	@PostMapping("/zajednicke/prihvati/{id}")
 	public String prihvatiZahtjev(@PathVariable Long id, Principal principal,RedirectAttributes redir) {
