@@ -27,6 +27,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -97,7 +99,27 @@ public class ProfilController {
 		model.addAttribute("expenditures", expenditures);
 		return "home";
 	}
-
+	
+	@RequestMapping(value = "/metric-graph-data", method = RequestMethod.GET)
+	@ResponseBody
+	public Object [][] getGraphData(Principal principal){
+		User user = userService.findByUsername(principal.getName()).get();
+		List<Expenditure> expenditures=expenditureService.findByUserID(user);
+		Object [][] result = new Object [expenditures.size()+1][2];
+		result[0][0]="Ime";
+		result[0][1]="Iznos";
+		
+		int i = 1;
+		for(Expenditure e : expenditures) {
+			result[i][0] = e.getName();
+			result[i][1] = e.getAmount();
+			i++;
+		}
+		for (Object[] objects : result) {
+			System.out.println(objects.toString());
+		}
+		return result;
+	}
 
 	@GetMapping("/profil")
 	public String mojProfil(Principal principal,WebRequest request, Model model) {

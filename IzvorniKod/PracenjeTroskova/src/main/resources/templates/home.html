@@ -41,7 +41,7 @@
 	<div class="showcase-right">
 	<div class="jumbotron jumbotron-fluid">
   		<div class="container">
-    		<h1 class="display-4">Dobro došli na praćenje troškova</h1>
+    		<h1 class="display-4">Dobro došli na Praćenje troškova</h1>
     		<p class="lead">Pridružite nam se i pomozite sami sebi.</p>
   		</div>
 	</div>
@@ -79,5 +79,43 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+		google.charts.load('current', {'packages':['corechart']});
+		google.charts.setOnLoadCallback(drawChart);
+		function drawChart() {
+			$.get("/metric-graph-data",function(mydata) {
+			    var data = google.visualization.arrayToDataTable(mydata);
+			    var options = {
+			            title : 'Potrošnja',
+			            is3D : true,
+			            pieSliceText: 'label',
+			            tooltip :  {showColorCode: true},
+			            width : 700,
+			            height : 500
+			        };
+			 
+			    var chart = new google.visualization.PieChart(document.getElementById('piechart_div'));
+			    chart.draw(data, options);
+			    var barchart_options = {title:'Potrošnja',
+	                       width:700,
+	                       height:500,
+	                       legend: 'none'};
+	        var barchart = new google.visualization.BarChart(document.getElementById('barchart_div'));
+	        barchart.draw(data, barchart_options);
+			 
+			});
+			 
+			}
+		
+	</script>
+	<table class="table table-borderless">
+      <tr>
+        <td><div id="piechart_div" style="border: 1px solid #ccc"></div></td>
+        <td><div id="barchart_div" style="border: 1px solid #ccc"></div></td>
+      </tr>
+    </table>
+</body>
 </body>
 </html>
