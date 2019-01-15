@@ -1,5 +1,7 @@
 package eu.pracenjetroskova.app.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,12 @@ public class LogServiceImpl implements LogService{
 	@Override
 	public Log createLog(Log log) {
 		return logRepository.save(log);
+	}
+
+	@Override
+	public void deleteALl(List<Log> logs) {
+		logRepository.deleteAll(logs);
+		
 	}
 	
 	

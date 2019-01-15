@@ -73,6 +73,8 @@
                 <th>Isplata</th>
                 <th>Pozovi</th>
                 <th>Info</th>
+                <th>Izlaz</th>
+                
                    
             </tr>
             </thead>
@@ -111,6 +113,14 @@
        					<td>
            					<form th:action="@{/stednje/zajednicke/{id}(id=${zajednicka.id})}" method="get" >
               					<button type="submit" value="Info" class="btn btn-outline-primary"><span class="fas fa-info"></span></button>
+              					
+              					
+           					</form>
+           					
+       					</td>
+       					<td>
+           					<form th:action="@{/stednje/zajednicke/izadi/{id}(id=${zajednicka.id})}" method="post" >
+              					<button type="submit" onClick="return confirm('Jeste li sigurni da želite izaći iz zajedničke štednje?')" value="Info" class="btn btn-outline-danger"><span class="fas fa-user-alt-slash"></span></button>
               					
               					
            					</form>

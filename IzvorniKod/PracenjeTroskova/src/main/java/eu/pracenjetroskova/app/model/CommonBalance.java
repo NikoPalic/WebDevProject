@@ -147,6 +147,8 @@ public class CommonBalance {
 		this.date = date;
 	}
 	
-	
+	public void deleteMember(UsersCommonBalance user) {
+		this.users.remove(user);
+	}
 
 }

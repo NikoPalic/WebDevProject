@@ -39,6 +39,12 @@ public class CommonBalanceServiceImpl implements CommonBalanceService{
 	public List<CommonBalance> findAllById(List<Long> ids) {
 		return commonBalanceRepository.findAllById(ids);
 	}
+
+	@Override
+	public void deleteBallance(CommonBalance commonBalance) {
+		commonBalanceRepository.delete(commonBalance);
+		
+	}
 	
 	
 

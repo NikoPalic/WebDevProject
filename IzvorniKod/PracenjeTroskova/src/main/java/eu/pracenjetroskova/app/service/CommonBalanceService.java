@@ -11,4 +11,5 @@ public interface CommonBalanceService {
 	Optional<CommonBalance> findById(Long id);
 	CommonBalance updateCommon (CommonBalance commonBalance);
 	List<CommonBalance> findAllById(List<Long> ids);
+	void deleteBallance(CommonBalance commonBalance);
 }

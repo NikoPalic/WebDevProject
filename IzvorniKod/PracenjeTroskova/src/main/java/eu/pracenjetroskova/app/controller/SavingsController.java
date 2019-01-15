@@ -63,8 +63,30 @@ public class SavingsController {
 		this.logService = logService;
 	}
 
-
-
+	@PostMapping("/zajednicke/izadi/{id}")
+	public String izadiIzZajednicke(@PathVariable Long id, Principal principal, Model model, RedirectAttributes redir) {
+		User user=userService.findByUsername(principal.getName()).get();
+		CommonBalance zajednicka=commonBalanceService.findById(id).get();
+		List<UsersCommonBalance> zapisi=uCBService.findByUser(user);
+		UsersCommonBalance mojZapis=zapisi.stream().filter(e->e.getCommonbalance().equals(zajednicka)).findFirst().get();
+		List<UsersCommonBalance> korisnici=zajednicka.getUsers().stream().filter(e->e.getStatus().equals(Status.ACCEPTED.name())).collect(Collectors.toList());
+		if(korisnici.size()==1) {
+			user.setFunds(user.getFunds()+zajednicka.getFunds());
+			korisnici.remove(mojZapis);
+			List<Log> logovi=zajednicka.getLog();
+			logService.deleteALl(logovi);
+			commonBalanceService.deleteBallance(zajednicka);
+			redir.addFlashAttribute("successMsg", "Uspješan izlazak! Bili ste posljednji korisnik te su vam preostala sredstva isplaćena u blagajnu!");
+			
+		}else {
+			korisnici.remove(mojZapis);
+			zajednicka.deleteMember(mojZapis);
+			commonBalanceService.updateCommon(zajednicka);
+			redir.addFlashAttribute("successMsg", "Uspješno ste izašli iz štednje!");
+		}
+		userService.updateUser(user);
+		return "redirect:/profil/zajednicke";
+	}
 
 	@GetMapping("/zajednicke/{id}")
 	public String infoForm(@PathVariable Long id, Principal principal, Model model) {
