@@ -90,7 +90,13 @@ public class ProfilController {
 	}
 
 
-
+	@GetMapping("/")
+	public String homepage(Principal principal,Model model) {
+		User user = userService.findByUsername(principal.getName()).get();
+		List<Expenditure> expenditures=expenditureService.findByUserID(user);
+		model.addAttribute("expenditures", expenditures);
+		return "home";
+	}
 
 
 	@GetMapping("/profil")
