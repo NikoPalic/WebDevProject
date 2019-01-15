@@ -105,7 +105,7 @@
         				<td th:text="${kategorija.type!=null}?${kategorija.type}:'NIJE UPISANA'">...</td>
         				<td>
            					<form th:action="@{/kategorije/osvjezi/{id}(id=${kategorija.id})}" method="get" >
-              					<button type="submit" value="Update" class="btn btn-info"><span class="fas fa-pencil-alt"></span></button>
+              					<button type="submit" value="Update" class="btn btn-outline-primary"><span class="fas fa-pencil-alt"></span></button>
               					
               					
            					</form>
@@ -114,7 +114,7 @@
        					<td>
        						<form th:action="@{/kategorije/izbrisi/{id}(id=${kategorija.id})}" method="post" >
               					
-              					<button type="submit" onClick="return confirm('Jeste li sigurni da želite obrisati označenu kategoriju?')" value="Delete" class="btn btn-danger"><span class="fas fa-trash-alt"></span></button>
+              					<button type="submit" onClick="return confirm('Jeste li sigurni da želite obrisati označenu kategoriju?')" value="Delete" class="btn btn-outline-danger"><span class="fas fa-trash-alt"></span></button>
               					
            					</form>
        					</td>

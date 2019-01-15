@@ -106,7 +106,7 @@
         				<td th:text="${prihod.categoryID!=null}?${prihod.categoryID?.name}:'NIJE UPISANA'"></td>
         				<td>
            					<form th:action="@{/prihodi/osvjezi/{id}(id=${prihod.id})}" method="get" >
-              					<button type="submit" value="Update" class="btn btn-info"><span class="fas fa-pencil-alt"></span></button>
+              					<button type="submit" value="Update" class="btn btn-outline-primary"><span class="fas fa-pencil-alt"></span></button>
               					
               					
            					</form>
@@ -115,7 +115,7 @@
        					<td>
        						<form th:action="@{/prihodi/izbrisi/{id}(id=${prihod.id})}" method="post" >
               					
-              					<button type="submit" onClick="return confirm('Jeste li sigurni da želite obrisati označeni prihod?')" value="Delete" class="btn btn-danger"><span class="fas fa-trash-alt"></span></button>
+              					<button type="submit" onClick="return confirm('Jeste li sigurni da želite obrisati označeni prihod?')" value="Delete" class="btn btn-outline-danger"><span class="fas fa-trash-alt"></span></button>
               					
            					</form>
        					</td>
