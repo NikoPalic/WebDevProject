@@ -23,16 +23,17 @@
   padding:8px; 
   color:#ccc;
 }
-.search{
-  padding-bottom: 1%;
-
-}
 .navbar{
   margin-bottom: 1%;
 }
     .table{
       padding-top: 10px;
     }
+.search{
+  width: 20%;
+  min-width: 200px;
+  justify-content: center;
+}
   </style>
 </head>
 <body>
@@ -54,6 +55,7 @@
         			<a class="nav-link" href="/profil/prihodi/stvori">Novi prihod <span class="sr-only">(current)</span></a>
       			</li>
    			</ul>
+        <input type="text" class="search form-control mr-sm-2 my-2 my-sm-0" placeholder="Pretraga">
 			<a class="nav-item active mr-sm-2 my-2 my-sm-0" th:inline="text">Korisnik [[${#httpServletRequest.remoteUser}]]  </a>
 						   			
    			<form th:action="@{/logout}" method="post">
@@ -68,9 +70,6 @@
 			<h1 th:text="${successMsg}"></h1>
 		</div>
 	</div>
-   <div class="form-group pull-right">
-    <input type="text" class="search form-control" placeholder="Pretraga">
-</div>
   <div class ="container">
     <div class="row mt-3">
       <div class ="col">

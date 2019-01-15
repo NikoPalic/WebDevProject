@@ -22,12 +22,14 @@
   padding:8px; 
   color:#ccc;
 }
-.search{
-  padding-bottom: 1%;
 
-}
 .navbar{
   margin-bottom: 1%;
+}
+.search{
+  width: 20%;
+  min-width: 200px;
+  justify-content: center;
 }
 </style>
 </head>
@@ -50,6 +52,7 @@
         			<a class="nav-link" href="/profil/kategorije/stvori">Nova kategorija <span class="sr-only">(current)</span></a>
       			</li>
    			</ul>
+        <input type="text" class="search form-control mr-sm-2 my-2 my-sm-0" placeholder="Pretraga">
 			<a class="nav-item active mr-sm-2 my-2 my-sm-0" th:inline="text">Korisnik [[${#httpServletRequest.remoteUser}]]  </a>
 						   			
    			<form th:action="@{/logout}" method="post">
