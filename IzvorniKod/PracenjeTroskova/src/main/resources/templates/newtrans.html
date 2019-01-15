@@ -71,7 +71,7 @@
   		
 	</nav>
 	<h1 >Transakcija</h1>
-<form action="#" th:action="@{/stednje/prebaci}"th:object="${transaction}" method="POST" enctype="utf8">
+<form action="#" th:action="@{/stednje/povuci}"th:object="${transaction}" method="POST" enctype="utf8">
     <div>
         <input th:field="*{amount}" class = "allinputs" placeholder="Unesite iznos" />
         <span  th:each="error: ${#fields.errors('amount')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
@@ -80,7 +80,7 @@
     	<input type="hidden" th:field="*{id}" />
     </div>
    
-    <button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Uplati</button>
+    <button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Isplati</button>
 </form>
  
 <a th:href="@{/profil/stednje}" >Natrag na pregled štednji</a>

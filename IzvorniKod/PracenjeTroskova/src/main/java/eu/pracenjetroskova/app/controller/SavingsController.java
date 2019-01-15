@@ -71,9 +71,36 @@ public class SavingsController {
 		return new ArrayList<String>();
 	}
 	
+	@GetMapping("/povuci/{id}")
+	public String povuciForm(@PathVariable Long id, Principal principal,Model model) {
+		Transakcija transaction=new Transakcija();
+		transaction.setId(id);
+		model.addAttribute("transaction", transaction);
+		return "newtrans";
+	}
+	
 	@PostMapping("/povuci")
-	public void povuciNovacSaStednje() {
-		//TODO
+	public String povuciNovacSaStednje(@ModelAttribute("transaction") @Valid Transakcija transaction, BindingResult result, Principal principal, Model model,RedirectAttributes redir) {
+		User user=userService.findByUsername(principal.getName()).get();
+		Savings stednja=savingsService.findById(transaction.getId()).get();
+		if(transaction.getAmount()!=null) {
+			if(transaction.getAmount()>stednja.getFunds()) {
+				result.rejectValue("amount", "newtransaction.transaction.funds");
+			}
+			
+		}
+		
+		if(result.hasErrors()) {
+			model.addAttribute("transaction", transaction);
+			return "newtrans";
+		}else {
+			stednja.setFunds(stednja.getFunds()-transaction.getAmount());
+			user.setFunds(user.getFunds()+transaction.getAmount());
+			redir.addFlashAttribute("successMsg", "Uspješno ste isplatili "+transaction.getAmount()+" sa štednje: "+stednja.getInfo());
+			savingsService.saveRevenue(stednja);
+			userService.updateUser(user);
+			return "redirect:/profil/stednje";
+		}
 	}
 
 	@GetMapping("/prebaci/{id}")
@@ -87,8 +114,11 @@ public class SavingsController {
 	@PostMapping("/prebaci")
 	public String prebaciNaStednju(@ModelAttribute("transaction") @Valid Transakcija transaction, BindingResult result, Principal principal, Model model,RedirectAttributes redir) {
 		User user=userService.findByUsername(principal.getName()).get();
-		if(transaction.getAmount()>user.getFunds()) {
-			result.rejectValue("amount", "newtransaction.transaction.amount");
+		if(transaction.getAmount()!=null) {
+			if(transaction.getAmount()>user.getFunds()) {
+				result.rejectValue("amount", "newtransaction.transaction.amount");
+			}
+			
 		}
 		if(result.hasErrors()) {
 			model.addAttribute("transaction", transaction);

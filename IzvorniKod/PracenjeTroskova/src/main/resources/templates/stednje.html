@@ -75,7 +75,7 @@
 			<h1 th:text="${successMsg}"></h1>
 		</div>
 	</div>
-    <table data-toggle ="table" data-classes="table table-hover table-condensed table-bordered results" data-striped="true" data-sort-name="Datum_Kraja"
+    <table data-toggle ="table" data-classes="table table-hover table-condensed table-bordered text-center results" data-striped="true" data-sort-name="Datum_Kraja"
        data-sort-order="asc">
     	<thead class="thead-inverse">
         	<tr>
@@ -84,8 +84,11 @@
                 <th class = "col-xs-1" data-field="Cilj" data-sortable="true">Cilj</th>
                 <th class = "col-xs-1" data-field="Opis" data-sortable="true">Opis</th>
                 <th class = "col-xs-1" data-field="Sredstva" data-sortable="true">Sredstva</th>
+                <th>Uplata</th>
+                <th>Isplata</th>
                 <th >Uredi</th>
                 <th>Obriši</th>
+                
                    
             </tr>
             </thead>
@@ -97,6 +100,22 @@
         				<td th:text="${stednja.goal}">...</td>
         				<td th:text="${stednja.info}">...</td>
         				<td th:text="${stednja.funds}">...</td>
+        				<td>
+           					<form th:action="@{/stednje/prebaci/{id}(id=${stednja.id})}" method="get" >
+              					<button type="submit" value="Uplati" class="btn btn-outline-primary"><span class="fas fa-money-bill-alt"></span></button>
+              					
+              					
+           					</form>
+           					
+       					</td>
+       					<td>
+           					<form th:action="@{/stednje/povuci/{id}(id=${stednja.id})}" method="get" >
+              					<button type="submit" value="Uplati" class="btn btn-outline-primary"><span class="fas fa-hand-holding-usd"></span></button>
+              					
+              					
+           					</form>
+           					
+       					</td>
         				<td>
            					<form th:action="@{/stednje/osvjezi/{id}(id=${stednja.id})}" method="get" >
               					<button type="submit" value="Update" class="btn btn-outline-primary"><span class="fas fa-pencil-alt"></span></button>
@@ -112,6 +131,7 @@
               					
            					</form>
        					</td>
+       					
                     </tr>
                 </th:block>
             </tbody>
