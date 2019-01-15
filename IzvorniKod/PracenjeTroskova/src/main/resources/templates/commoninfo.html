@@ -39,6 +39,9 @@
         			<a class="nav-link" href="/profil">Profil <span class="sr-only">(current)</span></a>
       			</li>
       			<li class="nav-item active">
+        			<a class="nav-link" href="/profil/zajednicke">Zajedničke štednje <span class="sr-only">(current)</span></a>
+      			</li>
+      			<li class="nav-item active">
         			<a class="nav-link" href="/profil/zajednicke/stvori">Nova zajednička štednja <span class="sr-only">(current)</span></a>
       			</li>
       			<li class="nav-item active">
@@ -64,45 +67,56 @@
        data-sort-order="asc">
     	<thead class="thead-inverse">
         	<tr>
-        		<th class = "col-xs-1" data-field="Naziv" data-sortable="true">Naziv</th>
-            	<th class = "col-xs-1" data-field="Opis" data-sortable="true">Opis</th>
+        		<th class = "col-xs-1" data-field="Akcija" data-sortable="true">Akcija</th>
             	<th class = "col-xs-1" data-field="Datum" data-sortable="true">Datum</th>
                 <th class = "col-xs-1" data-field="Sredstva" data-sortable="true">Sredstva</th>
-                <th class = "col-xs-1" data-field="Cilj" data-sortable="true">Cilj</th>
-                <th>Pozovi</th>
-                <th>Info</th>
+                <th class = "col-xs-1" data-field="Korisnik" data-sortable="true">Korisnik</th>
+                
                    
             </tr>
             </thead>
             <tbody>
-            	<th:block th:each="zajednicka : ${zajednicke}">
+            	<th:block th:each="log : ${logovi}">
                     <tr>
-        				<td th:text="${zajednicka.name}">...</td>
-        				<td th:text="${zajednicka.info}">...</td>
-        				<td th:text="${#dates.format(zajednicka.date,'dd.MM.yyyy')}">...</td>
-        				<td th:text="${zajednicka.funds}">...</td>
-        				<td th:text="${zajednicka.goal}">...</td>
-        				<td>
-           					<form th:action="@{/stednje/zajednicke/pozovi/{id}(id=${zajednicka.id})}" method="get" >
-              					<button type="submit" value="Update" class="btn btn-outline-primary"><span class="fas fa-user-plus"></span></button>
-              					
-              					
-           					</form>
-           					
-       					</td>
-       					<td>
-           					<form th:action="@{/stednje/zajednicke/{id}(id=${zajednicka.id})}" method="get" >
-              					<button type="submit" value="Info" class="btn btn-outline-primary"><span class="fas fa-info"></span></button>
-              					
-              					
-           					</form>
-           					
-       					</td>
+        				<td th:text="${log.action}">...</td>
+        				<td th:text="${#dates.format(log.date,'dd.MM.yyyy')}">...</td>
+        				<td th:text="${log.amount}">...</td>
+        				<td th:text="${log.userID.username}">...</td>
+        				
                     </tr>
                 </th:block>
             </tbody>
 	</table>
 </div>
+
+<div style="background:transparent !important" class="jumbotron">
+	<div>
+		<h3>Korisnici u štednji:</h3>
+		<div>
+			<table data-toggle ="table" data-classes="table table-hover table-condensed table-bordered text-center results" data-striped="true" data-sort-name="Korisnik" data-sort-order="asc">
+				<thead class="thead-inverse">
+					<tr>
+						<th class = "col-xs-1" data-field="Korisnik" data-sortable="true">Korisnik</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<th:block th:each="korisnik: ${korisnici}">
+		
+						<tr>
+							<td  th:text="${korisnik.username}">...</td>
+		
+						</tr>
+	
+					</th:block>
+				</tbody>
+				
+			</table>
+		</div>
+	</div>
+
+</div>
+
 </body>
 <script src="//code.jquery.com/jquery.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>    

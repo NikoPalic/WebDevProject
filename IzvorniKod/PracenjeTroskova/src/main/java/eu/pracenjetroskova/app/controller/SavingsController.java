@@ -29,6 +29,7 @@ import eu.pracenjetroskova.app.dto.Korisnik;
 import eu.pracenjetroskova.app.dto.Transakcija;
 import eu.pracenjetroskova.app.enumeration.Status;
 import eu.pracenjetroskova.app.model.CommonBalance;
+import eu.pracenjetroskova.app.model.Log;
 import eu.pracenjetroskova.app.model.Savings;
 import eu.pracenjetroskova.app.model.User;
 import eu.pracenjetroskova.app.model.UsersCommonBalance;
@@ -65,10 +66,16 @@ public class SavingsController {
 		//TODO
 		return "unosi";
 	}
-	@GetMapping("/zajednicke")
-	public List<String> prikazLogaZaZajednickuStednju(){
-		//TODO
-		return new ArrayList<String>();
+	
+	@GetMapping("/zajednicke/{id}")
+	public String infoForm(@PathVariable Long id, Principal principal, Model model) {
+		CommonBalance zajednicka=commonBalanceService.findById(id).get();
+		List<UsersCommonBalance> zapisi=zajednicka.getUsers();
+		List<User> korisnici=zapisi.stream().map(e->e.getUser()).collect(Collectors.toList());
+		List<Log> logovi=zajednicka.getLog();
+		model.addAttribute("logovi", logovi);
+		model.addAttribute("korisnici", korisnici);
+		return "commoninfo";
 	}
 	
 	@GetMapping("/povuci/{id}")

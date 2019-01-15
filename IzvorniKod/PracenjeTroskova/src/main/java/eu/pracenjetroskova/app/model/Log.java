@@ -37,6 +37,11 @@ public class Log {
 	@JoinColumn(name="common_balance_id")
 	private CommonBalance cbID;
 
+	
+	
+	public Log() {
+	}
+
 	public Log(Long id, String action, Date date, Double amount) {
 		super();
 		this.id = id;
