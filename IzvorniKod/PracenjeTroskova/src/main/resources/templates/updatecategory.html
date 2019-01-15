@@ -99,7 +99,19 @@
         <input th:field="*{info}" class = "allinputs" th:value="${editkategorija.info}" />
         <span  th:each="error: ${#fields.errors('info')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
-  
+  	<div>
+        <select class="dropdown" th:field="*{type}" >
+            <option 
+                    th:text="${'Trošak'}"
+                    th:value="${'Trošak'}"
+            ></option>
+             <option 
+                    th:text="${'Prihod'}"
+                    th:value="${'Prihod'}"
+            ></option>
+            
+        </select>
+    </div>
 
    
     <button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Spremi</button>

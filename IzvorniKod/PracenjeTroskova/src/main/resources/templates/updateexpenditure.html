@@ -112,7 +112,7 @@
     <div>
     	
         <select class="dropdown" th:field="*{categoryID.id}">
-            <option th:each="kategorija : ${kategorije}"
+            <option th:each="kategorija : ${kategorije.?[type=='Trošak']}"
                     th:text="${kategorija.name}"
                     th:value="${kategorija.id}"
             ></option>

@@ -43,6 +43,17 @@
       width: 100%;
       margin-left: 0px;
     }
+    .dropdown{
+        width: 50%;
+        margin-bottom: 8px;
+        margin-top: 8px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        padding-left: 12px;
+    }
     </style>
 <body class="body">
 <h1 >Kategorije</h1>
@@ -80,7 +91,19 @@
         <input th:field="*{info}" class = "allinputs" placeholder="Unesite opis" />
         <span  th:each="error: ${#fields.errors('info')}" th:text="${error}" class="alert alert-danger col-sm-4" ></span>
     </div>
-   
+   <div>
+        <select class="dropdown" th:field="*{type}" >
+            <option 
+                    th:text="${'Trošak'}"
+                    th:value="${'Trošak'}"
+            ></option>
+             <option 
+                    th:text="${'Prihod'}"
+                    th:value="${'Prihod'}"
+            ></option>
+            
+        </select>
+    </div>
     <button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Stvori</button>
 </form>
  

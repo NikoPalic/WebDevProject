@@ -88,6 +88,7 @@
         	<tr>
                 <th class = "col-xs-1" data-field="Naziv" data-sortable="true">Naziv</th>
                 <th class = "col-xs-1" data-field="Opis" data-sortable="true">Opis</th>
+                <th class = "col-xs-1" data-field="tip" data-sortable="true">Tip</th>
                 <th>Uredi</th>
                 <th>Obriši</th>
                    
@@ -101,6 +102,7 @@
                     <tr>
                         <td th:text="${kategorija.name}">...</td>
         				<td th:text="${kategorija.info}">...</td>
+        				<td th:text="${kategorija.type!=null}?${kategorija.type}:'NIJE UPISANA'">...</td>
         				<td>
            					<form th:action="@{/kategorije/osvjezi/{id}(id=${kategorija.id})}" method="get" >
               					<button type="submit" value="Update" class="btn btn-info"><span class="fas fa-pencil-alt"></span></button>
