@@ -54,21 +54,42 @@
           <li class="nav-item active">
               <a class="nav-link" th:href="@{/}">Početna <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="/profil/prihodi">Prihodi <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="/profil/stednje">Štednje <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="/profil/zajednicke">Zajedničke štednje <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="/profil/troskovi">Troškovi <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="/profil/kategorije">Kategorije <span class="sr-only">(current)</span></a>
-            </li>
+            <li class="nav-item active dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Prihod</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/profil/prihodi">Prihodi</a>
+            <a class="dropdown-item" href="/profil/prihodi/stvori">Novi Prihod</a>
+            </div>
+          </li>
+          <li class="nav-item active dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Štednja</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/profil/stednje">Štednje</a>
+            <a class="dropdown-item" href="/profil/stednje/stvori">Nova Štednja</a>
+            </div>
+          </li>
+          <li class="nav-item active dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Zajednička Štednja</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/profil/zajednicke">Zajedničke Štednje</a>
+            <a class="dropdown-item" href="/profil/zajednicke/stvori">Nova Zajednička Štednja</a>
+            <a class="dropdown-item" href="/profil/zajednicke/zahtjevi"></a>
+            </div>
+          </li>
+          <li class="nav-item active dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Trošak</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/profil/troskovi">Troškovi</a>
+            <a class="dropdown-item" href="/profil/troskovi/stvori">Novi Trošak</a>
+            </div>
+          </li>
+          <li class="nav-item active dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kategorija</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/profil/kategorije">Kategorije</a>
+            <a class="dropdown-item" href="/profil/kategorije/stvori">Nova Kategorija</a>
+            </div>
+          </li>
         </ul>
         <a class="nav-item active mr-sm-2 my-2 my-sm-0" th:inline="text" th:text="${'Sredstva: ' + #numbers.formatDecimal(funds, 1, 'DEFAULT', 2, 'DEFAULT')}"></a>
 
