@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import eu.pracenjetroskova.app.dto.Korisnik;
 import eu.pracenjetroskova.app.dto.Transakcija;
+import eu.pracenjetroskova.app.enumeration.Action;
 import eu.pracenjetroskova.app.enumeration.Status;
 import eu.pracenjetroskova.app.model.CommonBalance;
 import eu.pracenjetroskova.app.model.Log;
@@ -35,6 +36,7 @@ import eu.pracenjetroskova.app.model.User;
 import eu.pracenjetroskova.app.model.UsersCommonBalance;
 import eu.pracenjetroskova.app.model.UsersCommonBalanceId;
 import eu.pracenjetroskova.app.service.CommonBalanceService;
+import eu.pracenjetroskova.app.service.LogService;
 import eu.pracenjetroskova.app.service.SavingsService;
 import eu.pracenjetroskova.app.service.UserService;
 import eu.pracenjetroskova.app.service.UsersCommonBalanceService;
@@ -48,25 +50,22 @@ public class SavingsController {
 	private final UserService userService;
 	private final UsersCommonBalanceService uCBService;
 	private final CommonBalanceService commonBalanceService;
+	private final LogService logService;
 	
 	@Autowired
 	public SavingsController(SavingsService savingsService, UserService userService,
-			UsersCommonBalanceService uCBService, CommonBalanceService commonBalanceService) {
+			UsersCommonBalanceService uCBService, CommonBalanceService commonBalanceService, LogService logService) {
 		super();
 		this.savingsService = savingsService;
 		this.userService = userService;
 		this.uCBService = uCBService;
 		this.commonBalanceService = commonBalanceService;
+		this.logService = logService;
 	}
 
 
 
-	@GetMapping
-	public String prikazSvihUnosa() {
-		//TODO
-		return "unosi";
-	}
-	
+
 	@GetMapping("/zajednicke/{id}")
 	public String infoForm(@PathVariable Long id, Principal principal, Model model) {
 		CommonBalance zajednicka=commonBalanceService.findById(id).get();
@@ -76,6 +75,94 @@ public class SavingsController {
 		model.addAttribute("logovi", logovi);
 		model.addAttribute("korisnici", korisnici);
 		return "commoninfo";
+	}
+	
+	@GetMapping("/zajednicke/prebaci/{id}")
+	public String prebaciZajednickaForm(@PathVariable Long id, Principal principal,Model model) {
+		Transakcija transaction=new Transakcija();
+		transaction.setId(id);
+		model.addAttribute("transaction", transaction);
+		return "newcommontransaction";
+	}
+	
+	@PostMapping("/zajednicke/prebaci")
+	public String prebaciNaZajednicku(@ModelAttribute("transaction") @Valid Transakcija transaction, BindingResult result, Principal principal, Model model,RedirectAttributes redir) {
+		User user=userService.findByUsername(principal.getName()).get();
+		if(transaction.getAmount()!=null) {
+			if(transaction.getAmount()>user.getFunds()) {
+				result.rejectValue("amount", "newtransaction.transaction.amount");
+			}
+			
+		}
+		if(result.hasErrors()) {
+			model.addAttribute("transaction", transaction);
+			return "newcommontransaction";
+		}else {
+			CommonBalance stednja=commonBalanceService.findById(transaction.getId()).get();
+			Double uplaceniIznos=0.0;
+			if(stednja.getFunds()+transaction.getAmount()>stednja.getGoal()) {
+				stednja.setFunds(stednja.getGoal());
+				user.setFunds(user.getFunds()-(stednja.getGoal()-stednja.getFunds()));
+				uplaceniIznos=stednja.getGoal()-stednja.getFunds();
+				redir.addFlashAttribute("successMsg", "Uspješno ste uplatili novce u zajedničku štednju "+stednja.getInfo()+"! Višak novaca je vraćen u blagajnu!");
+			}else {
+				stednja.setFunds(stednja.getFunds()+transaction.getAmount());
+				user.setFunds(user.getFunds()-transaction.getAmount());
+				uplaceniIznos=transaction.getAmount();
+				redir.addFlashAttribute("successMsg", "Uspješno ste uplatili "+transaction.getAmount()+" u zajedničku štednju: "+stednja.getInfo());
+			}
+			Log log=new Log(null, Action.UPLATA.name(), Calendar.getInstance().getTime(), uplaceniIznos);
+			log.setCbID(stednja);
+			log.setUserID(user);
+			log=logService.createLog(log);
+			List<Log>logovi=stednja.getLog();
+			logovi.add(log);
+			stednja.setLog(logovi);
+			commonBalanceService.updateCommon(stednja);
+			userService.updateUser(user);
+			return "redirect:/profil/zajednicke";
+		}
+	}
+	
+	@GetMapping("/zajednicke/povuci/{id}")
+	public String povuciZajednickeForm(@PathVariable Long id, Principal principal,Model model) {
+		Transakcija transaction=new Transakcija();
+		transaction.setId(id);
+		model.addAttribute("transaction", transaction);
+		return "newcommontrans";
+	}
+	
+	@PostMapping("/zajednicke/povuci")
+	public String povuciNovacZajednicka(@ModelAttribute("transaction") @Valid Transakcija transaction, BindingResult result, Principal principal, Model model,RedirectAttributes redir) {
+		User user=userService.findByUsername(principal.getName()).get();
+		CommonBalance stednja=commonBalanceService.findById(transaction.getId()).get();
+		Double isplaceniIznos=0.0;
+		if(transaction.getAmount()!=null) {
+			if(transaction.getAmount()>stednja.getFunds()) {
+				result.rejectValue("amount", "newtransaction.transaction.funds");
+			}
+			
+		}
+		
+		if(result.hasErrors()) {
+			model.addAttribute("transaction", transaction);
+			return "newcommontrans";
+		}else {
+			stednja.setFunds(stednja.getFunds()-transaction.getAmount());
+			user.setFunds(user.getFunds()+transaction.getAmount());
+			redir.addFlashAttribute("successMsg", "Uspješno ste isplatili "+transaction.getAmount()+" sa zajedničke štednje: "+stednja.getInfo());
+			isplaceniIznos=transaction.getAmount();
+			Log log=new Log(null, Action.ISPLATA.name(), Calendar.getInstance().getTime(), isplaceniIznos);
+			log.setCbID(stednja);
+			log.setUserID(user);
+			log=logService.createLog(log);
+			List<Log>logovi=stednja.getLog();
+			logovi.add(log);
+			stednja.setLog(logovi);
+			commonBalanceService.updateCommon(stednja);
+			userService.updateUser(user);
+			return "redirect:/profil/zajednicke";
+		}
 	}
 	
 	@GetMapping("/povuci/{id}")
