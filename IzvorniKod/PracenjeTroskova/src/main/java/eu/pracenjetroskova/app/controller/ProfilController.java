@@ -108,10 +108,10 @@ public class ProfilController {
 		Double iznosPrihoda=dobriPrihodi.stream().mapToDouble(e->e.getAmount()).sum();
 		boolean flagPotrosnja;
 		String poruka="";
-		if(iznosTroskova>=iznosPrihoda) {
+		if(iznosTroskova>=iznosPrihoda && iznosTroskova!=0.0) {
 			flagPotrosnja=true;
 			poruka="Previše trošite! U zadnjih mjesec dana vaši prihodi iznose "+iznosPrihoda + ", a troškovi "+iznosTroskova;
-		}else if (iznosTroskova>=iznosPrihoda*0.85) {
+		}else if (iznosTroskova>=iznosPrihoda*0.85 && iznosTroskova!=0.0) {
 			flagPotrosnja=true;
 			poruka="Razlika između vaših prihoda i troškova u zadnjih mjesec dana manja je ili jednaka 15%!";
 		}else {

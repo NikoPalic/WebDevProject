@@ -102,6 +102,10 @@ public class AccountController {
 	public String deleteKategorija(@PathVariable Long id,Principal principal, RedirectAttributes redir) {
 		Optional<User> user=userService.findByUsername(principal.getName());
 		List<Category>kategorije=user.get().getCategories();
+		if(id.intValue()>=10000 && id.intValue()<=10011) {
+			redir.addFlashAttribute("zabrana", "Zabrana brisanja! Probali ste obrisati unaprijed zadanu kategoriju!");
+			return "redirect:/profil/kategorije";
+		}
 		try {
 			kategorije.remove(categoryService.findById(id));
 			user.get().setCategories(kategorije);
@@ -115,7 +119,11 @@ public class AccountController {
 	}
 	
 	@GetMapping("/kategorije/osvjezi/{id}")
-	public String showUpdateKategorija(@PathVariable Long id, Model model, Principal principal) {
+	public String showUpdateKategorija(@PathVariable Long id, Model model, Principal principal, RedirectAttributes redir) {
+		if(id.intValue()>=10000 && id.intValue()<=10011) {
+			redir.addFlashAttribute("zabrana", "Zabrana uređivanja! Probali ste izmjeniti unaprijed zadanu kategoriju!");
+			return "redirect:/profil/kategorije";
+		}
 		model.addAttribute("editkategorija", categoryService.findById(id));
 		return "updatecategory";
 	}

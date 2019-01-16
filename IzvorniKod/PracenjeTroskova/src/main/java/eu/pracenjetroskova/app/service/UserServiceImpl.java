@@ -1,6 +1,8 @@
 package eu.pracenjetroskova.app.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -11,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import eu.pracenjetroskova.app.dto.UserDto;
+import eu.pracenjetroskova.app.model.Category;
 import eu.pracenjetroskova.app.model.User;
 import eu.pracenjetroskova.app.model.VerificationToken;
 import eu.pracenjetroskova.app.repository.UserRepository;
@@ -22,6 +25,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private VerificationTokenRepository tokenRepository;
+	
+	@Autowired
+	private CategoryService categoryService;
 	
 	private final UserRepository userRepository;
 	
@@ -58,7 +64,14 @@ public class UserServiceImpl implements UserService {
         user.setEmail(accountDto.getEmail());
         user.setFunds(0.0);
         user.setActive(false);
-        
+        List<Category> kategorije = new ArrayList<>();
+        for (int i=10000; i<10012;i++) {
+        	Category temp=categoryService.findById(Long.valueOf(i));
+        	if(temp!=null) {
+        		kategorije.add(temp);
+        	}
+        }
+        user.setCategories(kategorije);
         return userRepository.save(user);       
     }
 	@Override
