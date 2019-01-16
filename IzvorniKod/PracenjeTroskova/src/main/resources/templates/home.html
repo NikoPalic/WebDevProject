@@ -84,11 +84,15 @@
 	<script type="text/javascript" th:inline="javascript">
 		google.charts.load('current', {'packages':['corechart']});
 		google.charts.setOnLoadCallback(drawChart);
+		google.charts.setOnLoadCallback(drawLineChart);
+		google.charts.setOnLoadCallback(drawChartRevenue);
+		google.charts.setOnLoadCallback(drawLineChartRevenue);
+		
 		function drawChart() {
 			$.get("/metric-graph-data",function(mydata) {
 			    var data = google.visualization.arrayToDataTable(mydata);
 			    var options = {
-			            title : 'Potrošnja',
+			            title : 'Troškovi',
 			            is3D : true,
 			            pieSliceText: 'label',
 			            tooltip :  {showColorCode: true},
@@ -98,12 +102,79 @@
 			 
 			    var chart = new google.visualization.PieChart(document.getElementById('piechart_div'));
 			    chart.draw(data, options);
-			    var barchart_options = {title:'Potrošnja',
+			    
+			 
+			});
+			 
+			}
+		function drawChartRevenue() {
+			$.get("/revenue-graph-data",function(mydata) {
+			    var data = google.visualization.arrayToDataTable(mydata);
+			    var options = {
+			            title : 'Prihodi',
+			            is3D : true,
+			            pieSliceText: 'label',
+			            tooltip :  {showColorCode: true},
+			            width : 700,
+			            height : 500
+			        };
+			 
+			    var chart = new google.visualization.PieChart(document.getElementById('piechart_div_revenue'));
+			    chart.draw(data, options);
+			    
+			 
+			});
+			 
+			}
+		
+		function drawLineChart() {
+			$.get("/expenditure-graph-data",function(mydata) {
+				
+			    var data = google.visualization.arrayToDataTable(mydata);
+			    
+			    var options = {
+			    		title:'Potrošnja po mjesecima',
 	                       width:700,
 	                       height:500,
-	                       legend: 'none'};
-	        var barchart = new google.visualization.BarChart(document.getElementById('barchart_div'));
-	        barchart.draw(data, barchart_options);
+	                       legend: 'Potrošnja',
+	                       hAxis: {
+	                    	   format: 'MMMM, yyyy'
+	                       },
+			    		   explorer: { 
+	                	   		actions: ['dragToZoom', 'rightClickToReset'], 
+	                       		axis: 'vertical'
+	            		   }
+			        };
+			 
+			    var chart = new google.visualization.LineChart(document.getElementById('linechart_div'));
+			    chart.draw(data, options);
+			    
+			 
+			});
+			 
+			}
+		function drawLineChartRevenue() {
+			$.get("/revenue-graph-data-line",function(mydata) {
+				
+			    var data = google.visualization.arrayToDataTable(mydata);
+			    
+			    var options = {
+			    		title:'Prihodi po mjesecima',
+	                       width:700,
+	                       height:500,
+	                       legend: 'Prihodi',
+	                       hAxis: {
+	                    	   format: 'MMMM, yyyy'
+	                       },
+			    		   explorer: { 
+	                	   		actions: ['dragToZoom', 'rightClickToReset'], 
+	                       		axis: 'vertical'
+	            		   }
+			        };
+			 
+			    var chart = new google.visualization.LineChart(document.getElementById('linechart_div_revenue'));
+			    chart.draw(data, options);
+			    
 			 
 			});
 			 
@@ -112,8 +183,12 @@
 	</script>
 	<table class="table table-borderless">
       <tr>
-        <td><div id="piechart_div" style="border: 1px solid #ccc"></div></td>
-        <td><div id="barchart_div" style="border: 1px solid #ccc"></div></td>
+        <td th:if="${not #lists.isEmpty(expenditures)}"><div id="piechart_div" style="border: 1px solid #ccc"></div></td>
+        <td th:if="${not #lists.isEmpty(revenues)}"><div id="piechart_div_revenue" style="border: 1px solid #ccc"></div></td>
+      </tr>
+      <tr>
+        <td th:if="${not #lists.isEmpty(expenditures)}"><div id="linechart_div" style="border: 1px solid #ccc"></div></td>
+        <td th:if="${not #lists.isEmpty(revenues)}"><div id="linechart_div_revenue" style="border: 1px solid #ccc"></div></td>
       </tr>
     </table>
 </body>

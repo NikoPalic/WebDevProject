@@ -97,6 +97,7 @@ public class ProfilController {
 		User user = userService.findByUsername(principal.getName()).get();
 		List<Expenditure> expenditures=expenditureService.findByUserID(user);
 		model.addAttribute("expenditures", expenditures);
+		model.addAttribute("revenues", revenueService.findByUserID(user));
 		return "home";
 	}
 	
@@ -115,12 +116,64 @@ public class ProfilController {
 			result[i][1] = e.getAmount();
 			i++;
 		}
-		for (Object[] objects : result) {
-			System.out.println(objects.toString());
+		return result;
+	}
+	
+	@RequestMapping(value = "/revenue-graph-data", method = RequestMethod.GET)
+	@ResponseBody
+	public Object [][] getGraphDataRevenue(Principal principal){
+		User user = userService.findByUsername(principal.getName()).get();
+		List<Revenue> prihodi=revenueService.findByUserID(user);
+		Object [][] result = new Object [prihodi.size()+1][2];
+		result[0][0]="Ime";
+		result[0][1]="Iznos";
+		
+		int i = 1;
+		for(Revenue e : prihodi) {
+			result[i][0] = e.getName();
+			result[i][1] = e.getAmount();
+			i++;
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/expenditure-graph-data", method = RequestMethod.GET)
+	@ResponseBody
+	public Object [][] getGraphDataForExpenditureLineChart(Principal principal){
+		User user = userService.findByUsername(principal.getName()).get();
+		List<Expenditure> expenditures=expenditureService.findByUserID(user);
+		Object [][] result = new Object [expenditures.size()+1][2];
+		result[0][0]="Datum";
+		result[0][1]="Potrošnja";
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+		int i = 1;
+		for(Expenditure e : expenditures) {
+			
+			result[i][0] = dateFormatter.format(e.getDate());
+			result[i][1] = e.getAmount();
+			i++;
 		}
 		return result;
 	}
 
+	@RequestMapping(value = "/revenue-graph-data-line", method = RequestMethod.GET)
+	@ResponseBody
+	public Object [][] getGraphDataRevenueLine(Principal principal){
+		User user = userService.findByUsername(principal.getName()).get();
+		List<Revenue> prihodi=revenueService.findByUserID(user);
+		Object [][] result = new Object [prihodi.size()+1][2];
+		result[0][0]="Datum";
+		result[0][1]="Prihodi";
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+		int i = 1;
+		for(Revenue e : prihodi) {
+			result[i][0] = dateFormatter.format(e.getDate());
+			result[i][1] = e.getAmount();
+			i++;
+		}
+		return result;
+	}
+	
 	@GetMapping("/profil")
 	public String mojProfil(Principal principal,WebRequest request, Model model) {
 		Optional<User> user=userService.findByUsername(principal.getName());
@@ -129,6 +182,7 @@ public class ProfilController {
 		model.addAttribute("zajednicke", zajednicke);
 		model.addAttribute("funds",user.get().getFunds());
 		model.addAttribute("stednje", user.get().getSavings());
+	
 		return "profil";
 	}
 	
