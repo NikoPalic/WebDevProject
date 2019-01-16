@@ -63,7 +63,10 @@
       			</li>
    			</ul>
          <input type="text" class="search form-control mr-sm-2 my-2 my-sm-0" placeholder="Pretraga">
-			   <a class="nav-item active mr-sm-2 my-2 my-sm-0" th:inline="text">Korisnik [[${#httpServletRequest.remoteUser}]]  </a>
+			   <a class="nav-item active mr-sm-2 my-2 my-sm-0" th:inline="text" th:text="${'Sredstva: ' + #numbers.formatDecimal(currentUser.funds, 1, 'DEFAULT', 2, 'DEFAULT')}"></a>
+
+      		<a  class="nav-item active mr-sm-2 my-2 my-sm-0" th:text="${'Korisnik '+currentUser.username}"></a>
+      		<button class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" onclick="window.location.href='/postavke'"><span class="fas fa-cogs"></span> </button>
 						   			
    			<form th:action="@{/logout}" method="post">
            		 <input type="submit" value="Odjavi se" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0"/>
