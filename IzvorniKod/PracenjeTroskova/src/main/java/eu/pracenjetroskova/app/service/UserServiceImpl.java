@@ -12,13 +12,16 @@ import org.springframework.stereotype.Service;
 
 import eu.pracenjetroskova.app.dto.UserDto;
 import eu.pracenjetroskova.app.model.User;
-
+import eu.pracenjetroskova.app.model.VerificationToken;
 import eu.pracenjetroskova.app.repository.UserRepository;
+import eu.pracenjetroskova.app.repository.VerificationTokenRepository;
 import eu.pracenjetroskova.app.validation.EmailExistsException;
 
 @Service
 public class UserServiceImpl implements UserService {
 	
+	@Autowired
+	private VerificationTokenRepository tokenRepository;
 	
 	private final UserRepository userRepository;
 	
@@ -54,6 +57,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder().encode(accountDto.getPassword()));
         user.setEmail(accountDto.getEmail());
         user.setFunds(0.0);
+        user.setActive(false);
         
         return userRepository.save(user);       
     }
@@ -101,4 +105,27 @@ public class UserServiceImpl implements UserService {
         return false;
 	}
 
+
+	@Override
+	public User getUser(String verificationToken) {
+		User user = tokenRepository.findByToken(verificationToken).getUser();
+        return user;
+	}
+
+
+	@Override
+	public void createVerificationToken(User user, String token) {
+		VerificationToken myToken = new VerificationToken(token, user);
+        tokenRepository.save(myToken);
+		
+	}
+
+
+	@Override
+	public VerificationToken getVerificationToken(String VerificationToken) {
+		return tokenRepository.findByToken(VerificationToken);
+	}
+
+	
+	
 }
