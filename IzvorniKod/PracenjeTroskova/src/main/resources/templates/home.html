@@ -7,6 +7,7 @@
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
      <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+     <script type="text/javascript" th:src="@{/js/close_alert.js}"></script>
 
 	<title>Praćenje troškova</title>
 </head>
@@ -39,7 +40,18 @@
 	</nav>
 
 	
-	
+	<div class="container" th:if="${flagStednje==True}">
+		<div class="alert alert-danger alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<h1 th:text="${istekle}"></h1>
+		</div>
+	</div>
+	<div class="container" th:if="${flagStednjeGotove==True}">
+		<div class="alert alert-info alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<h1 th:text="${gotove}"></h1>
+		</div>
+	</div>
 
 	<div class="showcase-right">
 	<div class="jumbotron jumbotron-fluid">

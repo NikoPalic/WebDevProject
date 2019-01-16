@@ -96,8 +96,38 @@ public class ProfilController {
 	public String homepage(Principal principal,Model model) {
 		User user = userService.findByUsername(principal.getName()).get();
 		List<Expenditure> expenditures=expenditureService.findByUserID(user);
-		model.addAttribute("expenditures", expenditures);
-		model.addAttribute("revenues", revenueService.findByUserID(user));
+		List<Savings> stednje=savingsService.findByUserID(user);
+		List<Savings> istekleStednje=stednje.stream().filter(e->e.getEndDate().before(Calendar.getInstance().getTime())).collect(Collectors.toList());
+		
+		List<Savings> gotoveStednje=new ArrayList<>();
+		for (Savings savings : stednje) {
+			Double iznos=savings.getFunds();
+			Double cilj=savings.getGoal();
+			
+			if(!(iznos<cilj)) {
+				gotoveStednje.add(savings);
+			}
+		}
+		
+		boolean istSteZas;
+		boolean gotSteZas;
+		if(istekleStednje.isEmpty()) {
+			istSteZas=false;
+		}else {
+			istSteZas=true;
+		}
+		if(gotoveStednje.isEmpty()) {
+			gotSteZas=false;
+		}else {
+			gotSteZas=true;
+		}
+		String istekle=istekleStednje.stream().map(e->e.getInfo()).collect(Collectors.joining(" ; "));
+		String gotove=gotoveStednje.stream().map(e->e.getInfo()).collect(Collectors.joining(" ; "));
+		
+		model.addAttribute("flagStednje", istSteZas);
+		model.addAttribute("flagStednjeGotove", gotSteZas);
+		model.addAttribute("istekle","Štednje koje su istekle s trenutnim vremenom : "+istekle);
+		model.addAttribute("gotove","Štednje koje su dostigle cilj: "+gotove);
 		return "home";
 	}
 	

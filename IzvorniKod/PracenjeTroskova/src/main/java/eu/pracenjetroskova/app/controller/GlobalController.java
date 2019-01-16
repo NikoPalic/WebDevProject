@@ -12,7 +12,7 @@ import com.google.common.base.Optional;
 import eu.pracenjetroskova.app.model.User;
 import eu.pracenjetroskova.app.service.UserService;
 
-@ControllerAdvice
+@ControllerAdvice(assignableTypes = {AccountController.class,ExpenditureController.class,ProfilController.class,RevenueController.class,SavingsController.class})
 public class GlobalController {
 
 	@Autowired
