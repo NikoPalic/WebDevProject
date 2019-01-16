@@ -106,7 +106,7 @@
         				<td th:text="${#dates.format(prihod.date,'dd.MM.yyyy')}">...</td>
         				<td th:text="${prihod.amount}">...</td>
         				<td th:text="${prihod.info}">...</td>
-        				<td th:text="${prihod.categoryID!=null}?${prihod.categoryID?.name}:'NIJE UPISANA'"></td>
+        				<td th:text="${prihod.categoryID!=null and prihod.categoryID.type=='Prihod'}?${prihod.categoryID?.name}:'NIJE UPISANA'"></td>
         				<td>
            					<form th:action="@{/prihodi/osvjezi/{id}(id=${prihod.id})}" method="get" >
               					<button type="submit" value="Update" class="btn btn-outline-primary"><span class="fas fa-pencil-alt"></span></button>
