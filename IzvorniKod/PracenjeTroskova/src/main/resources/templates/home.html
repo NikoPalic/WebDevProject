@@ -46,6 +46,12 @@
 			<h1 th:text="${istekle}"></h1>
 		</div>
 	</div>
+	<div class="container" th:if="${flagPotrosnja==True}">
+		<div class="alert alert-warning alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<h1 th:text="${poruka}"></h1>
+		</div>
+	</div>
 	<div class="container" th:if="${flagStednjeGotove==True}">
 		<div class="alert alert-info alert-dismissible">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

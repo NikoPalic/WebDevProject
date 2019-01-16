@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -96,9 +97,26 @@ public class ProfilController {
 	public String homepage(Principal principal,Model model) {
 		User user = userService.findByUsername(principal.getName()).get();
 		List<Expenditure> expenditures=expenditureService.findByUserID(user);
+		List<Revenue> revenues=revenueService.findByUserID(user);
 		List<Savings> stednje=savingsService.findByUserID(user);
 		List<Savings> istekleStednje=stednje.stream().filter(e->e.getEndDate().before(Calendar.getInstance().getTime())).collect(Collectors.toList());
-		
+		Calendar calendar=Calendar.getInstance();
+		calendar.add(Calendar.MONTH, -1);
+		List<Expenditure> dobriTroskovi=expenditures.stream().filter(e->e.getDate().after(calendar.getTime())).collect(Collectors.toList());
+		List<Revenue> dobriPrihodi=revenues.stream().filter(e->e.getDate().after(calendar.getTime())).collect(Collectors.toList());
+		Double iznosTroskova=dobriTroskovi.stream().mapToDouble(e->e.getAmount()).sum();
+		Double iznosPrihoda=dobriPrihodi.stream().mapToDouble(e->e.getAmount()).sum();
+		boolean flagPotrosnja;
+		String poruka="";
+		if(iznosTroskova>=iznosPrihoda && iznosTroskova!=0.0) {
+			flagPotrosnja=true;
+			poruka="Previše trošite! U zadnjih mjesec dana vaši prihodi iznose "+iznosPrihoda + ", a troškovi "+iznosTroskova;
+		}else if (iznosTroskova>=iznosPrihoda*0.85 && iznosTroskova!=0.0) {
+			flagPotrosnja=true;
+			poruka="Razlika između vaših prihoda i troškova u zadnjih mjesec dana manja je ili jednaka 15%!";
+		}else {
+			flagPotrosnja=false;
+		}
 		List<Savings> gotoveStednje=new ArrayList<>();
 		for (Savings savings : stednje) {
 			Double iznos=savings.getFunds();
@@ -124,8 +142,12 @@ public class ProfilController {
 		String istekle=istekleStednje.stream().map(e->e.getInfo()).collect(Collectors.joining(" ; "));
 		String gotove=gotoveStednje.stream().map(e->e.getInfo()).collect(Collectors.joining(" ; "));
 		
+		model.addAttribute("expenditures", expenditures);
+		model.addAttribute("revenues", revenues);
 		model.addAttribute("flagStednje", istSteZas);
 		model.addAttribute("flagStednjeGotove", gotSteZas);
+		model.addAttribute("flagPotrosnja", flagPotrosnja);
+		model.addAttribute("poruka", poruka);
 		model.addAttribute("istekle","Štednje koje su istekle s trenutnim vremenom : "+istekle);
 		model.addAttribute("gotove","Štednje koje su dostigle cilj: "+gotove);
 		return "home";
@@ -172,6 +194,7 @@ public class ProfilController {
 	public Object [][] getGraphDataForExpenditureLineChart(Principal principal){
 		User user = userService.findByUsername(principal.getName()).get();
 		List<Expenditure> expenditures=expenditureService.findByUserID(user);
+		Collections.sort(expenditures,(s1,s2)-> s1.getDate().compareTo(s2.getDate()));
 		Object [][] result = new Object [expenditures.size()+1][2];
 		result[0][0]="Datum";
 		result[0][1]="Potrošnja";
@@ -191,6 +214,7 @@ public class ProfilController {
 	public Object [][] getGraphDataRevenueLine(Principal principal){
 		User user = userService.findByUsername(principal.getName()).get();
 		List<Revenue> prihodi=revenueService.findByUserID(user);
+		Collections.sort(prihodi,(s1,s2)-> s1.getDate().compareTo(s2.getDate()));
 		Object [][] result = new Object [prihodi.size()+1][2];
 		result[0][0]="Datum";
 		result[0][1]="Prihodi";
