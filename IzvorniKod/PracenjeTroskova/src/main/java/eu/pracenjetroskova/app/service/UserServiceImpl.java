@@ -43,6 +43,10 @@ public class UserServiceImpl implements UserService {
             throw new EmailExistsException(
               "There is an account with that email address: " + accountDto.getEmail());
         }
+        if (userRepository.findByUsername(accountDto.getUsername()).get()!=null) {   
+            throw new EmailExistsException(
+              "There is an account with that username: " + accountDto.getUsername());
+        }
         User user = new User();
         user.setUsername(accountDto.getUsername());
         user.setName(accountDto.getName());
@@ -85,6 +89,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+
+
+	@Override
+	public boolean usernameExist(String username) {
+		User user = userRepository.findByUsername(username).get();
+        if (user != null) {
+            return true;
+        }
+        return false;
 	}
 
 }

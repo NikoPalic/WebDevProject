@@ -17,5 +17,6 @@ public interface UserService {
 	boolean emailExist(String email);
 	User findByEmail(String email);
 	PasswordEncoder passwordEncoder();
+	boolean usernameExist(String username);
 
 }
