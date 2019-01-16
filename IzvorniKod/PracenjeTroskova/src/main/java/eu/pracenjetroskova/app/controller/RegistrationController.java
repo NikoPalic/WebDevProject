@@ -55,16 +55,16 @@ public class RegistrationController {
 			  Errors errors) {
 			     
 			    User registered = new User();
-			    if (!result.hasErrors()) {
-			        registered = createUserAccount(accountDto, result);
-			    }
 			    if (userService.usernameExist(accountDto.getUsername())) {
 			    	result.rejectValue("username", "message.regError.name");
 			    }
 			    if (userService.emailExist(accountDto.getEmail())) {
 			        result.rejectValue("email", "message.regError");
-			        
 			    }
+			    if (!result.hasErrors()) {
+			        registered = createUserAccount(accountDto, result);
+			    }
+			   
 			    if (result.hasErrors()) {
 			        return new ModelAndView("registration", "user", accountDto);
 			    } 

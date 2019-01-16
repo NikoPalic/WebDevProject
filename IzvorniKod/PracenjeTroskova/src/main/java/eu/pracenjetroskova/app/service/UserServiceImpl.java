@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
             throw new EmailExistsException(
               "There is an account with that email address: " + accountDto.getEmail());
         }
-        if (userRepository.findByUsername(accountDto.getUsername()).get()!=null) {   
+        if (usernameExist(accountDto.getUsername())) {   
             throw new EmailExistsException(
               "There is an account with that username: " + accountDto.getUsername());
         }
@@ -94,8 +94,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean usernameExist(String username) {
-		User user = userRepository.findByUsername(username).get();
-        if (user != null) {
+		Optional<User> user = userRepository.findByUsername(username);
+        if (user.isPresent()) {
             return true;
         }
         return false;
