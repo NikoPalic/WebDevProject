@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import eu.pracenjetroskova.app.dto.UserDto;
 import eu.pracenjetroskova.app.model.User;
+import eu.pracenjetroskova.app.model.VerificationToken;
 import eu.pracenjetroskova.app.validation.EmailExistsException;
 
 public interface UserService {
@@ -18,5 +19,9 @@ public interface UserService {
 	User findByEmail(String email);
 	PasswordEncoder passwordEncoder();
 	boolean usernameExist(String username);
+	User getUser (String verificationToken);
+	void createVerificationToken(User user, String token);
+	 
+    VerificationToken getVerificationToken(String VerificationToken);
 
 }

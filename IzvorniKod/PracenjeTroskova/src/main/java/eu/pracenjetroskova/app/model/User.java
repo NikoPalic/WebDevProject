@@ -55,7 +55,7 @@ public class User {
 	private String email;
 	
 	@Column(name="user_active")
-	private int active;
+	private boolean active;
 	
 	@Column(name="user_funds")
 	private Double funds;
@@ -156,11 +156,11 @@ public class User {
 		this.email = email;
 	}
 
-	public int getActive() {
+	public boolean getActive() {
 		return active;
 	}
 
-	public void setActive(int active) {
+	public void setActive(boolean active) {
 		this.active = active;
 	}
 
