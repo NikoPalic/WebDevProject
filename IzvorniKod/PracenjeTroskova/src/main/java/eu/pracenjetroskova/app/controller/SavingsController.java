@@ -123,9 +123,11 @@ public class SavingsController {
 			CommonBalance stednja=commonBalanceService.findById(transaction.getId()).get();
 			Double uplaceniIznos=0.0;
 			if(stednja.getFunds()+transaction.getAmount()>stednja.getGoal()) {
-				stednja.setFunds(stednja.getGoal());
 				user.setFunds(user.getFunds()-(stednja.getGoal()-stednja.getFunds()));
 				uplaceniIznos=stednja.getGoal()-stednja.getFunds();
+				stednja.setFunds(stednja.getGoal());
+				
+				
 				redir.addFlashAttribute("successMsg", "Uspješno ste uplatili novce u zajedničku štednju "+stednja.getInfo()+"! Višak novaca je vraćen u blagajnu!");
 			}else {
 				stednja.setFunds(stednja.getFunds()+transaction.getAmount());
@@ -242,8 +244,9 @@ public class SavingsController {
 		}else {
 			Savings stednja=savingsService.findById(transaction.getId()).get();
 			if(stednja.getFunds()+transaction.getAmount()>stednja.getGoal()) {
-				stednja.setFunds(stednja.getGoal());
 				user.setFunds(user.getFunds()-(stednja.getGoal()-stednja.getFunds()));
+				stednja.setFunds(stednja.getGoal());
+				
 				redir.addFlashAttribute("successMsg", "Uspješno ste uplatili novce u štednju "+stednja.getInfo()+"! Višak novaca je vraćen u blagajnu!");
 			}else {
 				stednja.setFunds(stednja.getFunds()+transaction.getAmount());
