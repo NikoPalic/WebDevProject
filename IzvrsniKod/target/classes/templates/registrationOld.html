@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+   body{
+      font-family: arial, helvetica, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      padding: 0;
+      margin-left: 25%;
+      margin-top: 3%;
+      margin-right: 25%
+      background: url("../slike/background.jpg");
+      background-repeat: no-repeat;
+      min-width: 200px;
+    }
+    .allinputs{
+      width: 50%;
+      min-width: 250px;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+   
+    .allinputs:hover{
+      border-color: green;
+    }
+    .btn-outline-success{
+      margin-left: 20%;
+    }
+    .btn-outline-success:hover{
+      background-color: green;
+    }
+    p{
+      color: red;
+    }
+  </style>
+  
+  </head>
+<body class="body">
+<h1 >Registracija</h1><br>
+<div>
+	<form action="#" th:action="@{/signup}"th:object="${user}" method="POST" enctype="utf8">
+	    <div>
+	        <input th:field="*{name}" class="allinputs" placeholder="Unesite ime" />
+	        <p th:each="error: ${#fields.errors('name')}"
+	          th:text="${error}">Validation error</p>
+	    </div>
+	    <div>
+	        <input th:field="*{lastName}" class = "allinputs" placeholder="Unesite prezime" />
+	        <p th:each="error : ${#fields.errors('lastName')}"
+	          th:text="${error}">Validation error</p>
+	    </div>
+	    <div>
+	        <input th:field="*{username}" class = "allinputs" placeholder="Unesite korisničko ime" />
+	        <p th:each="error : ${#fields.errors('username')}"
+	          th:text="${error}">Validation error</p>
+	    </div>
+	    <div>
+	        <input type="email" th:field="*{email}" class = "allinputs" placeholder="Unesite email" />
+	        <p th:each="error : ${#fields.errors('email')}"
+	          th:text="${error}">Validation error</p>
+	    </div>
+	    <div >
+	        <input id="password" name="password" type="password" th:field="*{password}" class = "allinputs" placeholder="Unesite lozinku" />
+	        <p class="allinputs alert alert-danger col-sm-4" th:each="error : ${#fields.errors('password')}"
+	          th:text="${error}">Validation error</p>
+	        
+	    </div>
+	    <div>
+	        
+	        <input id="matchPassword" type="password" th:field="*{matchingPassword}" class = "allinputs" placeholder="Ponovno unesite lozinku" />
+	    	<span id="globalError" class="alert alert-danger col-sm-4" style="display:none"></span>
+	    </div>
+	    <button type="submit" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" >Pošalji</button>
+	</form>
+ </div>
+<a th:href="@{/login}" >Natrag na početnu stranicu</a>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/js/pwstrength-bootstrap.min.js}"></script>  
+
+
+<script th:inline="javascript">
+var serverContext = [[@{/}]];
+
+$(document).ready(function () {
+	$('form').submit(function(event) {
+		register(event);
+	});
+	
+	$(":password").keyup(function(){
+		if($("#password").val() != $("#matchPassword").val()){
+	        $("#globalError").show().html(/*[[#{PasswordMatches.user}]]*/);
+	    }else{
+	    	$("#globalError").html("").hide();
+	    }
+	});
+	
+	options = {
+		    common: {minChar:8},
+		    ui: {
+		    	
+		    	showVerdictsInsideProgressBar:true,
+		    	showErrors:true,
+		    	errorMessages:{
+		    		  wordLength: /*[[#{error.wordLength}]]*/,
+		    		  wordNotEmail: /*[[#{error.wordNotEmail}]]*/,
+		    		  wordSequences: /*[[#{error.wordSequences}]]*/,
+		    		  wordLowercase: /*[[#{error.wordLowercase}]]*/,
+		    		  wordUppercase: /*[[#{error.wordUppercase}]]*/,
+		    	          wordOneNumber: /*[[#{error.wordOneNumber}]]*/,
+		    		  wordOneSpecialChar: /*[[#{error.wordOneSpecialChar}]]*/
+		    		}
+		    	}
+		};
+	 $('#password').pwstrength(options);
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
+</body>
+</html>

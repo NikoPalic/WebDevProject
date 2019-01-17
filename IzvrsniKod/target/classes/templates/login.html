@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+
+	<title>Praćenje troškova</title>
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    	<span class="navbar-toggler-icon"></span>
+  		</button>
+
+		
+  		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    		<ul class="navbar-nav mr-auto">
+      			<li class="nav-item active">
+        			<a class="nav-link" href="/">Početna <span class="sr-only">(current)</span></a>
+      			</li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/profil">Profil <span class="sr-only">(current)</span></a>
+            </li>
+   			</ul>
+   			
+   		<div th:if="${param.logout}">
+            <div class="alert alert-success text-center mr-sm-2 my-2 my-sm-0 " style="margin-bottom: 1px; padding:0px 15px; height: 35px ; line-height:35px" role="alert" >
+                <strong>Uspješno</strong> ste se odjavili!
+            </div>
+        </div>
+        	
+        <div th:if="${param.error}">
+            <div class="alert alert-danger text-center mr-sm-2 my-2 my-sm-0 " style="margin-bottom: 1px; padding:0px 15px; height: 35px ; line-height:35px" role="alert">
+                <strong>Krivo</strong> korisničko ime ili lozinka!
+            </div>
+        </div>
+           			
+        
+       	
+    		<form class="form-inline my-2 my-lg-0" th:action="@{/login}" method="post">
+     			<input type="text" name="username" class="form-control" id="exampleInputEmail1"  placeholder="Korisničko ime" >    		
+    			<input type="password" name="password"  class="form-control mr-sm-2" id="exampleInputPassword1" placeholder="Lozinka">
+    			<button class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" id="logbtn" type="submit">PRIJAVA</button>
+    			<a href="/signup" class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" id="regbtn" role="button" >REGISTRACIJA</a>
+	    	</form>
+  		</div>
+  		
+	</nav>
+
+	
+	
+
+	<div class="showcase-left">
+	<div class="jumbotron jumbotron-fluid">
+  		<div class="container">
+    		<h1 class="display-4">Dobro došli na praćenje troškova</h1>
+    		<p class="lead">Smanjite svoje troškove i uštedite s nama.</p>
+  		</div>
+	</div>
+  </div>
+
+  <script>
+        window.sr = ScrollReveal();
+        sr.reveal('.navbar', {
+          duration: 2000,
+          origin:'right'
+        });
+        sr.reveal('.showcase-left', {
+          duration: 2000,
+          origin:'left',
+          distance:'300px'
+        });
+  </script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/js/close_alert.js}"></script>
+</body>
+</html>
