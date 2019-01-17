@@ -12,29 +12,29 @@ import eu.pracenjetroskova.app.validation.ValidEmail;
 @PasswordMatches
 public class UserDto {
 
-	@NotNull
-	@NotEmpty
+	@NotNull(message="Polje ne može ostati prazno")
+	@NotEmpty(message="Polje ne može ostati prazno")
 	private String username;
 	
-	@NotNull
-	@NotEmpty
+	@NotNull(message="Polje ne može ostati prazno")
+	@NotEmpty(message="Polje ne može ostati prazno")
 	private String name;
 	
-	@NotNull
-	@NotEmpty
+	@NotNull(message="Polje ne može ostati prazno")
+	@NotEmpty(message="Polje ne može ostati prazno")
 	private String lastName;
 	
 	@ValidEmail
-	@NotNull
-	@NotEmpty
+	@NotNull(message="Polje ne može ostati prazno")
+	@NotEmpty(message="Polje ne može ostati prazno")
 	private String email;
 	
-	@NotNull
-	@NotEmpty
+	@NotNull(message="Polje ne može ostati prazno")
+	@NotEmpty(message="Polje ne može ostati prazno")
 	@ValidPassword
 	private String password;
 	@NotNull
-    @Size(min = 1)
+    @Size(min = 1,message="Minimalna duljina potrebna iznosi 1 znak")
 	private String matchingPassword;
 	
 	public String getUsername() {

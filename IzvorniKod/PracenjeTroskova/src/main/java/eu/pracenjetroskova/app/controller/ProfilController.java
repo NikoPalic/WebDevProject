@@ -141,7 +141,35 @@ public class ProfilController {
 		}
 		String istekle=istekleStednje.stream().map(e->e.getInfo()).collect(Collectors.joining(" ; "));
 		String gotove=gotoveStednje.stream().map(e->e.getInfo()).collect(Collectors.joining(" ; "));
-		
+		List<UsersCommonBalance> useroveStednje=uCBService.findByUser(user);
+		List<CommonBalance> zajednicke=useroveStednje.stream().filter(e->e.getStatus().equals(Status.ACCEPTED.name())).map(e->e.getCommonbalance()).collect(Collectors.toList());
+		List<CommonBalance> gotoveZajedncike=new ArrayList<>();
+		for(CommonBalance common: zajednicke) {
+			Double iznos=common.getFunds();
+			Double cilj=common.getGoal();
+			if(!(iznos<cilj)) {
+				gotoveZajedncike.add(common);
+			}
+		}
+		String dostigleCilj=gotoveZajedncike.stream().map(e->e.getName()).collect(Collectors.joining(" ; "));
+		boolean flagZajednickeGotove;
+		if(gotoveZajedncike.isEmpty()) {
+			flagZajednickeGotove=false;
+		}else {
+			flagZajednickeGotove=true;
+		}
+		List<CommonBalance> zahtjevi = useroveStednje.stream().filter(t->t.getStatus().equals(Status.WAITING.name())).map(e->e.getCommonbalance()).collect(Collectors.toList());
+		int brojZahtjeva=zahtjevi.size();
+		boolean flagZahtjevi;
+		if(brojZahtjeva>0) {
+			flagZahtjevi=true;
+		}else {
+			flagZahtjevi=false;
+		}
+		model.addAttribute("flagZahtjevi", flagZahtjevi);
+		model.addAttribute("flagZajednickeGotove", flagZajednickeGotove);
+		model.addAttribute("dostigleCilj","Zajedničke štednje koje su dostigle cilj: "+dostigleCilj);
+		model.addAttribute("brojZahtjeva", "Imate nove zahtjeve za pridruživanje zajedničkim štednjama ("+brojZahtjeva+")!");
 		model.addAttribute("expenditures", expenditures);
 		model.addAttribute("revenues", revenues);
 		model.addAttribute("flagStednje", istSteZas);

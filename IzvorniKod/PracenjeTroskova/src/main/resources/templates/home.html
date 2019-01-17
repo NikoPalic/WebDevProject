@@ -39,7 +39,12 @@
   		
 	</nav>
 
-	
+	<div class="container" th:if="${flagZahtjevi==True}">
+		<div class="alert alert-success alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<h1 th:text="${brojZahtjeva}"></h1>
+		</div>
+	</div>
 	<div class="container" th:if="${flagStednje==True}">
 		<div class="alert alert-danger alert-dismissible">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -56,6 +61,12 @@
 		<div class="alert alert-info alert-dismissible">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 			<h1 th:text="${gotove}"></h1>
+		</div>
+	</div>
+	<div class="container" th:if="${flagZajednickeGotove==True}">
+		<div class="alert alert-info alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<h1 th:text="${dostigleCilj}"></h1>
 		</div>
 	</div>
 
